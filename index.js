@@ -18,12 +18,12 @@ let currentBackground = 0;
 let current = content.querySelector('div#active-content');
 let currentCanvas = current.querySelector('canvas');
 let currentAvatarImage = new Image();
-currentAvatarImage。src = 'Resources/Avatars/Keishi.png';
+currentAvatarImage.src = 'Resources/Avatars/Keishi.png';
 let customBackground = null; // 自定义背景图片
 
 // 语言支持相关
 let currentLang = localStorage.getItem('lang') || 'zh';
-document。documentElement.lang = currentLang === 'jp' ? 'ja' : currentLang;
+document.documentElement.lang = currentLang === 'jp' ? 'ja' : currentLang;
 
 function applyTranslation(lang) {
     if (!translations[lang]) return;

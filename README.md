@@ -16,10 +16,10 @@ MCCAG (Minecraft Cute Avatar Generator) 是一个专门用于生成 Minecraft �
 
 ```
 Website-main/
-├── index.css        # 样式表文件
-├── index.html       # 主页面
-├── index.js         # 主要逻辑
-├── translations.js  # 多语言支持
+├── Index.css        # 样式表文件
+├── Index.html       # 主页面
+├── Index.js         # 主要逻辑
+├── Translations.js  # 多语言支持
 └── Resources/       # 资源文件
     ├── Avatars/     # 头像资源
     ├── Icons/       # 界面图标
