@@ -1,9 +1,9 @@
-const tipsContainer = document.querySelector('.notification-tips');
-const content = document.querySelector('.generator__content');
-const contentTabs = document.querySelectorAll('.tabs__input');
+const tipsContainer = document.querySelector('.notification-list');
+const content = document.querySelector('.generator-content');
+const contentTabs = document.querySelectorAll('.tab-switcher-input');
 
-const uploadInput = document.querySelector('.tab-panel--upload .file-input');
-const skinWebsiteInput = document.querySelector('.input.skin-website');
+const uploadInput = document.querySelector('.tab-panel-upload .file-upload-input');
+const skinWebsiteInput = document.querySelector('.text-input.skin-website');
 
 const backgrounds = [
     '#ffcccb', '#add8e6', '#ffffff',
@@ -67,7 +67,7 @@ function applyTranslation(lang) {
 applyTranslation(currentLang);
 
 // 语言切换事件
-document.querySelectorAll('.language-switcher__item[data-lang]').forEach(li => {
+document.querySelectorAll('.language-selector-item[data-lang]').forEach(li => {
     li.addEventListener('click', function(e) {
         e.preventDefault();
         const lang = this.getAttribute('data-lang');
@@ -100,7 +100,7 @@ function switchContent(index) {
         current.id = '';
         // 获取面板ID
         const panelId = event.target.id;
-        current = content.querySelector(`.tab-panel--${panelId}`);
+        current = content.querySelector(`.tab-panel-${panelId}`);
         currentCanvas = current.querySelector('canvas');
         current.id = 'active-content';
         content.style.transform = `translateX(-${transform}px)`;
@@ -249,14 +249,15 @@ async function request(address, data) {
 }
 
 async function generate(event) {
-    const input = current.querySelector('.input.player-name');
+    const input = current.querySelector('input.player-name');
+    console.log(input);
     const avatarType = event.target.getAttribute('avatar-type');
     if (!input.value) return popupTips('请输入用户名！', 'warning');
-    if (current.classList.contains('tab-panel--website') && !skinWebsiteInput.value) return popupTips('请输入皮肤站地址！', 'warning');
-    const mask = current.querySelector('.loading-mask');
+    if (current.classList.contains('tab-panel-website') && !skinWebsiteInput.value) return popupTips('请输入皮肤站地址！', 'warning');
+    const mask = current.querySelector('.loading-overlay');
     mask.style.opacity = 1;
     const sendData = { 
-        website: (current.classList.contains('tab-panel--website') ? 
+        website: (current.classList.contains('tab-panel-website') ? 
             (skinWebsiteInput.value.startsWith('http://') || skinWebsiteInput.value.startsWith('https://')) ? 
                 skinWebsiteInput.value : 'https://' + skinWebsiteInput.value : null), 
         player: input.value, 
@@ -277,7 +278,7 @@ async function generateUpload(event) {
     // 获取选中的头像类型
     const avatarType = event ? event.target.getAttribute('avatar-type') || 'full' : 'full';
     
-    const mask = current.querySelector('.loading-mask');
+    const mask = current.querySelector('.loading-overlay');
     mask.style.opacity = 1;
     const reader = new FileReader();
     reader.readAsDataURL(uploadInput.files[0]);
@@ -306,9 +307,9 @@ uploadInput.addEventListener('change', function() {
     }
 });
 
-document.querySelectorAll('.dropdown__item[avatar-type]').forEach(item => {
+document.querySelectorAll('.dropdown-menu-item[avatar-type]').forEach(item => {
     item.addEventListener('click', function(e) {
-        const parentId = e.target.closest('.actions').querySelector('input[type=checkbox]').id;
+        const parentId = e.target.closest('.action-list').querySelector('input[type=checkbox]').id;
         if (parentId.includes('upload')) {
             generateUpload(e);
         } else {
@@ -318,11 +319,11 @@ document.querySelectorAll('.dropdown__item[avatar-type]').forEach(item => {
     });
 });
 
-document.querySelectorAll('.dropdown__item[download-type]').forEach(item => {
+document.querySelectorAll('.dropdown-menu-item[download-type]').forEach(item => {
     item.addEventListener('click', handleDownload);
 });
 
-document.querySelectorAll('.tabs__input').forEach((tab, index) => {
+document.querySelectorAll('.input.tab-switcher-input').forEach((tab, index) => {
     tab.addEventListener('change', switchContent(index));
 });
 
@@ -379,7 +380,7 @@ function createBackgroundUploader() {
 const bgUploader = createBackgroundUploader();
 
 // 点击上传背景按钮时触发文件选择
-document.querySelectorAll('.btn.upload').forEach(button => {
+document.querySelectorAll('.upload').forEach(button => {
     button.addEventListener('click', function() {
         bgUploader.click();
     });
@@ -388,16 +389,17 @@ document.querySelectorAll('.btn.upload').forEach(button => {
 // 在页面加载时进行初始化
 document.addEventListener('DOMContentLoaded', function() {
     applyTranslation(currentLang);
-    
+    document.querySelectorAll('input.text-input').forEach((input) => {
+        input.addEventListener('input', checkInputValue(/[^a-zA-Z0-9-_.]/g));
+    });
     // 启用底部上传按钮
-    document.querySelectorAll('.actions--disabled').forEach(actionsGroup => {
+    document.querySelectorAll('.action-list-disabled').forEach(actionsGroup => {
         // 移除disabled类，但仅启用上传背景按钮
         // 保留发布和分享按钮的禁用状态
-        actionsGroup.classList.remove('actions--disabled');
-        
+        actionsGroup.classList.remove('action-list-disabled');
         // 单独禁用发布和分享按钮
-        actionsGroup.querySelectorAll('.btn.publish, .btn.share').forEach(btn => {
-            btn.classList.add('btn--disabled');
+        actionsGroup.querySelectorAll('.publish, .share').forEach(btn => {
+            btn.classList.add('button-disabled');
             btn.setAttribute('disabled', 'disabled');
         });
     });
@@ -406,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // 在JS文件末尾添加以下CSS样式类
 const style = document.createElement('style');
 style.textContent = `
-  .btn--disabled {
+  .button-disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }

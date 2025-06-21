@@ -30,15 +30,30 @@
 }
 
 /* 响应式设计 */
-@media (height <= 810px), (width <= 940px) {
-  .main {
+@media (max-height: 810px), (max-width: 940px) {
+  .main-content {
     padding: 70px;
     height: auto !important;
   }
-  .footer {
+  .footer-bar {
     height: auto !important;
   }
 }
+
+/* 确保下拉菜单在小屏幕设备上正确显示 */
+@media (max-width: 480px) {
+  .action-group {
+    position: static;
+  }
+  
+  .dropdown-menu {
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 120px;
+    width: auto;
+  }
+}
+
 
 /* 基础元素重置 */
 body {
@@ -61,7 +76,7 @@ ul, p {
 }
 
 /* 按钮基础样式 */
-.btn {
+.button {
   border: none;
   cursor: pointer;
   font-family: "Pixel";
@@ -73,18 +88,18 @@ ul, p {
   text-align: center;
 }
 
-.btn--primary {
+.button-primary {
   color: var(--white);
   background: var(--theme-color);
 }
 
-.btn--secondary {
+.button-secondary {
   color: var(--theme-color);
   background: var(--white);
 }
 
 /* 输入框基础样式 */
-.input {
+.text-input {
   height: 55px;
   width: 85%;
   margin: 20px 0;
@@ -99,62 +114,62 @@ ul, p {
   box-shadow: var(--theme-shadow);
 }
 
-.input:focus {
+.text-input:focus {
   outline: none;
   box-shadow: 0 4px 15px rgba(83, 146, 239, 0.5);
 }
 
 /* 顶部导航栏 */
-.header {
+.header-bar {
   height: 60px;
   padding: 15px;
   box-shadow: 0 2px 4px var(--theme-color-alpha);
 }
 
-.header__logo {
+.header-logo {
   float: left;
 }
 
-.header__logo-img {
+.header-logo-image {
   float: left;
   width: 60px;
   height: 60px;
 }
 
-.header__title {
+.header-title {
   float: left;
   line-height: 60px;
   margin: 0 0 0 20px;
 }
 
 /* 语言选择器 */
-.language-switcher {
+.language-selector {
   float: right;
   height: 30px;
 }
 
-.language-switcher__checkbox {
+.language-selector-checkbox {
   display: none;
 }
 
-.language-switcher__checkbox:checked ~ .language-switcher__list {
+.language-selector-checkbox:checked ~ .language-selector-list {
   opacity: 1;
   max-height: 300px;
 }
 
-.language-switcher__label {
+.language-selector-label {
   display: block;
   text-align: center;
   margin: 20px;
 }
 
-.language-switcher__icon {
+.language-selector-icon {
   width: 25px;
   height: 25px;
   cursor: pointer;
 }
 
-.language-switcher__list {
+.language-selector-list {
   z-index: 15;
   opacity: 0;
   max-height: 0;
@@ -169,18 +184,18 @@ ul, p {
   box-shadow: var(--theme-shadow);
 }
 
-.language-switcher__item {
+.language-selector-item {
   padding: 10px;
   cursor: pointer;
   transition: background-color var(--transition-normal);
 }
 
-.language-switcher__item:hover {
+.language-selector-item:hover {
   background: var(--theme-color-alpha);
 }
 
 /* 主内容区域 */
-.main {
+.main-content {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -190,7 +205,7 @@ ul, p {
 }
 
 /* 通知提示 */
-.notification-tips {
+.notification-list {
   position: fixed;
   z-index: 20;
   width: 100%;
@@ -198,7 +213,7 @@ ul, p {
   left: 5px;
 }
 
-.notification-tips li {
+.notification-list li {
   height: 45px;
   padding: 4px;
   width: fit-content;
@@ -210,7 +225,7 @@ ul, p {
   box-shadow: 0 2px 5px var(--theme-color-alpha);
 }
 
-.notification-tips li::before {
+.notification-list li::before {
   content: ' ';
   display: inline-block;
   height: 25px;
@@ -219,7 +234,7 @@ ul, p {
   background-size: contain;
 }
 
-.notification-tips li p {
+.notification-list li p {
   height: 25px;
   display: inline-block;
   position: relative;
@@ -229,28 +244,27 @@ ul, p {
   background-color: var(--white);
 }
 
-/* 提示类型样式 */
-.notification-tips li.error {
+.notification-list li.error {
   background: var(--error-color);
 }
 
-.notification-tips li.error::before {
+.notification-list li.error::before {
   background-image: url('Resources/Icons/Error.svg');
 }
 
-.notification-tips li.success {
+.notification-list li.success {
   background: var(--success-color);
 }
 
-.notification-tips li.success::before {
+.notification-list li.success::before {
   background-image: url('Resources/Icons/Success.svg');
 }
 
-.notification-tips li.warning {
+.notification-list li.warning {
   background: var(--warning-color);
 }
 
-.notification-tips li.warning::before {
+.notification-list li.warning::before {
   height: 21px;
   margin: 12px 10px;
   background-size: cover;
@@ -258,7 +272,7 @@ ul, p {
 }
 
 /* 主要内容区块 */
-.generator, .construction {
+.avatar-generator, .under-construction {
   height: 630px;
   width: 400px;
   border-radius: var(--radius-lg);
@@ -268,7 +282,7 @@ ul, p {
 }
 
 /* 标签页切换 */
-.tabs {
+.tab-switcher {
   height: 45px;
   color: var(--theme-color);
   background: var(--theme-color-alpha);
@@ -278,11 +292,11 @@ ul, p {
   padding: 0;
 }
 
-.tabs__input {
+.tab-switcher-input {
   display: none;
 }
 
-.tabs__label {
+.tab-switcher-label {
   z-index: 10;
   line-height: 45px;
   transition: transform var(--transition-normal);
@@ -294,11 +308,11 @@ ul, p {
   position: relative;
 }
 
-.tabs__label:hover {
+.tab-switcher-label:hover {
   transform: scale(1.05);
 }
 
-.tabs__glider {
+.tab-switcher-glider {
   z-index: 5;
   width: 130px;
   height: 45px;
@@ -312,20 +326,20 @@ ul, p {
 }
 
 /* 标签页滑块位置 */
-.tabs #mojang:checked ~ .tabs__glider {
+.tab-switcher #mojang:checked ~ .tab-switcher-glider {
   transform: translateX(0);
 }
 
-.tabs #website:checked ~ .tabs__glider {
+.tab-switcher #website:checked ~ .tab-switcher-glider {
   transform: translateX(132px);
 }
 
-.tabs #upload:checked ~ .tabs__glider {
+.tab-switcher #upload:checked ~ .tab-switcher-glider {
   transform: translateX(270px);
 }
 
 /* 生成器内容区域 */
-.generator__content {
+.generator-content {
   width: 300%;
   display: grid;
   grid-template-columns: var(--grid-3-col);
@@ -348,11 +362,11 @@ ul, p {
 }
 
 /* 文件上传 */
-.file-input {
+.file-upload-input {
   display: none;
 }
 
-.file-input__label {
+.file-upload-label {
   height: 50px;
   width: 85%;
   padding: 10px;
@@ -372,7 +386,7 @@ ul, p {
 }
 
 /* 表单容器 */
-.form-container {
+.form-section {
   gap: 15px;
   width: 85%;
   margin: 20px auto 0;
@@ -385,13 +399,13 @@ ul, p {
   gap: 15px;
 }
 
-.form-fields .input {
+.form-fields .text-input {
   margin: 0;
   width: 100%;
 }
 
 /* 操作区域 */
-.actions {
+.action-list {
   width: 85%;
   margin: 0 auto;
   display: grid;
@@ -404,19 +418,19 @@ ul, p {
   width: 100%; /* 确保宽度填充网格单元格 */
 }
 
-.actions--disabled {
+.action-list-disabled {
   opacity: 0.6;
 }
 
-.actions--disabled button {
+.action-list-disabled button {
   cursor: not-allowed;
 }
 
-.actions__checkbox {
+.action-checkbox {
   display: none;
 }
 
-.actions__label {
+.action-label {
   cursor: pointer;
   height: 35px;
   font-size: 15px;
@@ -430,19 +444,19 @@ ul, p {
   text-align: center;
 }
 
-.actions__label--download {
+.action-label-download {
   color: var(--theme-color);
   background: var(--white);
 }
 
 /* 设置发布作品、分享和上传背景按钮的样式与换背景按钮一致 */
-.actions .btn--primary {
+.action-list .button-primary {
   color: var(--theme-color);
   background: var(--white);
 }
 
 /* 下拉菜单 */
-.dropdown {
+.dropdown-menu {
   position: absolute;
   z-index: 15;
   opacity: 0;
@@ -462,23 +476,23 @@ ul, p {
   margin-top: 10px; /* 添加顶部边距 */
 }
 
-.dropdown__item {
+.dropdown-menu-item {
   padding: 10px;
   cursor: pointer;
   transition: background-color var(--transition-normal);
 }
 
-.dropdown__item:hover {
+.dropdown-menu-item:hover {
   background: var(--theme-color-alpha);
 }
 
-.actions__checkbox:checked ~ .dropdown {
+.action-checkbox:checked ~ .dropdown-menu {
   opacity: 1;
   max-height: 250px;
 }
 
 /* 预览区域 */
-.preview-canvas {
+.avatar-preview-canvas {
   position: relative;
   width: 330px;
   height: 330px;
@@ -490,7 +504,7 @@ ul, p {
 }
 
 /* 加载遮罩 */
-.loading-mask {
+.loading-overlay {
   width: 330px;
   height: 330px;
   border-radius: var(--radius-md);
@@ -507,7 +521,7 @@ ul, p {
   justify-content: center;
 }
 
-.loading-mask::after {
+.loading-overlay::after {
   content: '';
   display: block;
   width: 60px;
@@ -519,7 +533,7 @@ ul, p {
 }
 
 /* 网站皮肤标签页 */
-.tab-panel--website .form-container .actions {
+.tab-panel-website .form-section .action-list {
   margin: 0;
   width: 100%;
   gap: 10px;
@@ -527,25 +541,22 @@ ul, p {
   grid-template-rows: repeat(3, 1fr);
 }
 
-/* 确保网站标签页的下拉菜单不会超出容器边界 */
-.tab-panel--website .action-group {
+.tab-panel-website .action-group {
   position: relative;
   overflow: visible;
 }
 
-.tab-panel--website .dropdown {
+.tab-panel-website .dropdown-menu {
   width: 100%; /* 修改为与父容器同宽 */
   min-width: 100%;
   left: 0;
 }
 
-/* 上传皮肤标签页 */
-.tab-panel--upload .preview-canvas {
+.tab-panel-upload .avatar-preview-canvas {
   margin-top: 20px;
 }
 
-/* 施工中区域 */
-.construction {
+.under-construction {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -554,7 +565,7 @@ ul, p {
 }
 
 /* 页脚 */
-.footer {
+.footer-bar {
   text-align: center;
   box-sizing: border-box;
   height: 80px;
@@ -563,47 +574,20 @@ ul, p {
   background-color: var(--footer-bg);
 }
 
-.footer__text {
+.footer-text {
   margin: 0;
   font-size: 15px;
   line-height: 25px;
 }
 
-.footer__link {
+.footer-link {
   transition: color var(--transition-normal);
 }
 
-.footer__link:hover {
+.footer-link:hover {
   color: var(--footer-hover);
 }
 
-.footer__count {
+.footer-count {
   color: var(--theme-color);
 }
-
-/* 设置下拉菜单相对于父元素定位 */
-.actions__checkbox + label {
-  position: relative;
-}
-
-/* 确保下拉菜单在对应的标签下方 */
-.actions__checkbox ~ .dropdown {
-  position: absolute;
-  left: 0;
-  top: 35px; /* 标签高度 */
-}
-
-/* 确保下拉菜单在小屏幕设备上正确显示 */
-@media (max-width: 480px) {
-  .action-group {
-    position: static;
-  }
-  
-  .dropdown {
-    left: 50%;
-    transform: translateX(-50%);
-    min-width: 120px;
-    width: auto;
-  }
-}
-
