@@ -211,6 +211,7 @@ ul, p {
   width: 100%;
   top: 95px;
   left: 5px;
+  pointer-events: none;
 }
 
 .notification-list li {
