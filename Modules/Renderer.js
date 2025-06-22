@@ -111,10 +111,10 @@ export function renderAvatar(skinImage, avatarType) {
     canvas.width = 1000;
     canvas.height = 1000;
     const context = canvas.getContext('2d');
-    context.shadowColor = 'rgba(75, 85, 142, 0.5)';
+    context.shadowColor = 'rgba(0, 0, 0, 0.2)';
     context.shadowOffsetX = 0;
-    context.shadowOffsetY = 8;
-    context.shadowBlur = 15;
+    context.shadowOffsetY = 0;
+    context.shadowBlur = 10;
 
     // 清空画布
     context.clearRect(0, 0, 1000, 1000);
