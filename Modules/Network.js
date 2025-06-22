@@ -25,7 +25,7 @@ export async function fetchMojangProfile(player) {
  */
 export async function fetchSkinWebsiteProfile(website, player) {
     try {
-        const response = await fetch(`${corsProxy}${website}csl/${player}.json`);
+        const response = await fetch(`${corsProxy}${website}/csl/${player}.json`);
         if (response.ok) return await response.json();
         return null;
     } catch (error) {
