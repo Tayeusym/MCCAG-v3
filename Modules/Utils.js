@@ -19,6 +19,7 @@ export function popupTips(text, type) {
         tips.style.transform = `translateX(-${tips.offsetWidth + 40}px)`;
         setTimeout(() => {
             tips.style.height = '0';
+            tips.style.margin = '0';
             setTimeout(() => tipsContainer.removeChild(tips), 1000);
         }, 1000);
     }, 8000);
@@ -75,14 +76,14 @@ export function handleBackgroundUpload(event, updateCanvas, setCustomBackground)
     }
     
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function(event) {
         const img = new Image();
         img.onload = function() {
             setCustomBackground(img);
             updateCanvas();
             popupTips('背景图片上传成功！', 'success');
         };
-        img.src = e.target.result;
+        img.src = event.target.result;
     };
     reader.readAsDataURL(file);
 }

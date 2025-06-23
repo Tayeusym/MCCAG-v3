@@ -28,11 +28,8 @@ class AppState {
         this.currentAvatarImage.src = 'Resources/Avatars/Keishi.png';
         
         // DOM元素
-        this.tipsContainer = document.querySelector('.notification-list');
         this.content = document.querySelector('.generator-content');
-        this.contentTabs = document.querySelectorAll('.tab-switcher-input');
         this.uploadInput = document.querySelector('.tab-panel-upload .file-upload-input');
-        this.skinWebsiteInput = document.querySelector('.text-input.skin-website');
         this.current = this.content.querySelector('div#active-content');
         this.currentCanvas = this.current.querySelector('canvas');
         
@@ -109,59 +106,52 @@ class AvatarGeneratorApp {
         
         // 文件上传事件
         this.state.uploadInput.addEventListener('change', () => {
-            if (this.state.uploadInput.files && this.state.uploadInput.files[0]) {
-                this.generateUpload();
-            }
+            if (this.state.uploadInput.files && this.state.uploadInput.files[0]) this.generateUpload();
         });
         
         // 头像类型选择事件
         document.querySelectorAll('.dropdown-menu-item[avatar-type]').forEach(item => {
-            item.addEventListener('click', (e) => {
-                const parentId = e.target.closest('.action-list').querySelector('input[type=checkbox]').id;
-                if (parentId.includes('upload')) {
-                    this.generateUpload(e);
-                } else {
-                    this.generate(e);
-                }
+            item.addEventListener('click', event => {
+                const parentId = event.target.closest('.action-list').querySelector('input[type=checkbox]').id;
+                if (parentId.includes('upload')) this.generateUpload(event);
+                else this.generate(event);
                 closeSelections();
             });
         });
         
         // 下载事件
-        document.querySelectorAll('.dropdown-menu-item[download-type]').forEach(item => {
-            item.addEventListener('click', (e) => this.handleDownload(e));
-        });
+        document.querySelectorAll('.dropdown-menu-item[download-type]').forEach(item =>
+            item.addEventListener('click', event => this.handleDownload(event))
+        );
         
         // 标签页切换事件
-        document.querySelectorAll('input.tab-switcher-input').forEach((tab, index) => {
-            tab.addEventListener('change', this.switchContent(index));
-        });
+        document.querySelectorAll('input.tab-switcher-input').forEach((tab, index) =>
+            tab.addEventListener('change', this.switchContent(index))
+        );
         
         // 背景切换事件
-        document.querySelectorAll('.change-background').forEach(button => {
-            button.addEventListener('click', () => this.changeBackground());
-        });
+        document.querySelectorAll('.change-background').forEach(button =>
+            button.addEventListener('click', () => this.changeBackground())
+        );
         
         // 输入验证事件
-        document.querySelectorAll('input.text-input').forEach((input) => {
-            input.addEventListener('input', checkInputValue(/[^a-zA-Z0-9-_.]/g));
-        });
+        document.querySelectorAll('input.text-input').forEach(input =>
+            input.addEventListener('input', checkInputValue(/[^a-zA-Z0-9-_.]/g))
+        );
     }
     
     /**
      * 初始化背景上传器
      */
     initBackgroundUploader() {
-        this.backgroundUploader = createBackgroundUploader((event) => {
-            handleBackgroundUpload(event, () => this.updateCanvas(), (img) => this.state.setCustomBackground(img));
-        });
+        this.backgroundUploader = createBackgroundUploader(event =>
+            handleBackgroundUpload(event, () => this.updateCanvas(), (img) => this.state.setCustomBackground(img))
+        );
         
         // 点击上传背景按钮时触发文件选择
-        document.querySelectorAll('.upload').forEach(button => {
-            button.addEventListener('click', () => {
-                this.backgroundUploader.click();
-            });
-        });
+        document.querySelectorAll('.upload').forEach(button =>
+            button.addEventListener('click', () => this.backgroundUploader.click())
+        );
     }
     
     /**
