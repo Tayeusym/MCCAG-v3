@@ -1,33 +1,13 @@
-# MCCAG 2.5.1
+<div align="center">
 
-## 项目简介
+# 🥰 MCCAG Website
 
-MCCAG (Minecraft Cute Avatar Generator) 是一个专门用于生成 Minecraft 风格可爱头像的在线工具。这是项目的前端部分，采用纯静态网页实现，具有良好的响应式设计和用户体验。
+<img src="https://github.com/Natsusomekeishi/MCCAG/blob/main/static/logo.png" alt="MCCAG Logo">
 
-## 功能特点
+_Minecraft Cute Avatar Generator_  
+_MC可爱头像生成器_
 
-- 🎨 简洁优雅的用户界面
-- 🌐 多语言支持
-- 📱 响应式设计，支持各种设备
-- 🎯 直观的操作方式
-- 🖼️ 高质量头像生成
+</div>
 
-## 目录结构
-
-```
-Website-main/
-├── Index.css        # 样式表文件
-├── Index.html       # 主页面
-├── Index.js         # 主要逻辑
-├── Translations.js  # 多语言支持
-└── Resources/       # 资源文件
-    ├── Avatars/     # 头像资源
-    ├── Icons/       # 界面图标
-    ├── Font.ttf     # 字体文件
-    └── Logo.png     # 项目标志
-```
-
-## 开发团队
-
-- [Lonely-Sails](https://github.com/Lonely-Sails) - v2项目核心开发者
-- [Keishi](https://github.com/Natsusomekeishi) - 项目原开发者、UI设计、v2部分功能开发者
+> [!NOTE]
+> 此项目并非本人原创，思路来自 [Natsusomekeishi/MCCAG](https://github.com/Natsusomekeishi/MCCAG)
