@@ -1,5 +1,7 @@
 // 国际化模块
 
+import { request } from './Network.js';
+
 const translations = {
     'zh': {
         'language_name': '汉语',
@@ -189,10 +191,8 @@ const translations = {
     }
 }; 
 
-
 // 语言支持相关
-let currentLang = localStorage.getItem('lang') || 'zh';
-document.documentElement.lang = currentLang === 'jp' ? 'ja' : currentLang;
+let currentLang = 'zh';
 
 /**
  * 应用翻译
@@ -247,7 +247,16 @@ export function initLanguageEvents() {
 /**
  * 初始化语言支持
  */
-export function initI18n() {
-    applyTranslation(currentLang);
-    initLanguageEvents();
+export async function initI18n() {
+    // 请求ip归属地，设置语言
+    try {
+        const data = await request('https://ipapi.co/json/');
+        currentLang = data?.languages?.toLowerCase().split('-')[0] || 'zh';
+        document.documentElement.lang = currentLang === 'jp' ? 'ja' : currentLang;
+    } catch (error) {
+        console.error('获取IP归属地失败，使用默认语言：zh', error);
+    } finally {
+        applyTranslation(currentLang);
+        initLanguageEvents();
+    }
 } 

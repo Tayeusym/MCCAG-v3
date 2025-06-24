@@ -97,24 +97,15 @@ export function renderAvatar(skinImage, avatarType) {
     const skinSize = [skinImage.width, skinImage.height];
 
     // 调整皮肤图像尺寸
-    const resizedCanvas = document.createElement('canvas');
-    const resizedContext = resizedCanvas.getContext('2d');
-    if (skinSize[0] === 64 && skinSize[1] === 32) {
-        resizedCanvas.width = 128;
-        resizedCanvas.height = 64;
-    } else {
-        resizedCanvas.width = 128;
-        resizedCanvas.height = 128;
-    }
-    resizedContext.imageSmoothingEnabled = false;
+    const resizedSize = (skinSize[0] === 64 && skinSize[1] === 32) ? [128, 64] : [128, 128];
     // 修正缩放参数顺序，使其与Python一致：将原图缩放到目标尺寸
-    resizedContext.drawImage(skinImage, 0, 0, skinSize[0], skinSize[1], 0, 0, resizedCanvas.width, resizedCanvas.height);
+    skinImage = processImage(skinImage, 0, 0, ...skinSize, ...resizedSize);
 
     // 获取操作列表
     const operations = getOperations(avatarType, skinSize);
 
     // 执行渲染操作
-    for (const operation of operations) operate(context, resizedCanvas, ...operation);
+    for (const operation of operations) operate(context, skinImage, ...operation);
 
     // 如果是big_head类型，进行特殊处理
     if (avatarType === 'big_head') {
