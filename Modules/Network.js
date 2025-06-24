@@ -5,7 +5,7 @@ const corsProxy = 'https://proxy.mccag.cn/?url=';
 export async function request(url, cors = true, max = 3, count = 0) {
     try {
         if (count >= max) throw new Error(`请求失败超过最大重试次数！`);
-        const response = await fetch(cors ? url : corsProxy + url);
+        const response = await fetch(cors ? corsProxy + url : url);
         if (response.ok) return await response.json();
         console.warn(`网络请求失败（第 ${count} 次尝试）：`, response.status, response.statusText);
     } catch (error) {

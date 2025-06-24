@@ -192,7 +192,7 @@ const translations = {
 }; 
 
 // 语言支持相关
-let currentLang = 'zh';
+let currentLang = localStorage.getItem('language');
 
 /**
  * 应用翻译
@@ -238,6 +238,7 @@ export function initLanguageEvents() {
         item.addEventListener('click', function(event) {
             event.preventDefault();
             const lang = this.getAttribute('data-lang');
+            localStorage.setItem('language', lang);
             applyTranslation(lang);
             document.getElementById('language-switch').checked = false;
         });
@@ -249,14 +250,19 @@ export function initLanguageEvents() {
  */
 export async function initI18n() {
     // 请求ip归属地，设置语言
+    initLanguageEvents();
+    if (currentLang) {
+        applyTranslation(currentLang);
+        return;
+    }
     try {
-        const data = await request('https://ipapi.co/json/');
-        currentLang = data?.languages?.toLowerCase().split('-')[0] || 'zh';
+        const data = await request('https://ipapi.co/json/', false);
+        currentLang = data?.languages?.split('-')[0];
         document.documentElement.lang = currentLang === 'jp' ? 'ja' : currentLang;
+        if (currentLang) localStorage.setItem('language', currentLang);
+        else currentLang = 'zh';
+        applyTranslation(currentLang);
     } catch (error) {
         console.error('获取IP归属地失败，使用默认语言：zh', error);
-    } finally {
-        applyTranslation(currentLang);
-        initLanguageEvents();
     }
 } 
