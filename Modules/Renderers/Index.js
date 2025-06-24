@@ -1,37 +1,6 @@
-import { processImage } from './Utils.js';
-
 // 渲染模块
-const operationData = {
-    'head': [
-        [[16, 16, 16, 16], 37.5, [200, 200]],
-        [[80, 16, 16, 16], 41, [175, 175]]
-    ],
-    'full': {
-        '1.7': [
-            [[8, 40, 8, 24], 8.375, [434, 751]],
-            [[8, 40, 8, 24], 8.375, [505, 751], true],
-            [[86, 40, 6, 24], 8.167, [388, 561]],
-            [[86, 40, 6, 24], 8.167, [566, 561], true],
-            [[40, 40, 16, 24], 8.0625, [437, 561]],
-            [[16, 16, 16, 16], 26.875, [287, 131]],
-            [[80, 16, 16, 16], 30.8125, [254, 107]]
-        ],
-        '1.8': [
-            [[8, 40, 8, 24], 8.375, [434, 751]],
-            [[8, 72, 8, 24], 9.375, [428, 737]],
-            [[40, 104, 8, 24], 8.375, [505, 751]],
-            [[8, 104, 8, 24], 9.375, [503, 737]],
-            [[86, 40, 6, 24], 8.167, [388, 561]],
-            [[88, 72, 6, 24], 9.5, [382, 538]],
-            [[74, 104, 6, 24], 8.167, [566, 561]],
-            [[104, 104, 6, 24], 9.5, [564, 538]],
-            [[40, 40, 16, 24], 8.0625, [437, 561]],
-            [[40, 72, 16, 24], 8.6575, [432, 555]],
-            [[16, 16, 16, 16], 26.875, [287, 131]],
-            [[80, 16, 16, 16], 30.8125, [254, 107]]
-        ]
-    }
-};
+import { processImage } from './Utils.js';
+import { operationData } from './Data.js';
 
 /**
  * 根据头像类型和皮肤尺寸获取操作列表
@@ -59,7 +28,7 @@ function getOperations(avatarType, skinSize) {
  * @param {Array} pastePosition - 粘贴位置 [x, y]
  * @param {boolean} mirror - 是否镜像
  */
-function operate(mainContext, skinCanvas, cropBox, scaleFactor, pastePosition, mirror) {
+function operate(mainContext, skinCanvas, cropBox, mirror, scaleFactor, pastePosition) {
     const [pasteX, pasteY] = pastePosition;
     const [cropX, cropY, cropWidth, cropHeight] = cropBox;
 

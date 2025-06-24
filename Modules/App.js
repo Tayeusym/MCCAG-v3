@@ -271,6 +271,7 @@ class AvatarGeneratorApp {
             } else {
                 // Mojang模式
                 const profile = await fetchMojangProfile(input.value);
+                console.log(profile);
                 if (!profile) throw new Error('未找到该玩家的信息！');
                 skinUrl = `https://crafatar.com/skins/${profile.id}`;
             }
