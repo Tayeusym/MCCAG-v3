@@ -16,7 +16,7 @@ import {
 } from './Utils.js';
 
 import { initI18n } from './I18n.js';
-import { renderAvatar } from './Renderer.js';
+import { renderAvatar } from './Renderers/Index.js';
 
 
 // 应用状态

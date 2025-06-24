@@ -1,3 +1,5 @@
+import { processImage } from './Utils.js';
+
 // 渲染模块
 const operationData = {
     'head': [
@@ -57,47 +59,19 @@ function getOperations(avatarType, skinSize) {
  * @param {Array} pastePosition - 粘贴位置 [x, y]
  * @param {boolean} mirror - 是否镜像
  */
-function processImagePart(mainContext, skinCanvas, cropBox, scaleFactor, pastePosition, mirror) {
+function operate(mainContext, skinCanvas, cropBox, scaleFactor, pastePosition, mirror) {
     const [pasteX, pasteY] = pastePosition;
     const [cropX, cropY, cropWidth, cropHeight] = cropBox;
 
-    // 缩放裁剪的部分
-    const scaledWidth = cropWidth * scaleFactor;
-    const scaledHeight = cropHeight * scaleFactor;
-
-    // 创建带边框的画布（与Python版本保持一致）
-    const borderedWidth = scaledWidth + 30;
-    const borderedHeight = scaledHeight + 30;
-    const borderedCanvas = document.createElement('canvas');
-    borderedCanvas.width = borderedWidth;
-    borderedCanvas.height = borderedHeight;
-    const borderedContext = borderedCanvas.getContext('2d');
-    borderedContext.imageSmoothingEnabled = false;
-
-    // 创建一个临时画布用于裁剪和可选的镜像
-    const cropCanvas = document.createElement('canvas');
-    cropCanvas.width = scaledWidth;
-    cropCanvas.height = scaledHeight;
-    const cropContext = cropCanvas.getContext('2d');
-    cropContext.imageSmoothingEnabled = false;
-
-    if (mirror) {
-        cropContext.translate(scaledWidth, 0);
-        cropContext.scale(-1, 1);
-    }
-
-    cropContext.drawImage(
-        skinCanvas,
-        cropX, cropY, cropWidth, cropHeight, 0, 0, scaledWidth, scaledHeight
+    // 处理图片
+    const canvas = processImage(
+        skinCanvas, cropX, cropY, cropWidth, cropHeight,
+        cropWidth * scaleFactor, cropHeight * scaleFactor, mirror || false
     );
 
     // 将裁剪的图像粘贴到带边框的画布中（15像素内边距）
-    borderedContext.drawImage(cropCanvas, 15, 15);
-
     // 在主上下文中绘制带边框的图像（调整粘贴位置）
-    const adjustedPasteX = pasteX - 15;
-    const adjustedPasteY = pasteY - 15;
-    mainContext.drawImage(borderedCanvas, adjustedPasteX, adjustedPasteY);
+    mainContext.drawImage(canvas, pasteX, pasteY);
 }
 
 /**
@@ -140,7 +114,7 @@ export function renderAvatar(skinImage, avatarType) {
     const operations = getOperations(avatarType, skinSize);
 
     // 执行渲染操作
-    for (const operation of operations) processImagePart(context, resizedCanvas, ...operation);
+    for (const operation of operations) operate(context, resizedCanvas, ...operation);
 
     // 如果是big_head类型，进行特殊处理
     if (avatarType === 'big_head') {
