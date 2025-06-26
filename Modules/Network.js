@@ -10,8 +10,8 @@ export async function request(url, cors = true, max = 3, count = 0) {
     } catch (error) {
         console.error(`网络请求失败（第 ${count} 次尝试）：`, error);
     }
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return request(url, max, count + 1);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    return request(url, cors, max, count + 1);
 }
 
 /**
