@@ -54,11 +54,11 @@
         
         <section class="avatar-generator">
             <div class="tab-switcher">
-                <input type="radio" id="mojang" name="tabs" checked="" class="hidden">
+                <input type="radio" id="mojang" name="tabs" checked="" class="hidden tab-switcher-input">
                 <label for="mojang" data-i18n="tab_mojang" class="tab-switcher-label">正版 ID</label>
-                <input type="radio" id="website" name="tabs" class="hidden">
+                <input type="radio" id="website" name="tabs" class="hidden tab-switcher-input">
                 <label for="website" data-i18n="tab_website" class="tab-switcher-label">皮肤站</label>
-                <input type="radio" id="upload" name="tabs" class="hidden">
+                <input type="radio" id="upload" name="tabs" class="hidden tab-switcher-input">
                 <label for="upload" data-i18n="tab_upload" class="tab-switcher-label">上传皮肤</label>
                 <span class="tab-switcher-glider"></span>
             </div>
@@ -67,7 +67,7 @@
                     <input type="text" placeholder="请输入正版 ID" data-i18n-placeholder="placeholder_id" class="text-input player-name">
                     <div class="action-list">
                         <div class="action-group">
-                            <input id="generate-mojang" type="checkbox" class="hidden">
+                            <input id="generate-mojang" type="checkbox" class="hidden action-checkbox">
                             <label for="generate-mojang" data-i18n="btn_generate" class="action-label">生成</label>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-menu-item" avatar-option="full" data-i18n="avatar_full">全身照</li>
@@ -77,7 +77,7 @@
                         </div>
                         <button class="button button-secondary change-background" data-i18n="btn_change_bg">换背景</button>
                         <div class="action-group">
-                            <input id="download-mojang" type="checkbox" class="hidden">
+                            <input id="download-mojang" type="checkbox" class="hidden action-checkbox">
                             <label for="download-mojang" data-i18n="btn_download" class="action-label action-label-download">下载</label>
                             <ul class="dropdown-menu download-options">
                                 <li class="dropdown-menu-item" download-type="with-bg" data-i18n="download_with_bg">保留背景</li>
@@ -101,7 +101,7 @@
                         </div>
                         <div class="action-list">
                             <div class="action-group">
-                                <input id="generate-website" type="checkbox" class="hidden">
+                                <input id="generate-website" type="checkbox" class="hidden action-checkbox">
                                 <label for="generate-website" data-i18n="btn_generate" class="action-label">生成</label>
                                 <ul class="dropdown-menu">
                                     <li class="dropdown-menu-item" avatar-option="full" data-i18n="avatar_full">全身照</li>
@@ -111,7 +111,7 @@
                             </div>
                             <button class="button button-secondary change-background" data-i18n="btn_change_bg">换背景</button>
                             <div class="action-group">
-                                <input id="download-website" type="checkbox" class="hidden">
+                                <input id="download-website" type="checkbox" class="hidden action-checkbox">
                                 <label for="download-website" data-i18n="btn_download" class="action-label action-label-download">下载</label>
                                 <ul class="dropdown-menu download-options">
                                     <li class="dropdown-menu-item" download-type="with-bg" data-i18n="download_with_bg">保留背景</li>
@@ -133,7 +133,7 @@
                     <label for="upload-file" data-i18n="click_upload" class="file-upload-label">点击上传</label>
                     <div class="action-list">
                         <div class="action-group">
-                            <input id="generate-upload" type="checkbox" class="hidden">
+                            <input id="generate-upload" type="checkbox" class="hidden action-checkbox">
                             <label for="generate-upload" data-i18n="btn_generate" class="action-label">生成</label>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-menu-item" avatar-option="full" data-i18n="avatar_full">全身照</li>
@@ -143,7 +143,7 @@
                         </div>
                         <button class="button button-secondary change-background" data-i18n="btn_change_bg">换背景</button>
                         <div class="action-group">
-                            <input id="download-upload" type="checkbox" class="hidden">
+                            <input id="download-upload" type="checkbox" class="hidden action-checkbox">
                             <label for="download-upload" data-i18n="btn_download" class="action-label action-label-download">下载</label>
                             <ul class="dropdown-menu download-options">
                                 <li class="dropdown-menu-item" download-type="with-bg" data-i18n="download_with_bg">保留背景</li>
