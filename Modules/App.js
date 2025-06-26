@@ -113,7 +113,7 @@ class AvatarGeneratorApp {
         });
         
         // 头像类型选择事件
-        document.querySelectorAll('.dropdown-menu-item[avatar-option]').forEach(item => {
+        document.querySelectorAll('li[avatar-option]').forEach(item => {
             item.addEventListener('click', event => {
                 if (this.state.currentMethod == 'upload') this.generateUpload(event);
                 else this.generate(event);
@@ -137,7 +137,7 @@ class AvatarGeneratorApp {
         );
         
         // 背景切换事件
-        document.querySelectorAll('.change-background').forEach(button =>
+        document.querySelectorAll('button.change-background').forEach(button =>
             button.addEventListener('click', () => this.changeBackground())
         );
         
@@ -145,6 +145,15 @@ class AvatarGeneratorApp {
         document.querySelectorAll('input.text-input').forEach(input =>
             input.addEventListener('input', checkInputValue(/[^a-zA-Z0-9-_.]/g))
         );
+
+        document.querySelectorAll('label.generate').forEach(button => 
+            button.addEventListener('click', event => {
+                if (this.state.avatarType === 'normal') return;
+                event.preventDefault();
+                if (this.state.currentMethod == 'upload') this.generateUpload(event);
+                else this.generate(event);
+            })
+        )
     }
     
     /**
@@ -227,9 +236,7 @@ class AvatarGeneratorApp {
                 gradient.addColorStop(0, colors[0]);
                 gradient.addColorStop(1, colors[1]);
                 context.fillStyle = gradient;
-            } else {
-                context.fillStyle = background;
-            }
+            } else context.fillStyle = background;
             context.fillRect(0, 0, 1000, 1000);
         }
         

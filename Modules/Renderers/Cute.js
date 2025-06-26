@@ -10,12 +10,6 @@ const SCALE = 20; // 人像在输出画布上的缩放倍数（影响人像整�
 const VIGNETTE_INTENSITY = 5; // 暗角（四周黑色渐变）强度，0为无，100为最强
 const ALPHA_THRESHOLD = 128; // 判断像素是否为“非透明”的阈值（0-255），用于主色提取等
 
-// 直接用processImage提取切片
-function extractSlice(image, cropBox, mirror = false) {
-    const [x, y, w, h] = cropBox;
-    return processImage(image, x, y, w, h, null, null, mirror, false);
-}
-
 // 直接用processImage缩放
 function scaleCanvas(sourceCanvas, targetWidth, targetHeight) {
     return processImage(sourceCanvas, 0, 0, sourceCanvas.width, sourceCanvas.height, targetWidth, targetHeight, false, false);
@@ -34,41 +28,51 @@ function layerSlices(bottomSlice, topSlice) {
 }
 
 // 主色提取
-function getDominantColor(canvas, x = 0, y = 0, w = null, h = null) {
-    const context = canvas.getContext('2d');
-    w = w || canvas.width;
-    h = h || canvas.height;
-    const imageData = context.getImageData(x, y, w, h);
+function getDominantColor(canvas, x = 0, y = 0, width = null, height = null) {
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    width = width ?? canvas.width;
+    height = height ?? canvas.height;
+    
+    const imageData = ctx.getImageData(x, y, width, height);
     const data = imageData.data;
-    const colorCount = {};
+    
+    // 使用 Map 替代对象，提高大数据量性能
+    const colorFrequency = new Map();
+    let maxCount = 0;
+    let dominantR = 0, dominantG = 0, dominantB = 0;
+
     for (let index = 0; index < data.length; index += 4) {
         const alpha = data[index + 3];
-        if (alpha > ALPHA_THRESHOLD) {
-            const r = data[index];
-            const g = data[index + 1];
-            const b = data[index + 2];
-            const color = `${r},${g},${b}`;
-            colorCount[color] = (colorCount[color] || 0) + 1;
-        }
-    }
-    let maxCount = 0;
-    let dominantColor = '0,0,0';
-    for (const [color, count] of Object.entries(colorCount)) {
+        if (alpha <= ALPHA_THRESHOLD) continue;
+
+        const r = data[index];
+        const g = data[index + 1];
+        const b = data[index + 2];
+        
+        // 使用整数键代替字符串，提高性能
+        const colorKey = (r << 16) | (g << 8) | b;
+        
+        // 更新频率计数
+        const count = (colorFrequency.get(colorKey) ?? 0) + 1;
+        colorFrequency.set(colorKey, count);
+        
+        // 实时更新主导色，避免二次遍历
         if (count > maxCount) {
             maxCount = count;
-            dominantColor = color;
+            dominantR = r;
+            dominantG = g;
+            dominantB = b;
         }
     }
-    const [r, g, b] = dominantColor.split(',').map(Number);
-    return { r, g, b };
+    return { r: dominantR, g: dominantG, b: dominantB };
 }
 
 // 填充canvas区域为主色
-function fillCanvasRegion(canvas, color, x = 0, y = 0, w = null, h = null) {
+function fillCanvasRegion(canvas, color, x = 0, y = 0, width = null, height = null) {
     const context = canvas.getContext('2d');
-    w = w || canvas.width;
-    h = h || canvas.height;
-    const imageData = context.getImageData(x, y, w, h);
+    width = width || canvas.width;
+    height = height || canvas.height;
+    const imageData = context.getImageData(x, y, width, height);
     const data = imageData.data;
     for (let i = 0; i < data.length; i += 4) {
         const a = data[i + 3];
@@ -169,51 +173,48 @@ function drawVignette(context, width, height, intensity) {
 
 export function renderAvatar(skinImage) {
     // 1. 放大原图
-    const scaledImage = preprecessSkinImage(skinImage);
-
+    skinImage = preprecessSkinImage(skinImage);
     // 2. 判断皮肤类型
-    const isNewSkin = scaledImage.height === 128;
-    const skinType = isNewSkin ? 'new' : 'old';
-    const config = skinData[skinType];
-
+    const skinType = skinImage.height === 128 ? 'new' : 'old';
+    const opreationData = skinData[skinType];
     // 3. 提取所有切片
     const slices = {};
-    for (const name in config) {
-        const { cropBox, mirror } = config[name];
-        slices[name] = extractSlice(scaledImage, cropBox, mirror);
+    for (const name in opreationData) {
+        const { cropBox, mirror } = opreationData[name];
+        slices[name] = processImage(skinImage, ...cropBox, null, null, mirror);
     }
 
     // 4. 合并分层和处理各部分（直接在切片canvas上处理，减少canvas创建）
-    const head = config.headOuter
+    const head = opreationData.headOuter
         ? layerSlices(slices.head, slices.headOuter)
         : slices.head;
     const headScaled = scaleCanvas(head, 16, 16);
 
-    const torsoLayered = config.torsoOuter
+    const torsoLayered = opreationData.torsoOuter
         ? layerSlices(slices.torso, slices.torsoOuter)
         : slices.torso;
     processTorso(torsoLayered);
     const torso = scaleCanvas(torsoLayered, 4, 6);
 
-    const leftArmLayered = config.leftArmOuter && slices.leftArmOuter
+    const leftArmLayered = opreationData.leftArmOuter && slices.leftArmOuter
         ? layerSlices(slices.leftArm, slices.leftArmOuter)
         : slices.leftArm;
     processArm(leftArmLayered);
     const leftArm = scaleCanvas(leftArmLayered, 2, 4);
 
-    const rightArmLayered = config.rightArmOuter && slices.rightArmOuter
+    const rightArmLayered = opreationData.rightArmOuter && slices.rightArmOuter
         ? layerSlices(slices.rightArm, slices.rightArmOuter)
         : slices.rightArm;
     processArm(rightArmLayered);
     const rightArm = scaleCanvas(rightArmLayered, 2, 4);
 
-    const leftLegLayered = config.leftLegOuter && slices.leftLegOuter
+    const leftLegLayered = opreationData.leftLegOuter && slices.leftLegOuter
         ? layerSlices(slices.leftLeg, slices.leftLegOuter)
         : slices.leftLeg;
     processLeg(leftLegLayered);
     const leftLeg = scaleCanvas(leftLegLayered, 2, 2);
 
-    const rightLegLayered = config.rightLegOuter && slices.rightLegOuter
+    const rightLegLayered = opreationData.rightLegOuter && slices.rightLegOuter
         ? layerSlices(slices.rightLeg, slices.rightLegOuter)
         : slices.rightLeg;
     processLeg(rightLegLayered);
@@ -233,7 +234,6 @@ export function renderAvatar(skinImage) {
     const headHeight = headScaled.height;
     const torsoWidth = torso.width;
     const torsoHeight = torso.height;
-    const armWidth = Math.max(leftArm.width, rightArm.width);
     const armHeight = Math.max(leftArm.height, rightArm.height);
     const legsWidth = legs.width;
     const legsHeight = legs.height;

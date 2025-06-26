@@ -56,7 +56,3 @@ export const normalOperationData = {
         ]
     }
 };
-
-export const cuteOperationData = {
-    
-}
