@@ -24,9 +24,9 @@ class AppState {
     constructor() {
         this.customBackground = null;
         this.currentBackgroundIndex = 0;
-        this.currentMethod = 'normal';
+        this.currentMethod = 'mojang';
         this.currentAvatarImage = new Image();
-        this.currentAvatarImage.src = 'Resources/Avatars/Keishi.png';
+        this.currentAvatarImage.src = 'Resources/Avatars/Normal.png';
 
         this.avatarType = 'normal';
         
@@ -108,14 +108,14 @@ class AvatarGeneratorApp {
         
         // 文件上传事件
         this.state.uploadInput.addEventListener('change', () => {
-            if (this.state.uploadInput.files && this.state.uploadInput.files[0]) this.generateUpload();
+            if (this.state.uploadInput.files && this.state.uploadInput.files[0]) popupTips('成功选择皮肤文件！', 'success');
+            else popupTips('未选择任何文件！', 'warning');
         });
         
         // 头像类型选择事件
         document.querySelectorAll('.dropdown-menu-item[avatar-option]').forEach(item => {
             item.addEventListener('click', event => {
-                const parentId = event.target.closest('.action-list').querySelector('input[type=checkbox]').id;
-                if (parentId.includes('upload')) this.generateUpload(event);
+                if (this.state.currentMethod == 'upload') this.generateUpload(event);
                 else this.generate(event);
                 closeSelections();
             });
@@ -127,8 +127,13 @@ class AvatarGeneratorApp {
         );
         
         // 标签页切换事件
-        document.querySelectorAll('input.tab-switcher-input').forEach((tab, index) =>
-            tab.addEventListener('change', this.switchContent(index))
+        document.querySelectorAll('input[name=tabs]').forEach((tab, index) =>
+            tab.addEventListener('change', this.switchPanel(index))
+        );
+
+        // 头像类型切换事件
+        document.querySelectorAll('input[name=model-type]').forEach(button =>
+            button.addEventListener('click', event => this.switchAvatarType(event))
         );
         
         // 背景切换事件
@@ -155,11 +160,21 @@ class AvatarGeneratorApp {
             button.addEventListener('click', () => this.backgroundUploader.click())
         );
     }
+
+    switchAvatarType(event) {
+        const avatarType = event.target.id;
+        if (this.state.avatarType === avatarType) return;
+        const avatarTypeName = avatarType.charAt(0).toUpperCase() + avatarType.slice(1);
+        this.state.avatarType = avatarType;
+        this.state.currentAvatarImage.src = `Resources/Avatars/${avatarTypeName}.png`;
+        this.updateCanvas();
+        popupTips(`已切换到 ${avatarTypeName} 头像类型！`, 'success');
+    }
     
     /**
      * 切换内容面板
      */
-    switchContent(index) {
+    switchPanel(index) {
         const transform = index * 400;
         return event => {
             this.state.current.id = '';
