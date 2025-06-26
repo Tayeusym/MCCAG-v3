@@ -15,7 +15,6 @@ export function applyTranslation(lang) {
     if (!translations[lang]) return;
     
     currentLang = lang;
-    localStorage.setItem('lang', lang);
     document.documentElement.lang = lang === 'jp' ? 'ja' : lang;
     
     // 更新页面标题

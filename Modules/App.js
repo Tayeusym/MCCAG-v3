@@ -32,6 +32,12 @@ class AppState {
         this.uploadInput = document.querySelector('.tab-panel-upload .file-upload-input');
         this.current = this.content.querySelector('div#active-content');
         this.currentCanvas = this.current.querySelector('canvas');
+        this.avatarType = localStorage.getItem('avatar_type');
+        if (!this.avatarType) {
+            this.avatarType = 'normal';
+            localStorage.setItem('avatar_type', 'normal');
+        }
+
         
         // 背景预设
         this.backgrounds = [
@@ -207,12 +213,12 @@ class AvatarGeneratorApp {
         // 绘制背景
         if (this.state.customBackground) {
             // 如果有自定义背景，绘制自定义背景
-            const imgRatio = this.state.customBackground.width / this.state.customBackground.height;
+            const imageRatio = this.state.customBackground.width / this.state.customBackground.height;
             const canvasRatio = this.state.currentCanvas.width / this.state.currentCanvas.height;
             
             let drawWidth, drawHeight, offsetX, offsetY;
             
-            if (imgRatio > canvasRatio) {
+            if (imageRatio > canvasRatio) {
                 drawHeight = this.state.currentCanvas.height;
                 drawWidth = this.state.customBackground.width * (drawHeight / this.state.customBackground.height);
                 offsetX = (this.state.currentCanvas.width - drawWidth) / 2;
@@ -248,8 +254,8 @@ class AvatarGeneratorApp {
      * 生成头像（Mojang/皮肤站）
      */
     async generate(event) {
+        const avatarOption = event.target.getAttribute('avatar-option');
         const input = this.state.current.querySelector('input.player-name');
-        const avatarType = event.target.getAttribute('avatar-type');
         
         if (!input.value) return popupTips('请输入用户名！', 'warning');
         if (this.state.current.classList.contains('tab-panel-website') && !this.state.skinWebsiteInput.value) {
@@ -281,7 +287,7 @@ class AvatarGeneratorApp {
             skinImage.crossOrigin = 'anonymous';
             skinImage.onload = () => {
                 // 渲染头像
-                const renderedCanvas = renderAvatar(skinImage, avatarType);
+                const renderedCanvas = renderAvatar(skinImage, this.state.avatarType, avatarOption);
                 
                 // 更新当前头像
                 this.state.currentAvatarImage.src = renderedCanvas.toDataURL('image/png');
@@ -312,7 +318,7 @@ class AvatarGeneratorApp {
             return popupTips('请先上传皮肤！', 'warning');
         }
         
-        const avatarType = event ? event.target.getAttribute('avatar-type') || 'full' : 'full';
+        const avatarOption = event.target.getAttribute('avatar-option');
         const mask = this.state.current.querySelector('.loading-overlay');
         mask.style.opacity = 1;
         
@@ -322,7 +328,7 @@ class AvatarGeneratorApp {
             
             skinImage.onload = () => {
                 // 渲染头像
-                const renderedCanvas = renderAvatar(skinImage, avatarType);
+                const renderedCanvas = renderAvatar(skinImag, this.state.avatarType, avatarOption);
                 
                 // 更新当前头像
                 this.state.currentAvatarImage.src = renderedCanvas.toDataURL('image/png');
@@ -339,8 +345,8 @@ class AvatarGeneratorApp {
             skinImage.src = URL.createObjectURL(file);
             
         } catch (error) {
-            console.error('生成头像失败:', error);
             mask.style.opacity = 0;
+            console.error('生成头像失败:', error);
             popupTips('生成头像失败！', 'error');
         }
     }

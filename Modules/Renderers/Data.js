@@ -31,7 +31,7 @@ export const operationData = {
         [skinData.new.headOuter.cropBox, skinData.new.headOuter.mirror, 41, [175, 175]]
     ],
     full: {
-        '1.7': [
+        old: [
             [skinData.old.rightLeg.cropBox, skinData.old.rightLeg.mirror, 8.375, [434, 751]],
             [skinData.old.leftLeg.cropBox, skinData.old.leftLeg.mirror, 8.375, [505, 751]],
             [skinData.old.rightArm.cropBox, skinData.old.rightArm.mirror, 8.167, [388, 561]],
@@ -40,7 +40,7 @@ export const operationData = {
             [skinData.old.head.cropBox, skinData.old.head.mirror, 26.875, [287, 131]],
             [skinData.old.headOuter.cropBox, skinData.old.headOuter.mirror, 30.8125, [254, 107]]
         ],
-        '1.8': [
+        new: [
             [skinData.new.rightLeg.cropBox, skinData.new.rightLeg.mirror, 8.375, [434, 751]],
             [skinData.new.rightLegOuter.cropBox, skinData.new.rightLegOuter.mirror, 9.375, [428, 737]],
             [skinData.new.leftLeg.cropBox, skinData.new.leftLeg.mirror, 8.375, [505, 751]],
