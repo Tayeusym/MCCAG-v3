@@ -459,20 +459,19 @@ input[name='model-type']:checked + .model-selector-label {
   margin: 0 auto;
   display: grid;
   gap: 15px;
-  grid-template-columns: var(--grid-3-col);
+}
+
+.action-list[columns='2'] {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.action-list[columns='3'] {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .action-group {
   position: relative;
   width: 100%; /* 确保宽度填充网格单元格 */
-}
-
-.action-list-disabled {
-  opacity: 0.6;
-}
-
-.action-list-disabled button {
-  cursor: not-allowed;
 }
 
 .action-checkbox {

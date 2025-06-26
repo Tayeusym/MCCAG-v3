@@ -22,21 +22,19 @@ import { renderAvatar } from './Renderers/Index.js';
 // 应用状态
 class AppState {
     constructor() {
-        this.currentBackground = 0;
         this.customBackground = null;
+        this.currentBackgroundIndex = 0;
+        this.currentMethod = 'normal';
         this.currentAvatarImage = new Image();
         this.currentAvatarImage.src = 'Resources/Avatars/Keishi.png';
+
+        this.avatarType = 'normal';
         
         // DOM元素
         this.content = document.querySelector('.generator-content');
         this.uploadInput = document.querySelector('.tab-panel-upload .file-upload-input');
         this.current = this.content.querySelector('div#active-content');
         this.currentCanvas = this.current.querySelector('canvas');
-        this.avatarType = localStorage.getItem('avatar_type');
-        if (!this.avatarType) {
-            this.avatarType = 'normal';
-            localStorage.setItem('avatar_type', 'normal');
-        }
 
         
         // 背景预设
@@ -55,17 +53,17 @@ class AppState {
     }
     
     getCurrentBackground() {
-        return this.backgrounds[this.currentBackground];
+        return this.backgrounds[this.currentBackgroundIndex];
     }
     
     nextBackground() {
         if (this.customBackground) {
             this.customBackground = null;
-            this.currentBackground = 0;
+            this.currentBackgroundIndex = 0;
         } else {
-            this.currentBackground += 1;
-            if (this.currentBackground >= this.backgrounds.length) {
-                this.currentBackground = 0;
+            this.currentBackgroundIndex += 1;
+            if (this.currentBackgroundIndex >= this.backgrounds.length) {
+                this.currentBackgroundIndex = 0;
             }
         }
     }
@@ -90,8 +88,6 @@ class AvatarGeneratorApp {
             this.initEventListeners();
             // 初始化背景上传器
             this.initBackgroundUploader();
-            // 初始化UI
-            this.initUI();
             
             console.log('应用初始化完成');
         } catch (error) {
@@ -126,7 +122,7 @@ class AvatarGeneratorApp {
         });
         
         // 下载事件
-        document.querySelectorAll('.dropdown-menu-item[download-type]').forEach(item =>
+        document.querySelectorAll('button[download-type]').forEach(item =>
             item.addEventListener('click', event => this.handleDownload(event))
         );
         
@@ -161,44 +157,20 @@ class AvatarGeneratorApp {
     }
     
     /**
-     * 初始化UI
-     */
-    initUI() {
-        // 启用底部上传按钮
-        document.querySelectorAll('.action-list-disabled').forEach(actionsGroup => {
-            actionsGroup.classList.remove('action-list-disabled');
-            // 单独禁用发布和分享按钮
-            actionsGroup.querySelectorAll('.publish, .share').forEach(btn => {
-                btn.classList.add('button-disabled');
-                btn.setAttribute('disabled', 'disabled');
-            });
-        });
-        
-        // 添加CSS样式
-        const style = document.createElement('style');
-        style.textContent = `
-            .button-disabled {
-                opacity: 0.6;
-                cursor: not-allowed;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    /**
      * 切换内容面板
      */
     switchContent(index) {
         const transform = index * 400;
-        return function (event) {
+        return event => {
             this.state.current.id = '';
             const panelId = event.target.id;
+            this.state.currentMethod = panelId;
             this.state.current = this.state.content.querySelector(`.tab-panel-${panelId}`);
             this.state.currentCanvas = this.state.current.querySelector('canvas');
             this.state.current.id = 'active-content';
             this.state.content.style.transform = `translateX(-${transform}px)`;
             this.updateCanvas();
-        }.bind(this);
+        };
     }
     
     /**
@@ -258,16 +230,15 @@ class AvatarGeneratorApp {
         const input = this.state.current.querySelector('input.player-name');
         
         if (!input.value) return popupTips('请输入用户名！', 'warning');
-        if (this.state.current.classList.contains('tab-panel-website') && !this.state.skinWebsiteInput.value) {
+        if (this.state.currentMethod === 'website' && !this.state.skinWebsiteInput.value)
             return popupTips('请输入皮肤站地址！', 'warning');
-        }
         
         const mask = this.state.current.querySelector('.loading-overlay');
         mask.style.opacity = 1;
         
         try {
             let skinUrl = null;
-            if (this.state.current.classList.contains('tab-panel-website')) {
+            if (this.state.currentMethod === 'website') {
                 // 皮肤站模式
                 const website = 'https://' + this.state.skinWebsiteInput.value;
                 const skinData = await fetchSkinWebsiteProfile(website, input.value);
@@ -328,7 +299,7 @@ class AvatarGeneratorApp {
             
             skinImage.onload = () => {
                 // 渲染头像
-                const renderedCanvas = renderAvatar(skinImag, this.state.avatarType, avatarOption);
+                const renderedCanvas = renderAvatar(skinImage, this.state.avatarType, avatarOption);
                 
                 // 更新当前头像
                 this.state.currentAvatarImage.src = renderedCanvas.toDataURL('image/png');
@@ -356,11 +327,8 @@ class AvatarGeneratorApp {
      */
     handleDownload(event) {
         const downloadType = event.target.getAttribute('download-type');
-        if (downloadType === 'with-bg') {
-            downloadWithBackground(this.state.currentCanvas);
-        } else if (downloadType === 'transparent') {
-            downloadTransparent(this.state.currentAvatarImage);
-        }
+        if (downloadType === 'background') downloadWithBackground(this.state.currentCanvas);
+        else if (downloadType === 'transparent') downloadTransparent(this.state.currentAvatarImage);
     }
     
     /**
