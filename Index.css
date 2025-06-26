@@ -75,6 +75,10 @@ ul, p {
   padding: 0;
 }
 
+.hidden {
+  display: none;
+}
+
 /* 按钮基础样式 */
 .button {
   border: none;
@@ -146,10 +150,6 @@ ul, p {
 .language-selector {
   float: right;
   height: 30px;
-}
-
-.language-selector-checkbox {
-  display: none;
 }
 
 .language-selector-checkbox:checked ~ .language-selector-list {
@@ -273,13 +273,65 @@ ul, p {
 }
 
 /* 主要内容区块 */
-.avatar-generator, .under-construction {
+.avatar-generator, .avatar-switcher {
   height: 630px;
   width: 400px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background-color: var(--white);
   box-shadow: var(--theme-shadow);
+}
+
+.title {
+  height: 45px;
+  color: var(--theme-color);
+  background: var(--theme-color-alpha);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 18px;
+  line-height: 45px;
+}
+
+.model-selector {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 18px;
+  height: calc(100% - 100px);
+  width: 85%;
+  margin: 25px auto;
+  box-sizing: border-box;
+}
+
+input[name='model-type']:checked + .model-selector-label {
+  border-color: var(--theme-color);
+  box-shadow: var(--theme-shadow);
+}
+
+.model-selector-label {
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--theme-color-alpha);
+  background: url('Resources/Avatars/Keishi.png') no-repeat center center;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.model-selector-label:hover {
+  box-shadow: var(--theme-shadow);
+  transform: scale(1.005);
+}
+
+.model-selector-label a {
+  color: var(--white);
+  display: block;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  padding: 3px 5px;
+  left: 5px;
+  bottom: 5px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 /* 标签页切换 */
@@ -291,10 +343,6 @@ ul, p {
   grid-template-columns: var(--grid-3-col);
   margin: 0;
   padding: 0;
-}
-
-.tab-switcher-input {
-  display: none;
 }
 
 .tab-switcher-label {
@@ -555,14 +603,6 @@ ul, p {
 
 .tab-panel-upload .avatar-preview-canvas {
   margin-top: 20px;
-}
-
-.under-construction {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: gray;
 }
 
 /* 页脚 */

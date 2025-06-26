@@ -116,7 +116,7 @@ class AvatarGeneratorApp {
         });
         
         // 头像类型选择事件
-        document.querySelectorAll('.dropdown-menu-item[avatar-type]').forEach(item => {
+        document.querySelectorAll('.dropdown-menu-item[avatar-option]').forEach(item => {
             item.addEventListener('click', event => {
                 const parentId = event.target.closest('.action-list').querySelector('input[type=checkbox]').id;
                 if (parentId.includes('upload')) this.generateUpload(event);

@@ -1,4 +1,4 @@
-import { renderAvatar as renderCuteAvatar } from './Normal';
+import { renderAvatar as renderCuteAvatar } from './Normal.js';
 
 
 export function renderAvatar(skinImage, avatarType, options = null) {
