@@ -25,7 +25,7 @@ export const skinData = {
 };
 
 
-export const operationData = {
+export const normalOperationData = {
     head: [
         [skinData.new.head.cropBox, skinData.new.head.mirror, 37.5, [200, 200]],
         [skinData.new.headOuter.cropBox, skinData.new.headOuter.mirror, 41, [175, 175]]
@@ -56,3 +56,7 @@ export const operationData = {
         ]
     }
 };
+
+export const cuteOperationData = {
+    
+}

@@ -311,7 +311,7 @@ input[name='model-type']:checked + .model-selector-label {
 .model-selector-label {
   border-radius: var(--radius-sm);
   border: 2px solid var(--theme-color-alpha);
-  background: url('Resources/Avatars/Keishi.png') no-repeat center center;
+  background: url('Resources/Avatars/Normal.png') no-repeat center center;
   transition: all var(--transition-fast);
   position: relative;
 }

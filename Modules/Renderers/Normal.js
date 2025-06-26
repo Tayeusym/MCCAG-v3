@@ -1,6 +1,6 @@
 // 渲染模块
-import { processImage } from './Image.js';
-import { operationData } from './Data.js';
+import { normalOperationData } from './Data.js';
+import { preprecessSkinImage, processImage } from './Image.js';
 
 /**
  * 根据头像类型和皮肤尺寸获取操作列表
@@ -9,13 +9,13 @@ import { operationData } from './Data.js';
  * @returns {Array} 操作列表
  */
 function getOperations(avatarType, skinSize) {
-    if (!operationData) return [];
+    if (!normalOperationData) return [];
 
-    if (avatarType === 'head') return operationData.head;
+    if (avatarType === 'head') return normalOperationData.head;
     if (avatarType === 'big_head') avatarType = 'full';
 
     const skinVersion = (skinSize[0] === 64 && skinSize[1] === 32) ? 'old' : 'new';
-    return operationData[avatarType][skinVersion];
+    return normalOperationData[avatarType][skinVersion];
 }
 
 
@@ -65,11 +65,7 @@ export function renderAvatar(skinImage, avatarType) {
     // 确定皮肤尺寸
     const skinSize = [skinImage.width, skinImage.height];
 
-    // 调整皮肤图像尺寸
-    const resizedSize = (skinSize[0] === 64 && skinSize[1] === 32) ? [128, 64] : [128, 128];
-    // 修正缩放参数顺序，使其与Python一致：将原图缩放到目标尺寸
-    skinImage = processImage(skinImage, 0, 0, ...skinSize, ...resizedSize);
-
+    skinImage = preprecessSkinImage(skinImage);
     // 获取操作列表
     const operations = getOperations(avatarType, skinSize);
 
