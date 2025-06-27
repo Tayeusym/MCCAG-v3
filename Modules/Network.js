@@ -1,11 +1,12 @@
 // 网络请求模块
 import { corsProxy } from './Const.js';
 
-export async function request(url, cors = true, max = 3, count = 0) {
+export async function request(url, cors = true, max = 2, count = 0) {
     try {
-        if (count >= max) throw new Error(`请求失败超过最大重试次数！`);
+        if (count >= max) return;
         const response = await fetch(cors ? corsProxy + url : url);
         if (response.ok) return await response.json();
+        if (response.status === 404) return;
         console.warn(`网络请求失败（第 ${count} 次尝试）：`, response.status, response.statusText);
     } catch (error) {
         console.error(`网络请求失败（第 ${count} 次尝试）：`, error);
