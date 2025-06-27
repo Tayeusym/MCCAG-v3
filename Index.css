@@ -632,6 +632,7 @@ p {
   align-items: center;
   margin-bottom: 20px;
   gap: 14px;
+  height: 28px;
 }
 
 .dialog-row:last-child {
@@ -679,22 +680,17 @@ p {
 }
 
 .color-picker {
-  display: block;
   width: 38px;
-  height: 24px !important;
+  height: 24px;
   border-radius: 100px;
   border: 2px solid #e0e4f6;
   cursor: pointer;
   transition: all var(--transition-fast);
   box-shadow: none;
   background-clip: padding-box;
-  -webkit-appearance: none;
+  box-sizing: content-box;
+  margin: 0;
   padding: 0;
-  appearance: none;
-  border: 2px solid #e0e4f6;
-  position: relative;
-  margin-right: 0;
-  margin-left: 0;
 }
 
 .color-picker.selected,
@@ -766,6 +762,7 @@ p {
   outline: none;
   vertical-align: middle;
   position: relative;
+  transition: all var(--transition-fast);
 }
 
 .range-slider:hover {
@@ -803,16 +800,16 @@ p {
   border: none;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-top: -2px;
+  margin-top: -2.5px;
 }
 
-.range-slider:focus::-webkit-slider-thumb,
+.range-slider:active::-webkit-slider-thumb,
 .range-slider::-webkit-slider-thumb:hover {
   box-shadow: 0 6px 24px 0 rgba(83, 146, 239, 0.28);
 }
 
 .range-slider::-moz-range-thumb {
-  margin-top: -2px;
+  margin-top: -2.5px;
   width: 30px;
   height: 20px;
   border-radius: 10px;
@@ -823,7 +820,7 @@ p {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.range-slider:focus::-moz-range-thumb,
+.range-slider:avtive::-moz-range-thumb,
 .range-slider::-moz-range-thumb:hover {
   box-shadow: 0 6px 24px 0 rgba(83, 146, 239, 0.28);
 }
@@ -833,7 +830,7 @@ p {
 }
 
 .range-slider::-ms-thumb {
-  margin-top: -2px;
+  margin-top: -2.5px;
   width: 30px;
   height: 20px;
   border-radius: 10px;
@@ -844,7 +841,7 @@ p {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.range-slider:focus::-ms-thumb,
+.range-slider:active::-ms-thumb,
 .range-slider::-ms-thumb:hover {
   box-shadow: 0 6px 24px 0 rgba(83, 146, 239, 0.28);
 }
@@ -857,9 +854,9 @@ p {
   transform: scale(1.08);
 }
 
-.range-slider:focus {
+.range-slider:active {
   outline: none;
-  box-shadow: 0 0 0 2px var(--theme-color-alpha);
+  box-shadow: 0 0 0 1px var(--theme-color-alpha);
 }
 
 .range-slider::-ms-tooltip {
