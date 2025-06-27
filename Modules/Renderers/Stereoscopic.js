@@ -2,6 +2,7 @@
 import { stereoscopicOperationData } from './Data.js';
 import { preprecessSkinImage, processImage } from './Image.js';
 
+
 /**
  * 根据头像类型和皮肤尺寸获取操作列表
  * @param {Array} skinSize - 皮肤尺寸 [width, height]
@@ -38,6 +39,35 @@ function operate(mainContext, skinCanvas, cropBox, mirror, scaleFactor, pastePos
     mainContext.drawImage(canvas, pasteX, pasteY);
 }
 
+
+function darkenAreasBatch(context, areas, factor = 0.8) {
+    // 先计算所有区域的最小包围盒
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const [x, y, width, height] of areas) {
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x + width);
+        maxY = Math.max(maxY, y + height);
+    }
+    const imageWidth = maxX - minX;
+    const imageHeight = maxY - minY;
+    const imageData = context.getImageData(minX, minY, imageWidth, imageHeight);
+    const data = imageData.data;
+    // 标记每个区域
+    for (const [x, y, width, height] of areas) {
+        for (let dy = 0; dy < height; dy++) {
+            for (let dx = 0; dx < width; dx++) {
+                const index = ((y - minY + dy) * imageWidth + (x - minX + dx)) * 4;
+                data[index] *= factor;
+                data[index + 1] *= factor;
+                data[index + 2] *= factor;
+            }
+        }
+    }
+    context.putImageData(imageData, minX, minY);
+}
+
+
 /**
  * 渲染头像
  * @param {HTMLImageElement} skinImage - 皮肤图像
@@ -59,16 +89,34 @@ export function renderAvatar(skinImage) {
 
     // 执行渲染操作
     for (const operation of operations) operate(context, skinImage, ...operation);
+    // 清空部分像素点
     context.clearRect(340, 640, 40, 40);
     context.clearRect(620, 640, 40, 40);
+
+    // 高性能颜色加深处理
+    // 需要加深的区域列表（可根据实际需求调整）
+    const darkenAreas = [
+        [300, 360, 120, 280], // 头部阴影
+        [340, 640, 320, 80],
+        [300, 720, 40, 280],
+        [340, 720, 40, 40],
+        [380, 720, 40, 280],
+        [580, 760, 40, 240],
+        [620, 720, 80, 40]
+    ];
+    // 合并像素操作，减少多次putImageData的性能损耗
+    darkenAreasBatch(context, darkenAreas);
+
+    // 渲染部分阴影
+    
     const finalCanvas = document.createElement('canvas');
     const finalContext = finalCanvas.getContext('2d');
     finalCanvas.width = 1000;
     finalCanvas.height = 1000;
-    finalContext.shadowColor = 'rgba(0, 0, 0, 0.2)';
+    finalContext.shadowColor = 'rgba(29, 4, 4, 0.5)';
     finalContext.shadowOffsetX = 0;
     finalContext.shadowOffsetY = 0;
-    finalContext.shadowBlur = 10;
+    finalContext.shadowBlur = 50;
     finalContext.drawImage(processImage(canvas, 0, 0, 1000, 1000, 1200, 1200), 100, 200, 1000, 1000, 0, 0, 1000, 1000);
     return finalCanvas;
 }

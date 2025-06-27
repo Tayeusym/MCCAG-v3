@@ -1,5 +1,6 @@
 /* 基础样式与变量定义 */
 :root {
+  --show-background-color: rgba(173, 216, 230);
   --theme-color: rgb(83, 146, 239);
   --theme-color-alpha: rgba(83, 146, 239, 0.3);
   --theme-shadow: 0 4px 15px rgba(83, 146, 239, 0.3);
@@ -311,7 +312,8 @@ input[name='model-type']:checked + .model-selector-label {
 .model-selector-label {
   border-radius: var(--radius-sm);
   border: 2px solid var(--theme-color-alpha);
-  background: url('Resources/Avatars/Normal.png') no-repeat center center;
+  background: url('Resources/Avatars/Normal.png') no-repeat center center / cover;
+  background-color: var(--show-background-color);
   transition: all var(--transition-fast);
   position: relative;
 }

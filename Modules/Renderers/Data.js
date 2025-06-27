@@ -81,8 +81,8 @@ export const stereoscopicOperationData = Object.freeze({
         [resizeCropBox(skinData.old.leftArm.cropBox, 0, 0, -2, 0), skinData.old.leftArm.mirror, 20, [300, 720]]
     ],
     new: [
-        [resizeCropBox(skinData.new.head.cropBox, 0, 2, -2, -2), skinData.new.head.mirror, 20, [420, 360]],
         [resizeCropBox(skinData.new.headSide.cropBox, 8, 2, -10, -2), skinData.new.headSide.mirror, 20, [300, 360]],
+        [resizeCropBox(skinData.new.head.cropBox, 0, 2, -2, -2), skinData.new.head.mirror, 20, [420, 360]],
         [skinData.new.headOuter.cropBox, skinData.new.headOuter.mirror, 20, [420, 320]],
         [skinData.new.rightArmSide.cropBox, skinData.new.rightArmSide.mirror, 20, [580, 720]],
         [skinData.new.torso.cropBox, skinData.new.torso.mirror, 20, [340, 640]],

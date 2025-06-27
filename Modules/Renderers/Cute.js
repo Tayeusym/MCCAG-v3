@@ -7,7 +7,7 @@ const BG_LINE_COUNT = 16; // 背景放射状线条的数量
 const BG_COLOR1 = '#6761F8'; // 背景放射状线条的主色1
 const BG_COLOR2 = '#F3F0E6'; // 背景放射状线条的主色2
 const SCALE = 20; // 人像在输出画布上的缩放倍数（影响人像整体大小）
-const VIGNETTE_INTENSITY = 5; // 暗角（四周黑色渐变）强度，0为无，100为最强
+const VIGNETTE_INTENSITY = 50; // 暗角（四周黑色渐变）强度，0为无，100为最强
 const ALPHA_THRESHOLD = 128; // 判断像素是否为“非透明”的阈值（0-255），用于主色提取等
 
 // 直接用processImage缩放
