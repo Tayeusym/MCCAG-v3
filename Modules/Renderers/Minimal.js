@@ -12,7 +12,7 @@ function getOperations(avatarType, skinSize) {
     if (!normalOperationData) return [];
 
     if (avatarType === 'head') return normalOperationData.head;
-    if (avatarType === 'big_head') avatarType = 'full';
+    if (avatarType === 'big-head') avatarType = 'full';
 
     const skinVersion = (skinSize[0] === 64 && skinSize[1] === 32) ? 'old' : 'new';
     return normalOperationData[avatarType][skinVersion];
@@ -73,7 +73,7 @@ export function renderAvatar(skinImage, avatarType) {
     for (const operation of operations) operate(context, skinImage, ...operation);
 
     // 如果是big_head类型，进行特殊处理
-    if (avatarType === 'big_head') {
+    if (avatarType === 'big-head') {
         const bigHeadCanvas = document.createElement('canvas');
         const bigHeadContext = bigHeadCanvas.getContext('2d');
         bigHeadCanvas.width = 1400;

@@ -145,10 +145,21 @@
         </p>
     </footer>
 
-    <div id="edit-dialog-overlay" class="edit-dialog-overlay">
+    <div id="edit-dialog-overlay" class="hidden edit-dialog-overlay">
         <div id="edit-dialog" class="edit-dialog">
+
             <!-- Minimal 生成编辑 -->
             <div id="dialog-minimal-generate" class="dialog-content hidden">
+                <div class="dialog-row">
+                    <label>阴影深浅</label>
+                    <input type="range" min="0" max="100" value="40" class="range-slider">
+                    <p><span class="range-slider-value">40</span>%</p>
+                </div>
+                <div class="dialog-row">
+                    <label>图片缩放</label>
+                    <input type="range" min="10" max="100" value="100" class="range-slider">
+                    <p><span class="range-slider-value">100</span>%</p>
+                </div>
                 <div class="dialog-row">
                     <label>生成模式</label>
                     <div class="button-group">
@@ -160,6 +171,10 @@
                         <label for="head" class="minimal-option" data-i18n="avatar_head">仅头像</label>
                     </div>
                 </div>
+            </div>
+
+            <!-- Vintage 生成编辑 -->
+            <div id="dialog-vintage-generate" class="dialog-content hidden">
                 <div class="dialog-row">
                     <label>边线粗细</label>
                     <input type="range" min="1" max="10" value="2" class="range-slider">
@@ -184,54 +199,18 @@
                     <input type="color" value="#1D113C" class="color-picker">
                 </div>
             </div>
-            <!-- Minimal 背景编辑 -->
-            <div id="dialog-minimal-background" class="dialog-content hidden">
+
+            <!-- Vintage 背景编辑 -->
+            <div id="dialog-vintage-background" class="dialog-content hidden">
                 <div class="dialog-row">
                     <label>背景条数</label>
                     <input type="range" min="1" max="20" value="8" class="range-slider">
-                    <p><span class="range-slider-value">16</span>px</p>
+                    <p><span class="range-slider-value">8</span>条</p>
                 </div>
                 <div class="dialog-row">
                     <label>暗角深浅</label>
                     <input type="range" min="0" max="100" value="20" class="range-slider">
-                </div>
-                <div class="dialog-row">
-                    <label>预设颜色</label>
-                    <div class="color-list">
-                        <div class="color-item" style="background:#F5E6E8"></div>
-                        <div class="color-item" style="background:#D5C6E0"></div>
-                        <div class="color-item" style="background:#AAA1C8"></div>
-                        <div class="color-item" style="background:#967AA1"></div>
-                        <div class="color-item" style="background:#192A51"></div>
-                    </div>
-                </div>
-                <div class="dialog-row">
-                    <label>选择颜色</label>
-                    <input type="color" value="#6C63FF" class="color-picker">
-                </div>
-                <div class="dialog-row">
-                    <label class="button button-secondary upload">点击上传</label>
-                    <input type="file" accept="image/*" class="hidden background-upload-input">
-                </div>
-            </div>
-            <!-- Vintage 生成编辑 -->
-            <div id="dialog-vintage-generate" class="dialog-content hidden">
-                <div class="dialog-row">
-                    <label>阴影深浅</label>
-                    <input type="range" min="0" max="100" value="40" class="range-slider">
-                    <p><span class="range-slider-value">40</span>%</p>
-                </div>
-                <div class="dialog-row">
-                    <label>图片缩放</label>
-                    <input type="range" min="10" max="100" value="100" class="range-slider">
-                    <p><span class="range-slider-value">100</span>%</p>
-                </div>
-            </div>
-            <!-- Vintage 背景编辑 -->
-            <div id="dialog-vintage-background" class="dialog-content hidden">
-                <div class="dialog-row">
-                    <label>倾斜角度</label>
-                    <input type="range" min="0" max="90" value="20" class="range-slider">
+                    <p><span class="range-slider-value">20</span>%</p>
                 </div>
                 <div class="dialog-row">
                     <label>预设颜色</label>
@@ -248,10 +227,12 @@
                     <input type="color" value="#6C63FF" class="color-picker">
                 </div>
                 <div class="dialog-row">
-                    <label class="button button-secondary upload">点击上传</label>
-                    <input type="file" accept="image/*" class="hidden background-upload-input">
+                    <label>上传背景</label>
+                    <label for="upload-background-1" class="button button-secondary upload-label">点击上传</label>
+                    <input type="file" id="upload-background-1" accept="image/*" class="upload-background hidden">
                 </div>
             </div>
+
             <!-- Side 生成编辑 -->
             <div id="dialog-side-generate" class="dialog-content hidden">
                 <div class="dialog-row">
@@ -265,8 +246,9 @@
                     <p><span class="range-slider-value">100</span>%</p>
                 </div>
             </div>
-            <!-- Side 背景编辑 -->
-            <div id="dialog-side-background" class="dialog-content hidden">
+
+            <!-- Side / Minimal 背景编辑 -->
+            <div id="dialog-common-background" class="dialog-content hidden">
                 <div class="dialog-row">
                     <label>倾斜角度</label>
                     <input type="range" min="0" max="90" value="20" class="range-slider">
@@ -287,10 +269,12 @@
                     <input type="color" value="#6C63FF" class="color-picker">
                 </div>
                 <div class="dialog-row">
-                    <label class="button button-secondary upload">点击上传</label>
-                    <input type="file" accept="image/*" class="hidden background-upload-input">
+                    <label>上传背景</label>
+                    <label for="upload-background-2" class="button button-secondary upload-label">点击上传</label>
+                    <input type="file" id="upload-background-2" accept="image/*" class="upload-background hidden">
                 </div>
             </div>
+
         </div>
     </div>
 

@@ -57,54 +57,21 @@ export function closeSelections() {
  * 处理背景上传
  * @param {Event} event - 文件上传事件
  * @param {Function} updateCanvas - 更新画布的回调函数
- * @param {Function} setCustomBackground - 设置自定义背景的回调函数
  */
-export function handleBackgroundUpload(event, updateCanvas, setCustomBackground) {
-    const fileInput = event.target;
-    const file = fileInput.files[0];
-    
-    // 验证文件类型
-    if (!file.type.match('image.*')) {
-        popupTips('请上传图片文件！', 'error');
-        return;
-    }
-    
-    // 验证文件大小（2MB = 2 * 1024 * 1024 字节）
-    if (file.size > 2 * 1024 * 1024) {
-        popupTips('图片大小不能超过2MB！', 'error');
-        return;
-    }
-    
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-            setCustomBackground(img);
-            updateCanvas();
-            popupTips('背景图片上传成功！', 'success');
-        };
-        img.src = event.target.result;
-    };
-    reader.readAsDataURL(file);
-}
-
-/**
- * 创建背景上传器
- * @param {Function} handleUpload - 处理上传的函数
- * @returns {HTMLInputElement} 文件输入元素
- */
-export function createBackgroundUploader(handleUpload) {
-    const bgFileInput = document.createElement('input');
-    bgFileInput.type = 'file';
-    bgFileInput.accept = 'image/*';
-    bgFileInput.style.display = 'none';
-    bgFileInput.id = 'background-upload';
-    document.body.appendChild(bgFileInput);
-    
-    // 监听文件选择
-    bgFileInput.addEventListener('change', handleUpload);
-    
-    return bgFileInput;
+export function handleUploader(event) {
+    return new Promise((resolve, reject) => {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+        // 验证文件类型
+        if (!file.type.match('image.*')) reject('请上传图片文件！');
+        // 验证文件大小（2MB = 2 * 1024 * 1024 字节）
+        if (file.size > 2 * 1024 * 1024) reject('图片大小不能超过限制的大小！');
+        const image = new Image();
+        
+        image.onload = () => resolve(image);
+        image.onerror = () => reject('读取图片失败！');
+        image.src = URL.createObjectURL(file);
+    });
 }
 
 /**
