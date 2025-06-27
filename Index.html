@@ -37,22 +37,25 @@
         <section class="avatar-switcher">
             <div class="title">选择模型</div>
             <div class="model-selector">
-                <input checked type="radio" id="normal" name="model-type" class="hidden">
-                <label for="normal" class="model-selector-label">
+                <input checked type="radio" id="minimal" name="model-type" class="hidden model-selector-input">
+                <label for="minimal" class="model-selector-label">
                     <a href="https://www.bilibili.com" target="_blank">啊啊啊啊啊这是来源</a>
                 </label>
-                <input type="radio" id="cute" name="model-type" class="hidden">
-                <label for="cute" class="model-selector-label">
+                <input type="radio" id="vintage" name="model-type" class="hidden model-selector-input">
+                <label for="vintage" class="model-selector-label">
                     <a href="https://www.bilibili.com" target="_blank">啊啊啊啊啊这是来源</a>
                 </label>
-                <input type="radio" id="stereoscopic" name="model-type" class="hidden">
-                <label for="stereoscopic" class="model-selector-label">
+                <input type="radio" id="side" name="model-type" class="hidden model-selector-input">
+                <label for="side" class="model-selector-label">
                     <a href="https://www.bilibili.com" target="_blank">啊啊啊啊啊这是来源</a>
                 </label>
+                <button class="button button-secondary more-model">更多模型，敬请期待！</button>
+
             </div>
         </section>
         
         <section class="avatar-generator">
+
             <div class="tab-switcher">
                 <input checked type="radio" id="mojang" name="tabs" class="hidden">
                 <label for="mojang" data-i18n="tab_mojang" class="tab-switcher-label">正版 ID</label>
@@ -62,29 +65,24 @@
                 <label for="upload" data-i18n="tab_upload" class="tab-switcher-label">上传皮肤</label>
                 <span class="tab-switcher-glider"></span>
             </div>
+
             <div class="generator-content">
+
                 <div class="tab-panel tab-panel-mojang" id="active-content">
                     <input type="text" placeholder="请输入正版 ID" data-i18n-placeholder="placeholder_id" class="text-input player-name">
                     <div class="action-list" columns="3">
-                        <div class="action-group">
-                            <input id="generate-mojang" type="checkbox" class="hidden action-checkbox">
-                            <label for="generate-mojang" data-i18n="btn_generate" class="action-label generate">生成</label>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-menu-item" avatar-option="full" data-i18n="avatar_full">全身照</li>
-                                <li class="dropdown-menu-item" avatar-option="big_head" data-i18n="avatar_half">半身照</li>
-                                <li class="dropdown-menu-item" avatar-option="head" data-i18n="avatar_head">仅头像</li>
-                            </ul>
-                        </div>
-                        <button class="button button-primary change-background" data-i18n="btn_change_bg">换背景</button>
-                        <button class="button button-primary upload" data-i18n="btn_upload_bg">上传背景</button>
+                        <button class="button button-primary generate" data-i18n="btn_generate">生成</button>
+                        <button class="button button-secondary edit-generate" data-i18n="btn_edit_generate">编辑生成</button>
+                        <button class="button button-secondary edit-background" data-i18n="btn_edit_background">编辑背景</button>
                     </div>
                     <canvas height="1000" width="1000" class="avatar-preview-canvas"></canvas>
                     <div class="loading-overlay"></div>
                     <div class="action-list" columns="2">
-                        <button class="button button-primary" data-i18n="download_with_bg" download-type="background">上传背景</button>
-                        <button class="button button-primary" data-i18n="download_transparent" download-type="transparent">透明背景</button>
+                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
+                        <button class="button button-secondary" data-i18n="download_transparent" download-type="transparent">无背景保存</button>
                     </div>
                 </div>
+
                 <div class="tab-panel tab-panel-website">
                     <div class="form-section">
                         <div class="form-fields">
@@ -92,49 +90,35 @@
                             <input type="text" value="littleskin.cn" placeholder="请输入皮肤站网址" data-i18n-placeholder="placeholder_website" class="text-input skin-website">
                         </div>
                         <div class="action-list" columns="3">
-                            <div class="action-group">
-                                <input id="generate-website" type="checkbox" class="hidden action-checkbox">
-                                <label for="generate-website" data-i18n="btn_generate" class="action-label generate">生成</label>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-menu-item" avatar-option="full" data-i18n="avatar_full">全身照</li>
-                                    <li class="dropdown-menu-item" avatar-option="big_head" data-i18n="avatar_half">半身照</li>
-                                    <li class="dropdown-menu-item" avatar-option="head" data-i18n="avatar_head">仅头像</li>
-                                </ul>
-                            </div>
-                            <button class="button button-primary change-background" data-i18n="btn_change_bg">换背景</button>
-                            <button class="button button-primary upload" data-i18n="btn_upload_bg">上传背景</button>
+                            <button class="button button-primary generate" data-i18n="btn_generate">生成</button>
+                            <button class="button button-secondary edit-generate" data-i18n="btn_edit_generate">编辑生成</button>
+                            <button class="button button-secondary edit-background" data-i18n="btn_edit_background">编辑背景</button>
                         </div>
                     </div>
                     <canvas height="1000" width="1000" class="avatar-preview-canvas"></canvas>
                     <div class="loading-overlay"></div>
                     <div class="action-list" columns="2">
-                        <button class="button button-primary" data-i18n="download_with_bg" download-type="background">上传背景</button>
-                        <button class="button button-primary" data-i18n="download_transparent" download-type="transparent">透明背景</button>
+                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
+                        <button class="button button-secondary" data-i18n="download_transparent" download-type="transparent">无背景保存</button>
                     </div>
                 </div>
+
                 <div class="tab-panel tab-panel-upload">
                     <input type="file" id="upload-file" accept="image/*" class="file-upload-input">
                     <label for="upload-file" data-i18n="click_upload" class="file-upload-label">点击上传</label>
                     <div class="action-list" columns="3">
-                        <div class="action-group">
-                            <input id="generate-upload" type="checkbox" class="hidden action-checkbox">
-                            <label for="generate-upload" data-i18n="btn_generate" class="action-label generate">生成</label>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-menu-item" avatar-option="full" data-i18n="avatar_full">全身照</li>
-                                <li class="dropdown-menu-item" avatar-option="big_head" data-i18n="avatar_half">半身照</li>
-                                <li class="dropdown-menu-item" avatar-option="head" data-i18n="avatar_head">仅头像</li>
-                            </ul>
-                        </div>
-                        <button class="button button-primary change-background" data-i18n="btn_change_bg">换背景</button>
-                        <button class="button button-primary upload" data-i18n="btn_upload_bg">上传背景</button>
+                        <button class="button button-primary generate" data-i18n="btn_generate">生成</button>
+                        <button class="button button-secondary edit-generate" data-i18n="btn_edit_generate">编辑生成</button>
+                        <button class="button button-secondary edit-background" data-i18n="btn_edit_background">编辑背景</button>
                     </div>
                     <canvas height="1000" width="1000" class="avatar-preview-canvas"></canvas>
                     <div class="loading-overlay"></div>
                     <div class="action-list" columns="2">
-                        <button class="button button-primary" data-i18n="download_with_bg" download-type="background">上传背景</button>
-                        <button class="button button-primary" data-i18n="download_transparent" download-type="transparent">透明背景</button>
+                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
+                        <button class="button button-secondary" data-i18n="download_transparent" download-type="transparent">无背景保存</button>
                     </div>
                 </div>
+
             </div>
         </section>
     </main>
@@ -160,5 +144,155 @@
             </span>
         </p>
     </footer>
+
+    <div id="edit-dialog-overlay" class="edit-dialog-overlay">
+        <div id="edit-dialog" class="edit-dialog">
+            <!-- Minimal 生成编辑 -->
+            <div id="dialog-minimal-generate" class="dialog-content hidden">
+                <div class="dialog-row">
+                    <label>生成模式</label>
+                    <div class="button-group">
+                        <input checked type="radio" id="full" name="minimal-option" class="hidden option-input">
+                        <label for="full" class="minimal-option" data-i18n="avatar_full">全身照</label>
+                        <input type="radio" id="big-head" name="minimal-option" class="hidden option-input">
+                        <label for="big-head" class="minimal-option" data-i18n="avatar_half">半身照</label>
+                        <input type="radio" id="head" name="minimal-option" class="hidden option-input">
+                        <label for="head" class="minimal-option" data-i18n="avatar_head">仅头像</label>
+                    </div>
+                </div>
+                <div class="dialog-row">
+                    <label>边线粗细</label>
+                    <input type="range" min="1" max="10" value="2" class="range-slider">
+                    <p><span class="range-slider-value">2</span>px</p>
+                </div>
+                <div class="dialog-row">
+                    <label>图片缩放</label>
+                    <input type="range" min="10" max="100" value="100" class="range-slider">
+                    <p><span class="range-slider-value">100</span>%</p>
+                </div>
+                <div class="dialog-row">
+                    <label>边线颜色</label>
+                    <div class="color-list">
+                        <div class="color-item" style="background:#1D113C"></div>
+                        <div class="color-item" style="background:#6C63FF"></div>
+                        <div class="color-item" style="background:#3A3A3A"></div>
+                        <div class="color-item" style="background:#000000"></div>
+                    </div>
+                </div>
+                <div class="dialog-row">
+                    <label>选择颜色</label>
+                    <input type="color" value="#1D113C" class="color-picker">
+                </div>
+            </div>
+            <!-- Minimal 背景编辑 -->
+            <div id="dialog-minimal-background" class="dialog-content hidden">
+                <div class="dialog-row">
+                    <label>背景条数</label>
+                    <input type="range" min="1" max="20" value="8" class="range-slider">
+                    <p><span class="range-slider-value">16</span>px</p>
+                </div>
+                <div class="dialog-row">
+                    <label>暗角深浅</label>
+                    <input type="range" min="0" max="100" value="20" class="range-slider">
+                </div>
+                <div class="dialog-row">
+                    <label>预设颜色</label>
+                    <div class="color-list">
+                        <div class="color-item" style="background:#F5E6E8"></div>
+                        <div class="color-item" style="background:#D5C6E0"></div>
+                        <div class="color-item" style="background:#AAA1C8"></div>
+                        <div class="color-item" style="background:#967AA1"></div>
+                        <div class="color-item" style="background:#192A51"></div>
+                    </div>
+                </div>
+                <div class="dialog-row">
+                    <label>选择颜色</label>
+                    <input type="color" value="#6C63FF" class="color-picker">
+                </div>
+                <div class="dialog-row">
+                    <label class="button button-secondary upload">点击上传</label>
+                    <input type="file" accept="image/*" class="hidden background-upload-input">
+                </div>
+            </div>
+            <!-- Vintage 生成编辑 -->
+            <div id="dialog-vintage-generate" class="dialog-content hidden">
+                <div class="dialog-row">
+                    <label>阴影深浅</label>
+                    <input type="range" min="0" max="100" value="40" class="range-slider">
+                    <p><span class="range-slider-value">40</span>%</p>
+                </div>
+                <div class="dialog-row">
+                    <label>图片缩放</label>
+                    <input type="range" min="10" max="100" value="100" class="range-slider">
+                    <p><span class="range-slider-value">100</span>%</p>
+                </div>
+            </div>
+            <!-- Vintage 背景编辑 -->
+            <div id="dialog-vintage-background" class="dialog-content hidden">
+                <div class="dialog-row">
+                    <label>倾斜角度</label>
+                    <input type="range" min="0" max="90" value="20" class="range-slider">
+                </div>
+                <div class="dialog-row">
+                    <label>预设颜色</label>
+                    <div class="color-list">
+                        <div class="color-item" style="background:#F5E6E8"></div>
+                        <div class="color-item" style="background:#D5C6E0"></div>
+                        <div class="color-item" style="background:#AAA1C8"></div>
+                        <div class="color-item" style="background:#967AA1"></div>
+                        <div class="color-item" style="background:#FFD6E0"></div>
+                    </div>
+                </div>
+                <div class="dialog-row">
+                    <label>选择颜色</label>
+                    <input type="color" value="#6C63FF" class="color-picker">
+                </div>
+                <div class="dialog-row">
+                    <label class="button button-secondary upload">点击上传</label>
+                    <input type="file" accept="image/*" class="hidden background-upload-input">
+                </div>
+            </div>
+            <!-- Side 生成编辑 -->
+            <div id="dialog-side-generate" class="dialog-content hidden">
+                <div class="dialog-row">
+                    <label>阴影深浅</label>
+                    <input type="range" min="0" max="100" value="40" class="range-slider">
+                    <p><span class="range-slider-value">40</span>%</p>
+                </div>
+                <div class="dialog-row">
+                    <label>图片缩放</label>
+                    <input type="range" min="10" max="100" value="100" class="range-slider">
+                    <p><span class="range-slider-value">100</span>%</p>
+                </div>
+            </div>
+            <!-- Side 背景编辑 -->
+            <div id="dialog-side-background" class="dialog-content hidden">
+                <div class="dialog-row">
+                    <label>倾斜角度</label>
+                    <input type="range" min="0" max="90" value="20" class="range-slider">
+                    <p><span class="range-slider-value">20</span>°</p>
+                </div>
+                <div class="dialog-row">
+                    <label>预设颜色</label>
+                    <div class="color-list">
+                        <div class="color-item" style="background:#F5E6E8"></div>
+                        <div class="color-item" style="background:#D5C6E0"></div>
+                        <div class="color-item" style="background:#AAA1C8"></div>
+                        <div class="color-item" style="background:#967AA1"></div>
+                        <div class="color-item" style="background:#FFD6E0"></div>
+                    </div>
+                </div>
+                <div class="dialog-row">
+                    <label>选择颜色</label>
+                    <input type="color" value="#6C63FF" class="color-picker">
+                </div>
+                <div class="dialog-row">
+                    <label class="button button-secondary upload">点击上传</label>
+                    <input type="file" accept="image/*" class="hidden background-upload-input">
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

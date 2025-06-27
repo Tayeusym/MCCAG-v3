@@ -26,9 +26,9 @@ class AppState {
         this.currentBackgroundIndex = 0;
         this.currentMethod = 'mojang';
         this.currentAvatarImage = new Image();
-        this.currentAvatarImage.src = 'Resources/Avatars/Normal.png';
+        this.currentAvatarImage.src = 'Resources/Avatars/Minimal.png';
 
-        this.avatarType = 'normal';
+        this.avatarType = 'minimal';
         
         // DOM元素
         this.content = document.querySelector('.generator-content');
@@ -83,7 +83,7 @@ class AvatarGeneratorApp {
         try {
             // 加载操作数据
             // 初始化国际化
-            initI18n();
+            // initI18n();
             // 初始化事件监听
             this.initEventListeners();
             // 初始化背景上传器
@@ -112,12 +112,11 @@ class AvatarGeneratorApp {
             else popupTips('未选择任何文件！', 'warning');
         });
         
-        // 头像类型选择事件
-        document.querySelectorAll('li[avatar-option]').forEach(item => {
-            item.addEventListener('click', event => {
+        // 头像类型选择事件（仅Minimal）
+        document.querySelectorAll('input[name=minimal-mode]').forEach(radio => {
+            radio.addEventListener('change', event => {
                 if (this.state.currentMethod == 'upload') this.generateUpload(event);
                 else this.generate(event);
-                closeSelections();
             });
         });
         
@@ -148,12 +147,32 @@ class AvatarGeneratorApp {
 
         document.querySelectorAll('label.generate').forEach(button => 
             button.addEventListener('click', event => {
-                if (this.state.avatarType === 'normal') return;
+                if (this.state.avatarType === 'minimal') return;
                 event.preventDefault();
                 if (this.state.currentMethod == 'upload') this.generateUpload(event);
                 else this.generate(event);
             })
-        )
+        );
+
+        // 拖动条进度条效果
+        this.initRangeSliders();
+
+        // 编辑按钮事件
+        document.querySelectorAll('.edit-generate, .edit-background').forEach(button => {
+            button.addEventListener('click', (event) => {
+                this.showEditDialog(event);
+            });
+        });
+
+        // 色块选择交互
+        document.querySelectorAll('.color-list').forEach(list => {
+            list.querySelectorAll('.color-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    list.querySelectorAll('.color-item').forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
+                });
+            });
+        });
     }
     
     /**
@@ -248,7 +267,15 @@ class AvatarGeneratorApp {
      * 生成头像（Mojang/皮肤站）
      */
     async generate(event) {
-        const avatarOption = event.target.getAttribute('avatar-option');
+        // 获取选中的生成模式（仅Minimal需要）
+        let avatarOption = 'head'; // 默认值
+        if (this.state.avatarType === 'minimal') {
+            const selectedRadio = document.querySelector('input[name="minimal-mode"]:checked');
+            if (selectedRadio) {
+                avatarOption = selectedRadio.value;
+            }
+        }
+        
         const input = this.state.current.querySelector('input.player-name');
         
         if (!input.value) return popupTips('请输入用户名！', 'warning');
@@ -311,7 +338,15 @@ class AvatarGeneratorApp {
             return popupTips('请先上传皮肤！', 'warning');
         }
         
-        const avatarOption = event.target.getAttribute('avatar-option');
+        // 获取选中的生成模式（仅Minimal需要）
+        let avatarOption = 'head'; // 默认值
+        if (this.state.avatarType === 'minimal') {
+            const selectedRadio = document.querySelector('input[name="minimal-mode"]:checked');
+            if (selectedRadio) {
+                avatarOption = selectedRadio.value;
+            }
+        }
+        
         const mask = this.state.current.querySelector('.loading-overlay');
         mask.style.opacity = 1;
         
@@ -359,6 +394,121 @@ class AvatarGeneratorApp {
     changeBackground() {
         this.state.nextBackground();
         this.updateCanvas();
+    }
+
+    /**
+     * 初始化拖动条进度条效果
+     */
+    initRangeSliders() {
+        const rangeInputs = document.querySelectorAll('.range-slider');
+        
+        rangeInputs.forEach(input => {
+            // 初始化进度条
+            this.updateRangeProgress(input);
+            
+            // 监听输入事件
+            input.addEventListener('input', () => {
+                this.updateRangeProgress(input);
+            });
+            
+            // 监听鼠标事件
+            input.addEventListener('mousedown', () => {
+                this.updateRangeProgress(input);
+            });
+            
+            input.addEventListener('mousemove', () => {
+                if (input.matches(':active')) {
+                    this.updateRangeProgress(input);
+                }
+            });
+        });
+    }
+
+    /**
+     * 更新拖动条进度条
+     */
+    updateRangeProgress(input) {
+        const value = (input.value - input.min) / (input.max - input.min) * 100;
+        const progressColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color');
+        const trackColor = '#e0e4f6';
+        
+        // 更新CSS变量
+        input.style.setProperty('--range-progress', `${value}%`);
+        
+        // 更新Webkit浏览器的进度条
+        input.style.background = `linear-gradient(to right, ${progressColor} 0%, ${progressColor} ${value}%, ${trackColor} ${value}%, ${trackColor} 100%)`;
+    }
+
+    /**
+     * 显示编辑对话框
+     */
+    showEditDialog(event) {
+        const button = event.target;
+        const isGenerate = button.classList.contains('edit-generate');
+        const avatarType = this.state.avatarType;
+        
+        // 构建对话框ID
+        const dialogId = `dialog-${avatarType}-${isGenerate ? 'generate' : 'background'}`;
+        const dialog = document.getElementById(dialogId);
+        
+        if (dialog) {
+            // 显示遮罩层和对话框
+            const overlay = document.getElementById('edit-dialog-overlay');
+            const editDialog = document.getElementById('edit-dialog');
+            
+            // 先显示元素，然后添加动画类
+            overlay.style.display = 'block';
+            editDialog.style.display = 'block';
+            
+            // 强制重绘，然后添加动画类
+            requestAnimationFrame(() => {
+                overlay.classList.add('show');
+                editDialog.classList.add('show');
+            });
+            
+            // 隐藏所有对话框内容
+            overlay.querySelectorAll('.dialog-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // 显示对应的对话框内容
+            dialog.style.display = 'block';
+            
+            // 初始化对话框中的拖动条
+            this.initRangeSliders();
+            
+            // 添加关闭对话框的事件
+            const closeDialog = (event) => {
+                // 只有点击遮罩层才关闭
+                if (event.target === overlay) {
+                    this.hideEditDialog();
+                }
+            };
+            
+            // 添加点击遮罩层关闭的事件
+            overlay.addEventListener('click', closeDialog);
+            
+            // 阻止事件冒泡
+            event.stopPropagation();
+        }
+    }
+
+    /**
+     * 隐藏编辑对话框
+     */
+    hideEditDialog() {
+        const overlay = document.getElementById('edit-dialog-overlay');
+        const editDialog = document.getElementById('edit-dialog');
+        
+        // 移除动画类
+        overlay.classList.remove('show');
+        editDialog.classList.remove('show');
+        
+        // 等待动画完成后隐藏元素
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            editDialog.style.display = 'none';
+        }, 300);
     }
 }
 
