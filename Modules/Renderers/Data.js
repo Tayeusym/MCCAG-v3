@@ -15,6 +15,7 @@ export const skinData = Object.freeze({
         leftArm: { cropBox: [86, 40, 6, 24], mirror: true },
         torso: { cropBox: [40, 40, 16, 24], mirror: false },
         head: { cropBox: [16, 16, 16, 16], mirror: false },
+        headSide: { cropBox: [0, 16, 16, 16], mirror: false },
         headOuter: { cropBox: [80, 16, 16, 16], mirror: false },
     },
     new: {
@@ -31,8 +32,8 @@ export const skinData = Object.freeze({
         torso: { cropBox: [40, 40, 16, 24], mirror: false },
         torsoOuter: { cropBox: [40, 72, 16, 24], mirror: false },
         head: { cropBox: [16, 16, 16, 16], mirror: false },
+        headSide: { cropBox: [0, 16, 16, 16], mirror: false },
         headOuter: { cropBox: [80, 16, 16, 16], mirror: false },
-        headSide: { cropBox: [0, 16, 16, 16], mirror: false }
     }
 });
 
@@ -72,7 +73,12 @@ export const normalOperationData = Object.freeze({
 
 export const stereoscopicOperationData = Object.freeze({
     old: [
-        [resizeCropBox(skinData.old.head.cropBox, 0, 0, -1, -1), skinData.old.head.mirror, 8.375, [434, 751]]
+        [resizeCropBox(skinData.old.head.cropBox, 0, 2, -2, -2), skinData.old.head.mirror, 20, [420, 360]],
+        [resizeCropBox(skinData.old.headSide.cropBox, 8, 2, -10, -2), skinData.old.headSide.mirror, 20, [300, 360]],
+        [resizeCropBox(skinData.old.headOuter.cropBox, 8, 2, -10, -2), skinData.old.headOuter.mirror, 20, [300, 360]],
+        [skinData.old.torso.cropBox, skinData.old.torso.mirror, 20, [340, 640]],
+        [resizeCropBox(skinData.old.rightArm.cropBox, 0, 0, -2, 0), skinData.old.rightArm.mirror, 20, [580, 720]],
+        [resizeCropBox(skinData.old.leftArm.cropBox, 0, 0, -2, 0), skinData.old.leftArm.mirror, 20, [300, 720]]
     ],
     new: [
         [resizeCropBox(skinData.new.head.cropBox, 0, 2, -2, -2), skinData.new.head.mirror, 20, [420, 360]],
