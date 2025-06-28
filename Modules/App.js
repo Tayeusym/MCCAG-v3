@@ -15,6 +15,7 @@ import {
 } from './Utils.js';
 
 import { initI18n } from './I18n.js';
+import { calculateAutoColors } from './Renderers/Image.js';
 import { renderBackground, renderAvatar, regulateAvatar } from './Renderers/Index.js';
 
 
@@ -35,10 +36,11 @@ class AppState {
         // DOM元素
         this.content = document.querySelector('.generator-content');
         this.uploadInput = document.querySelector('.file-upload-input');
-        this.current = this.content.querySelector('div#active-content');
+        this.current = this.content.querySelector('#active-content');
         this.currentCanvas = this.current.querySelector('canvas');
         this.dialog = document.querySelector('#edit-dialog');
         this.dialogOverlay = document.querySelector('#edit-dialog-overlay');
+        this.skinWebsiteInput = document.querySelector('.skin-website');
     }
 }
 
@@ -71,37 +73,14 @@ class AvatarGeneratorApp {
     initDialogs() {
         const colorItems = this.state.dialog.querySelectorAll('div.color-item');
         colorItems.forEach(item => {
-            console.log(item);
             const colors = item.getAttribute('value').split(',');
-            if (colors.length <= 1) item.style.background = colors[0];
+            if (colors.length <= 1) {
+                item.style.background = colors[0];
+                return;
+            }
+            if (item.parentElement.parentElement.parentElement.id.includes('vintage'))
+                item.style.background = 'linear-gradient(to right, ' + colors.join(' 50%, ') + ' 50%)'
             else item.style.background = 'linear-gradient(to right, ' + colors.join(', ') + ')';
-        });
-    }
-
-    /**
-     * 更新对话框
-     */
-    updateDialogs(dialog) {
-        if (dialog.id.includes('background')) {
-            let flag = false;
-            const currentColor = this.state.options.background.colors.join(',');
-            const colorItems = dialog.querySelectorAll('div.color-item');
-            colorItems.forEach(item => {
-                if (item.getAttribute('value') === currentColor) {
-                    item.id = 'selected';
-                    flag = true;
-                } else item.id = '';
-            });
-            if (!this.state.options.background.image && !flag)
-                dialog.querySelectorAll('input.color-picker').forEach(item => item.id = 'selected');
-        }
-
-        const rangeInputs = dialog.querySelectorAll('input.range-slider');
-        rangeInputs.forEach(input => {
-            // 初始化进度条
-            const [ type, option ] = input.getAttribute('option').split('-');
-            input.value = this.state.options[type][option];
-            this.updateRangeProgress(input);
         });
     }
 
@@ -125,7 +104,7 @@ class AvatarGeneratorApp {
         this.state.uploadInput.addEventListener('change', async event => {
             try {
                 this.state.currentSkinImage = await handleUploader(event);
-                popupTips('成功选择皮肤文件！', 'success');
+                this.generateUpload();
             } catch (error) {
                 this.state.currentSkinImage = null;
                 popupTips(error.message, 'error');
@@ -134,7 +113,11 @@ class AvatarGeneratorApp {
 
         // 头像类型选择事件（仅Minimal）额外判断
         document.querySelectorAll('input[name=minimal-option]').forEach(radio =>
-            radio.addEventListener('change', event => this.state.options.generate.type = event.target.id)
+            radio.addEventListener('change', event => {
+                this.state.options.generate.type = event.target.id;
+                if (this.state.fetchSkinMethod === 'upload') this.generateUpload();
+                else this.generate();
+            })
         );
 
         // 滑块通用选项改变
@@ -142,7 +125,13 @@ class AvatarGeneratorApp {
             function updateOptions(event) {
                 this.updateRangeProgress(event.target);
                 const [ type, option ] = event.target.getAttribute('option').split('-');
-                this.state.options[type][option] = event.target.value;
+                this.state.options[type][option] = parseInt(event.target.value);
+                if (this.state.modelType === 'vintage' && option == 'border') {
+                    this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
+                    this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
+                    this.updateCanvas();
+                    return;
+                }
                 if (type === 'generate')
                     this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
                 else this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
@@ -153,19 +142,48 @@ class AvatarGeneratorApp {
         });
 
         // 默认颜色选择
-        document.querySelectorAll('div.color-item, input.color-picker').forEach(item => {
+        document.querySelectorAll('div.color-item').forEach(item => {
             function updateColorOptions(event) {
-                const colors = event.target.tagName === 'INPUT' ? [event.target.value] : event.target.getAttribute('value').split(',');
-                const lastSelected = document.querySelectorAll('div[option]#selected');
+                const colors = event.target.getAttribute('value').split(',');
+                const lastSelected = document.querySelectorAll('#selected');
                 if (lastSelected) lastSelected.forEach(item => item.id = '');
                 event.target.id = 'selected';
                 const [ type, option ] = event.target.getAttribute('option').split('-');
                 this.state.options.background.image = null;
                 this.state.options[type][option] = colors;
+                if (this.state.modelType === 'vintage' && option == 'color') {
+                    this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
+                    this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
+                    this.updateCanvas();
+                    return;
+                }
                 this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
                 this.updateCanvas();
             }
+
             item.addEventListener('click', updateColorOptions.bind(this));
+        });
+
+        document.querySelectorAll('input.color-picker').forEach(item => {
+            function updateColorOptions(event) {
+                const pickers = Array.from(event.target.parentElement.querySelectorAll('input.color-picker'));
+                const colors = pickers.length > 1 ? pickers.map(picker => picker.value) : [event.target.value];
+                const lastSelected = document.querySelectorAll('#selected');
+                if (lastSelected) lastSelected.forEach(item => item.id = '');
+                event.target.id = 'selected';
+                const [ type, option ] = event.target.getAttribute('option').split('-');
+                this.state.options.background.image = null;
+                this.state.options[type][option] = colors;
+                if (this.state.modelType === 'vintage' && option == 'color') {
+                    this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
+                    this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
+                    this.updateCanvas();
+                    return;
+                }
+                this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
+                this.updateCanvas();
+            }
+
             item.addEventListener('input', updateColorOptions.bind(this));
         });
 
@@ -221,6 +239,46 @@ class AvatarGeneratorApp {
     }
 
     /**
+     * 更新对话框
+     */
+    updateDialogs(dialog) {
+        if (dialog.id.includes('background')) {
+            let flag = false;
+            const currentColor = this.state.options.background.colors.join(',');
+            for (const item of dialog.querySelectorAll('div.color-item')) {
+                if (item.getAttribute('value') === currentColor) {
+                    item.id = 'selected';
+                    flag = true;
+                } else item.id = '';
+            }
+            if (!this.state.options.background.image && !flag)
+                dialog.querySelectorAll('input.color-picker').forEach(item => item.id = 'selected');
+        } else if (this.state.modelType === 'vintage' && dialog.id.includes('generate')) {
+            // 在生成对话框中，如果当前皮肤不为空，则自动计算颜色
+            if (this.state.currentSkinImage.src) {
+                const selectedItem = dialog.querySelector('#selected');
+                const colorItems = dialog.querySelectorAll('div.color-item');
+                const autoColors = calculateAutoColors(this.state.currentSkinImage);
+                if (selectedItem) selectedItem.id = '';
+                colorItems[0].id = 'selected';
+                for (let index = 1; index < colorItems.length; index++) {
+                    const item = colorItems[index];
+                    item.style.background = autoColors[index - 1];
+                    item.setAttribute('value', autoColors[index - 1]);
+                }
+            } else popupTips('请先获取皮肤，否则无法自动计算颜色！', 'warning');
+        }
+
+        const rangeInputs = dialog.querySelectorAll('input.range-slider');
+        rangeInputs.forEach(input => {
+            // 初始化进度条
+            const [ type, option ] = input.getAttribute('option').split('-');
+            input.value = this.state.options[type][option];
+            this.updateRangeProgress(input);
+        });
+    }
+
+    /**
      * 从弹窗中读取默认选项
      */
     readOptions(modelType) {
@@ -245,17 +303,7 @@ class AvatarGeneratorApp {
 
             // 读取颜色选择器
             const colorPicker = generateDialog.querySelector('input.color-picker');
-            if (colorPicker) {
-                // 检查是否有option属性
-                const option = colorPicker.getAttribute('option');
-                if (option) {
-                    const [type, optionName] = option.split('-');
-                    newOptions[type][optionName] = [colorPicker.value];
-                } else {
-                    // 没有option属性时，假设是生成选项的颜色
-                    newOptions.generate.borderColor = colorPicker.value;
-                }
-            }
+            if (colorPicker) newOptions.generate.color = colorPicker.value;
             
             // 检查生成弹窗中的color-item（如Vintage模型的边线颜色）
             const colorItems = generateDialog.querySelectorAll('div.color-item');
@@ -264,12 +312,12 @@ class AvatarGeneratorApp {
                 if (selectedColorItem) {
                     // 如果有选中的color-item，使用其值
                     const colors = selectedColorItem.getAttribute('value').split(',');
-                    newOptions.generate.borderColor = colors[0]; // 对于生成选项，通常只需要第一个颜色
+                    newOptions.generate.color = colors[0]; // 对于生成选项，通常只需要第一个颜色
                 } else {
                     // 如果没有选中的color-item，使用第一个color-item的值
                     const firstColorItem = colorItems[0];
                     const colors = firstColorItem.getAttribute('value').split(',');
-                    newOptions.generate.borderColor = colors[0];
+                    newOptions.generate.color = colors[0];
                 }
             }
         }
@@ -321,9 +369,7 @@ class AvatarGeneratorApp {
                         if (firstColorItem) {
                             const colors = firstColorItem.getAttribute('value').split(',');
                             newOptions.background.colors = colors;
-                        } else {
-                            newOptions.background.colors = [colorPicker.value];
-                        }
+                        } else newOptions.background.colors = [colorPicker.value];
                     }
                 }
             } else if (colorItems.length > 0) {
@@ -332,7 +378,6 @@ class AvatarGeneratorApp {
                 newOptions.background.colors = colors;
             }
         }
-
         return newOptions;
     }
 
@@ -341,6 +386,7 @@ class AvatarGeneratorApp {
         if (this.state.modelType === modelType) return;
         // 更新选项，保留一些通用设置
         this.state.options = this.readOptions(modelType);
+        console.log(this.state.options);
         const avatarTypeName = modelType.charAt(0).toUpperCase() + modelType.slice(1);
         this.state.modelType = modelType;
         this.state.currentAvatarImage = new Image();
@@ -420,7 +466,7 @@ class AvatarGeneratorApp {
             }
             this.state.currentSkinImage.onload = () => {
                 // 渲染头像
-                this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate.type);
+                this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
                 this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
                 this.updateCanvas();
 
@@ -450,7 +496,7 @@ class AvatarGeneratorApp {
         const mask = this.state.current.querySelector('.loading-overlay');
         mask.style.opacity = 1;
         try {
-            this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate.type);
+            this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
             this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
             this.updateCanvas();
             mask.style.opacity = 0;

@@ -24,3 +24,38 @@ export function preprecessSkinImage(image) {
     // 修正缩放参数顺序，使其与Python一致：将原图缩放到目标尺寸
     return processImage(image, 0, 0, ...skinSize, ...resizedSize);
 }
+
+export function calculateAutoColors(image) {
+    if (!image) return [];
+    
+    // 如果已经是 canvas，直接使用；否则转换为 canvas
+    const canvas = processImage(image, 0, 0, image.width, image.height);
+    const imageData = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    
+    let pixelCount = 0;
+    let totalR = 0, totalG = 0, totalB = 0;
+    
+    // 计算所有非透明像素的平均颜色
+    for (let index = 0; index < data.length; index += 4) {
+        const a = data[index + 3];
+        if (a > 128) {
+            totalR += data[index];
+            totalG += data[index + 1];
+            totalB += data[index + 2];
+            pixelCount++;
+        }
+    }
+    
+    if (pixelCount === 0) return [];
+    
+    const avgR = Math.floor(totalR / pixelCount);
+    const avgG = Math.floor(totalG / pixelCount);
+    const avgB = Math.floor(totalB / pixelCount);
+    const autoColors = [];
+    for (let index = -4; index < 5; index++) {
+        const offset = index * 30;
+        autoColors.push(`rgb(${Math.max(0, avgR - offset)}, ${Math.max(0, avgG - offset)}, ${Math.max(0, avgB - offset)})`);
+    }
+    return autoColors;
+}

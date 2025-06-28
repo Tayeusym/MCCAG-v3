@@ -1,14 +1,8 @@
 import { skinData } from './Data.js';
 import { processImage, preprecessSkinImage } from './Image.js';
 
-const BORDER_WIDTH = 1; // 人像各部分边线的粗细（像素）
-const BORDER_COLOR = 'black'; // 人像边线的颜色
-const BG_LINE_COUNT = 16; // 背景放射状线条的数量
-const BG_COLOR1 = '#6761F8'; // 背景放射状线条的主色1
-const BG_COLOR2 = '#F3F0E6'; // 背景放射状线条的主色2
 const SCALE = 20; // 人像在输出画布上的缩放倍数（影响人像整体大小）
-const VIGNETTE_INTENSITY = 50; // 暗角（四周黑色渐变）强度，0为无，100为最强
-const ALPHA_THRESHOLD = 128; // 判断像素是否为“非透明”的阈值（0-255），用于主色提取等
+const ALPHA_THRESHOLD = 128; // 判断像素是否为"非透明"的阈值（0-255），用于主色提取等
 
 // 直接用processImage缩放
 function scaleCanvas(sourceCanvas, targetWidth, targetHeight) {
@@ -74,12 +68,12 @@ function fillCanvasRegion(canvas, color, x = 0, y = 0, width = null, height = nu
     height = height || canvas.height;
     const imageData = context.getImageData(x, y, width, height);
     const data = imageData.data;
-    for (let i = 0; i < data.length; i += 4) {
-        const a = data[i + 3];
+    for (let index = 0; index < data.length; index += 4) {
+        const a = data[index + 3];
         if (a > ALPHA_THRESHOLD) {
-            data[i] = color.r;
-            data[i + 1] = color.g;
-            data[i + 2] = color.b;
+            data[index] = color.r;
+            data[index + 1] = color.g;
+            data[index + 2] = color.b;
         }
     }
     context.putImageData(imageData, x, y);
@@ -137,16 +131,20 @@ function drawBorder(context, x, y, width, height, borderWidth, borderColor = 'bl
 }
 
 // 背景
-function drawRadialBackground(context, width, height, lineCount, color1, color2) {
+function drawRadialBackground(context, width, height, lineCount, color1, color2, rotationAngle = 0) {
     if (lineCount <= 0) return;
     const centerX = width / 2;
     const centerY = height / 2;
     const radius = Math.sqrt(centerX * centerX + centerY * centerY);
     const angleStep = (2 * Math.PI) / lineCount;
     const angleOffset = angleStep / 2;
+    
+    // 将旋转角度转换为弧度
+    const rotationRadians = (rotationAngle * Math.PI) / 180;
+    
     for (let index = 0; index < lineCount; index++) {
-        const startAngle = index * angleStep + angleOffset;
-        const endAngle = (index + 1) * angleStep + angleOffset;
+        const startAngle = index * angleStep + angleOffset + rotationRadians;
+        const endAngle = (index + 1) * angleStep + angleOffset + rotationRadians;
         context.fillStyle = (index % 2 === 0) ? color1 : color2;
         context.beginPath();
         context.moveTo(centerX, centerY);
@@ -171,50 +169,50 @@ function drawVignette(context, width, height, intensity) {
     context.fillRect(0, 0, width, height);
 }
 
-export function renderAvatar(skinImage) {
+export function renderAvatar(skinImage, options) {
     // 1. 放大原图
     skinImage = preprecessSkinImage(skinImage);
     // 2. 判断皮肤类型
     const skinType = skinImage.height === 128 ? 'new' : 'old';
-    const opreationData = skinData[skinType];
+    const operationData = skinData[skinType];
     // 3. 提取所有切片
     const slices = {};
-    for (const name in opreationData) {
-        const { cropBox, mirror } = opreationData[name];
+    for (const name in operationData) {
+        const { cropBox, mirror } = operationData[name];
         slices[name] = processImage(skinImage, ...cropBox, null, null, mirror);
     }
 
     // 4. 合并分层和处理各部分（直接在切片canvas上处理，减少canvas创建）
-    const head = opreationData.headOuter
+    const head = operationData.headOuter
         ? layerSlices(slices.head, slices.headOuter)
         : slices.head;
     const headScaled = scaleCanvas(head, 16, 16);
 
-    const torsoLayered = opreationData.torsoOuter
+    const torsoLayered = operationData.torsoOuter
         ? layerSlices(slices.torso, slices.torsoOuter)
         : slices.torso;
     processTorso(torsoLayered);
     const torso = scaleCanvas(torsoLayered, 4, 6);
 
-    const leftArmLayered = opreationData.leftArmOuter && slices.leftArmOuter
+    const leftArmLayered = operationData.leftArmOuter && slices.leftArmOuter
         ? layerSlices(slices.leftArm, slices.leftArmOuter)
         : slices.leftArm;
     processArm(leftArmLayered);
     const leftArm = scaleCanvas(leftArmLayered, 2, 4);
 
-    const rightArmLayered = opreationData.rightArmOuter && slices.rightArmOuter
+    const rightArmLayered = operationData.rightArmOuter && slices.rightArmOuter
         ? layerSlices(slices.rightArm, slices.rightArmOuter)
         : slices.rightArm;
     processArm(rightArmLayered);
     const rightArm = scaleCanvas(rightArmLayered, 2, 4);
 
-    const leftLegLayered = opreationData.leftLegOuter && slices.leftLegOuter
+    const leftLegLayered = operationData.leftLegOuter && slices.leftLegOuter
         ? layerSlices(slices.leftLeg, slices.leftLegOuter)
         : slices.leftLeg;
     processLeg(leftLegLayered);
     const leftLeg = scaleCanvas(leftLegLayered, 2, 2);
 
-    const rightLegLayered = opreationData.rightLegOuter && slices.rightLegOuter
+    const rightLegLayered = operationData.rightLegOuter && slices.rightLegOuter
         ? layerSlices(slices.rightLeg, slices.rightLegOuter)
         : slices.rightLeg;
     processLeg(rightLegLayered);
@@ -238,11 +236,11 @@ export function renderAvatar(skinImage) {
     const legsWidth = legs.width;
     const legsHeight = legs.height;
     const totalWidth = Math.max(
-        headWidth + 2 * BORDER_WIDTH,
-        leftArm.width + torsoWidth + rightArm.width + 4 * BORDER_WIDTH,
-        legsWidth + 2 * BORDER_WIDTH
+        headWidth + 2 * options.border,
+        leftArm.width + torsoWidth + rightArm.width + 4 * options.border,
+        legsWidth + 2 * options.border
     );
-    const totalHeight = headHeight + Math.max(torsoHeight, armHeight) + legsHeight + 4 * BORDER_WIDTH;
+    const totalHeight = headHeight + Math.max(torsoHeight, armHeight) + legsHeight + 4 * options.border;
 
     // 6. 绘制人形到临时画布（只用一个canvas）
     const tempCanvas = document.createElement('canvas');
@@ -250,26 +248,26 @@ export function renderAvatar(skinImage) {
     tempCanvas.height = totalHeight;
     const tempContext = tempCanvas.getContext('2d');
     tempContext.imageSmoothingEnabled = false;
-    let currentY = BORDER_WIDTH;
+    let currentY = options.border;
     const headX = (totalWidth - headWidth) / 2;
-    drawBorder(tempContext, headX, currentY, headWidth, headHeight, BORDER_WIDTH, BORDER_COLOR);
+    drawBorder(tempContext, headX, currentY, headWidth, headHeight, options.border, options.color);
     tempContext.drawImage(headScaled, headX, currentY);
-    currentY += headHeight + BORDER_WIDTH;
+    currentY += headHeight + options.border;
     const bodyRowY = currentY;
-    const bodyRowWidth = leftArm.width + torsoWidth + rightArm.width + 2 * BORDER_WIDTH;
+    const bodyRowWidth = leftArm.width + torsoWidth + rightArm.width + 2 * options.border;
     const bodyRowStartX = (totalWidth - bodyRowWidth) / 2;
     const leftArmX = bodyRowStartX;
-    drawBorder(tempContext, leftArmX, bodyRowY, leftArm.width, leftArm.height, BORDER_WIDTH, BORDER_COLOR);
+    drawBorder(tempContext, leftArmX, bodyRowY, leftArm.width, leftArm.height, options.border, options.color);
     tempContext.drawImage(leftArm, leftArmX, bodyRowY);
-    const torsoX = leftArmX + leftArm.width + BORDER_WIDTH;
-    drawBorder(tempContext, torsoX, bodyRowY, torsoWidth, torsoHeight, BORDER_WIDTH, BORDER_COLOR);
+    const torsoX = leftArmX + leftArm.width + options.border;
+    drawBorder(tempContext, torsoX, bodyRowY, torsoWidth, torsoHeight, options.border, options.color);
     tempContext.drawImage(torso, torsoX, bodyRowY);
-    const rightArmX = torsoX + torsoWidth + BORDER_WIDTH;
-    drawBorder(tempContext, rightArmX, bodyRowY, rightArm.width, rightArm.height, BORDER_WIDTH, BORDER_COLOR);
+    const rightArmX = torsoX + torsoWidth + options.border;
+    drawBorder(tempContext, rightArmX, bodyRowY, rightArm.width, rightArm.height, options.border, options.color);
     tempContext.drawImage(rightArm, rightArmX, bodyRowY);
-    currentY += Math.max(torsoHeight, armHeight) + BORDER_WIDTH;
+    currentY += Math.max(torsoHeight, armHeight) + options.border;
     const legsX = (totalWidth - legsWidth) / 2;
-    drawBorder(tempContext, legsX, currentY, legsWidth, legsHeight, BORDER_WIDTH, BORDER_COLOR);
+    drawBorder(tempContext, legsX, currentY, legsWidth, legsHeight, options.border, options.color);
     tempContext.drawImage(legs, legsX, currentY);
 
     // 7. 输出到最终画布
@@ -278,19 +276,26 @@ export function renderAvatar(skinImage) {
     canvas.width = 1000;
     canvas.height = 1000;
     context.imageSmoothingEnabled = false;
-    if (BG_LINE_COUNT > 0) {
-        drawRadialBackground(context, 1000, 1000, BG_LINE_COUNT, BG_COLOR1, BG_COLOR2);
-    } else {
-        context.fillStyle = 'white';
-        context.fillRect(0, 0, 1000, 1000);
-    }
+    
+    // 计算缩放和定位
     const scaledWidth = totalWidth * SCALE;
     const scaledHeight = totalHeight * SCALE;
-    const x = (1000 - scaledWidth) / 2;
-    const y = (1000 - scaledHeight) / 2;
+    const x = (canvas.width - scaledWidth) / 2;
+    const y = (canvas.height - scaledHeight) / 2;
+    
     context.drawImage(tempCanvas, x, y, scaledWidth, scaledHeight);
-    if (VIGNETTE_INTENSITY > 0) {
-        drawVignette(context, 1000, 1000, VIGNETTE_INTENSITY);
-    }
+    return canvas;
+}
+
+
+export function renderBackground(options) {
+    const { angle, colors, count, vignette } = options;
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = 1000;
+    canvas.height = 1000;
+    context.imageSmoothingEnabled = false;
+    drawRadialBackground(context, 1000, 1000, count, colors[0], colors[1], angle);
+    if (vignette > 0) drawVignette(context, 1000, 1000, vignette);
     return canvas;
 }

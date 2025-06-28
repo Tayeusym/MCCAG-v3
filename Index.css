@@ -605,9 +605,9 @@ p {
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   padding: 40px;
   position: fixed;
-  top: 20%;
+  top: 50px;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.5);
+  transform: translate(-50%, 0) scale(0.5);
   z-index: 1000;
   border: none;
   opacity: 0;
@@ -616,7 +616,7 @@ p {
 
 .edit-dialog.show {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, 0) scale(1);
 }
 
 .dialog-content {

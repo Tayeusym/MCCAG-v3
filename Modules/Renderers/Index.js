@@ -1,12 +1,12 @@
 import { processImage } from './Image.js';
 import { renderAvatar as renderSideAvater } from './Side.js';
-import { renderAvatar as renderVintageAvater } from './Vintage.js';
 import { renderAvatar as renderMinimalAvater } from './Minimal.js';
+import { renderBackground as renderVintageBackground, renderAvatar as renderVintageAvater } from './Vintage.js';
 
 
-export function renderAvatar(skinImage, modelType, avatarType = null) {
-    if (modelType === 'minimal') return renderMinimalAvater(skinImage, avatarType);
-    else if (modelType === 'vintage') return renderVintageAvater(skinImage);
+export function renderAvatar(skinImage, modelType, options) {
+    if (modelType === 'minimal') return renderMinimalAvater(skinImage, options.type);
+    else if (modelType === 'vintage') return renderVintageAvater(skinImage, options);
     else if (modelType === 'side') return renderSideAvater(skinImage);
     // 其他类型的渲染逻辑可以在这里添加
     throw new Error(`不支持的类型：${modelType}`);
@@ -89,6 +89,7 @@ export function renderBackground(modelType, options = null) {
         }
         return canvas;
     }
+    if (modelType === 'vintage') return renderVintageBackground(options);
     
     if (colors.length <= 1) {
         context.fillStyle = colors[0];
