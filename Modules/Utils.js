@@ -20,6 +20,7 @@ export function popupTips(text, type) {
         setTimeout(() => {
             tips.style.height = '0';
             tips.style.margin = '0';
+            tips.style.padding = '0';
             setTimeout(() => tipsContainer.removeChild(tips), 1000);
         }, 1000);
     }, 8000);
@@ -67,7 +68,7 @@ export function handleUploader(event) {
         // 验证文件大小（2MB = 2 * 1024 * 1024 字节）
         if (file.size > 2 * 1024 * 1024) reject('图片大小不能超过限制的大小！');
         const image = new Image();
-        
+        image.crossOrigin = 'anonymous';
         image.onload = () => resolve(image);
         image.onerror = () => reject('读取图片失败！');
         image.src = URL.createObjectURL(file);

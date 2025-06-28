@@ -1,6 +1,7 @@
 export const corsProxy = 'https://proxy.mccag.cn/?url=';
 
-export const translations = {
+
+export const translations = Object.freeze({
     'zh': {
         'language_name': '汉语',
         'title': '可爱头像生成器 | Minecraft Cute Avatar Generator',
@@ -187,4 +188,4 @@ export const translations = {
         'total_visits': 'Gesamtbesuche:',
         'times': 'mal'
     }
-};
+});

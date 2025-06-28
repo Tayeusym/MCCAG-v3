@@ -605,7 +605,7 @@ p {
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   padding: 40px;
   position: fixed;
-  top: 50%;
+  top: 20%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.5);
   z-index: 1000;
@@ -629,7 +629,7 @@ p {
   align-items: center;
   margin-bottom: 20px;
   gap: 14px;
-  height: 28px;
+  min-height: 28px;
 }
 
 .dialog-row:last-child {
@@ -648,7 +648,8 @@ p {
 }
 
 .color-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
 }
 
@@ -664,7 +665,7 @@ p {
   position: relative;
 }
 
-.color-item.selected,
+.color-item#selected,
 .color-item:active {
   border-color: var(--theme-color);
   box-shadow: 0 4px 16px 0 rgba(83, 146, 239, 0.18);
@@ -690,7 +691,7 @@ p {
   padding: 0;
 }
 
-.color-picker.selected,
+.color-picker#selected,
 .color-picker:focus {
   border-color: var(--theme-color);
   box-shadow: 0 4px 16px 0 rgba(83, 146, 239, 0.18);
@@ -746,7 +747,7 @@ p {
 }
 
 .minimal-option:active {
-  transform: scale(0.97);
+  transform: scale(0.95);
 }
 
 /* 拖动条美化 */

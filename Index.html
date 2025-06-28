@@ -78,8 +78,8 @@
                     <canvas height="1000" width="1000" class="avatar-preview-canvas"></canvas>
                     <div class="loading-overlay"></div>
                     <div class="action-list" columns="2">
-                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
                         <button class="button button-secondary" data-i18n="download_transparent" download-type="transparent">无背景保存</button>
+                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
                     </div>
                 </div>
 
@@ -98,8 +98,8 @@
                     <canvas height="1000" width="1000" class="avatar-preview-canvas"></canvas>
                     <div class="loading-overlay"></div>
                     <div class="action-list" columns="2">
-                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
                         <button class="button button-secondary" data-i18n="download_transparent" download-type="transparent">无背景保存</button>
+                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
                     </div>
                 </div>
 
@@ -114,8 +114,8 @@
                     <canvas height="1000" width="1000" class="avatar-preview-canvas"></canvas>
                     <div class="loading-overlay"></div>
                     <div class="action-list" columns="2">
-                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
                         <button class="button button-secondary" data-i18n="download_transparent" download-type="transparent">无背景保存</button>
+                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
                     </div>
                 </div>
 
@@ -127,16 +127,14 @@
             <span data-i18n="production">制作：</span>
             <a href="https://github.com/Lonely-Sails/" rel="noopener" target="_blank" class="footer-link">LonelySail</a> 
             <a href="https://space.bilibili.com/23785358/" rel="noopener" target="_blank" class="footer-link">Keishi</a> | 
-            <a href="https://www.bilibili.com/video/BV1rB4y1F7dW/" rel="noopener" target="_blank" data-i18n="inspiration" class="footer-link">灵感来源：噪音回放（B站视频链接）</a> | 
-            <span data-i18n="sponsor">赞助：DongYue</span>
+            <a href="https://github.com/MCCAG/" rel="noopener" target="_blank" class="footer-link">Github</a>
         </p>
         <p class="footer-text">
-            <a href="https://github.com/MCCAG/" rel="noopener" target="_blank" class="footer-link">Github</a> | 
             <a href="https://afdian.com/a/Keishi/" rel="noopener" target="_blank" data-i18n="donate" class="footer-link">打赏给作者一杯咖啡！</a> | 
             <span data-i18n="friendly_links">友链：</span>
             <a href="http://klpbbs.com/" rel="noopener" target="_blank" class="footer-link">苦力怕论坛</a> 
-            <a href="https://www.minebbs.com/" rel="noopener" target="_blank" class="footer-link">MineBBS</a> 
-            <a href="https://www.rainyun.com/" rel="noopener" target="_blank" class="footer-link">雨云服务器</a> | 
+            <a href="https://www.minebbs.com/" rel="noopener" target="_blank" class="footer-link">MineBBS</a>
+            <a href="https://www.rainyun.com/" rel="noopener" target="_blank" class="footer-link">雨云服务器</a> |
             <span id='busuanzi_container_site_pv'>
                 <span data-i18n="total_visits">本站总访问量</span> 
                 <span id="busuanzi_value_site_pv" class="footer-count"></span> 
@@ -149,15 +147,15 @@
         <div id="edit-dialog" class="edit-dialog">
 
             <!-- Minimal 生成编辑 -->
-            <div id="dialog-minimal-generate" class="dialog-content hidden">
+            <div id="dialog-minimal-generate" class="hidden dialog-content">
                 <div class="dialog-row">
                     <label>阴影深浅</label>
-                    <input type="range" min="0" max="100" value="40" class="range-slider">
-                    <p><span class="range-slider-value">40</span>%</p>
+                    <input type="range" option="generate-shadow" min="0" max="100" value="0" class="range-slider">
+                    <p><span class="range-slider-value">0</span>%</p>
                 </div>
                 <div class="dialog-row">
                     <label>图片缩放</label>
-                    <input type="range" min="10" max="100" value="100" class="range-slider">
+                    <input type="range" option="generate-scale" min="50" max="150" value="100" class="range-slider">
                     <p><span class="range-slider-value">100</span>%</p>
                 </div>
                 <div class="dialog-row">
@@ -177,21 +175,21 @@
             <div id="dialog-vintage-generate" class="dialog-content hidden">
                 <div class="dialog-row">
                     <label>边线粗细</label>
-                    <input type="range" min="1" max="10" value="2" class="range-slider">
+                    <input type="range" option="generate-border" min="1" max="5" value="2" class="range-slider">
                     <p><span class="range-slider-value">2</span>px</p>
                 </div>
                 <div class="dialog-row">
                     <label>图片缩放</label>
-                    <input type="range" min="10" max="100" value="100" class="range-slider">
+                    <input type="range" option="generate-scale" min="10" max="100" value="100" class="range-slider">
                     <p><span class="range-slider-value">100</span>%</p>
                 </div>
                 <div class="dialog-row">
                     <label>边线颜色</label>
                     <div class="color-list">
-                        <div class="color-item" style="background:#1D113C"></div>
-                        <div class="color-item" style="background:#6C63FF"></div>
-                        <div class="color-item" style="background:#3A3A3A"></div>
-                        <div class="color-item" style="background:#000000"></div>
+                        <div class="color-item" value="#1D113C"></div>
+                        <div class="color-item" value="#6C63FF"></div>
+                        <div class="color-item" value="#3A3A3A"></div>
+                        <div class="color-item" value="#000000"></div>
                     </div>
                 </div>
                 <div class="dialog-row">
@@ -204,22 +202,22 @@
             <div id="dialog-vintage-background" class="dialog-content hidden">
                 <div class="dialog-row">
                     <label>背景条数</label>
-                    <input type="range" min="1" max="20" value="8" class="range-slider">
+                    <input type="range" option="background-count" min="1" max="20" value="8" class="range-slider">
                     <p><span class="range-slider-value">8</span>条</p>
                 </div>
                 <div class="dialog-row">
                     <label>暗角深浅</label>
-                    <input type="range" min="0" max="100" value="20" class="range-slider">
+                    <input type="range" option="background-shadow" min="0" max="100" value="20" class="range-slider">
                     <p><span class="range-slider-value">20</span>%</p>
                 </div>
                 <div class="dialog-row">
                     <label>预设颜色</label>
                     <div class="color-list">
-                        <div class="color-item" style="background:#F5E6E8"></div>
-                        <div class="color-item" style="background:#D5C6E0"></div>
-                        <div class="color-item" style="background:#AAA1C8"></div>
-                        <div class="color-item" style="background:#967AA1"></div>
-                        <div class="color-item" style="background:#FFD6E0"></div>
+                        <div class="color-item" value="#F5E6E8"></div>
+                        <div class="color-item" value="#D5C6E0"></div>
+                        <div class="color-item" value="#AAA1C8"></div>
+                        <div class="color-item" value="#967AA1"></div>
+                        <div class="color-item" value="#FFD6E0"></div>
                     </div>
                 </div>
                 <div class="dialog-row">
@@ -237,12 +235,12 @@
             <div id="dialog-side-generate" class="dialog-content hidden">
                 <div class="dialog-row">
                     <label>阴影深浅</label>
-                    <input type="range" min="0" max="100" value="40" class="range-slider">
+                    <input type="range" option="generate-shadow" min="0" max="100" value="0" class="range-slider">
                     <p><span class="range-slider-value">40</span>%</p>
                 </div>
                 <div class="dialog-row">
                     <label>图片缩放</label>
-                    <input type="range" min="10" max="100" value="100" class="range-slider">
+                    <input type="range" option="generate-scale" min="100" max="150" value="100" class="range-slider">
                     <p><span class="range-slider-value">100</span>%</p>
                 </div>
             </div>
@@ -251,22 +249,24 @@
             <div id="dialog-common-background" class="dialog-content hidden">
                 <div class="dialog-row">
                     <label>倾斜角度</label>
-                    <input type="range" min="0" max="90" value="20" class="range-slider">
-                    <p><span class="range-slider-value">20</span>°</p>
+                    <input type="range" option="background-angle" min="0" max="180" value="0" class="range-slider">
+                    <p><span class="range-slider-value">0</span>°</p>
                 </div>
                 <div class="dialog-row">
                     <label>预设颜色</label>
                     <div class="color-list">
-                        <div class="color-item" style="background:#F5E6E8"></div>
-                        <div class="color-item" style="background:#D5C6E0"></div>
-                        <div class="color-item" style="background:#AAA1C8"></div>
-                        <div class="color-item" style="background:#967AA1"></div>
-                        <div class="color-item" style="background:#FFD6E0"></div>
+                        <div class="color-item" option="background-colors" value="#F5E6E8"></div>
+                        <div class="color-item" option="background-colors" value="#D5C6E0"></div>
+                        <div class="color-item" option="background-colors" value="#AAA1C8"></div>
+                        <div class="color-item" option="background-colors" value="#967AA1"></div>
+                        <div class="color-item" option="background-colors" value="#FFD6E0"></div>
+                        <div class="color-item" option="background-colors" value="#FFD6E0,#967AA1"></div>
+                        <div class="color-item" option="background-colors" value="#F5E6E8,#AAA1C8"></div>
                     </div>
                 </div>
                 <div class="dialog-row">
                     <label>选择颜色</label>
-                    <input type="color" value="#6C63FF" class="color-picker">
+                    <input type="color" option="background-colors" class="color-picker">
                 </div>
                 <div class="dialog-row">
                     <label>上传背景</label>

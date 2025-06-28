@@ -50,14 +50,14 @@ function operate(mainContext, skinCanvas, cropBox, mirror, scaleFactor, pastePos
  * @returns {HTMLCanvasElement} 渲染后的画布
  */
 export function renderAvatar(skinImage, avatarType) {
-    const canvas = document.createElement('canvas');
+    let canvas = document.createElement('canvas');
     canvas.width = 1000;
     canvas.height = 1000;
     const context = canvas.getContext('2d');
-    context.shadowColor = 'rgba(0, 0, 0, 0.2)';
+    context.shadowColor = `rgba(0, 0, 0, 0.2)`;
     context.shadowOffsetX = 0;
     context.shadowOffsetY = 0;
-    context.shadowBlur = 10;
+    context.shadowBlur = 15;
 
     // 清空画布
     context.clearRect(0, 0, 1000, 1000);
@@ -90,8 +90,8 @@ export function renderAvatar(skinImage, avatarType) {
         finalCanvas.height = 1000;
         finalContext.drawImage(bigHeadCanvas, 200, 0, 1000, 1000, 0, 0, 1000, 1000);
 
-        return finalCanvas;
+        return finalCanvas
     }
-
+    
     return canvas;
 }

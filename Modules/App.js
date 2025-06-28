@@ -1,44 +1,44 @@
 // 主应用模块
 
-import { 
-    fetchMojangProfile, 
-    fetchSkinWebsiteProfile, 
+import {
+    fetchMojangProfile,
+    fetchSkinWebsiteProfile,
 } from './Network.js';
 
-import { 
-    popupTips, 
-    checkInputValue, 
-    closeSelections, 
-    handleUploader, 
-    downloadWithBackground, 
-    downloadTransparent 
+import {
+    popupTips,
+    checkInputValue,
+    closeSelections,
+    handleUploader,
+    downloadWithBackground,
+    downloadTransparent
 } from './Utils.js';
 
 import { initI18n } from './I18n.js';
-import { renderAvatar } from './Renderers/Index.js';
+import { renderBackground, renderAvatar, regulateAvatar } from './Renderers/Index.js';
 
 
 // 应用状态
 class AppState {
     constructor() {
-        this.customBackground = null;
-        this.currentBackgroundIndex = 0;
+        this.currentSkinImage = new Image();
+        this.currentSkinImage.crossOrigin = 'anonymous';
         this.currentAvatarImage = new Image();
         this.currentAvatarImage.src = 'Resources/Avatars/Minimal.png';
+        this.currentRegulatedAvatarImage = null;
+        this.currentRegulatedBackgroundImage = null;
 
-        this.avatarType = 'minimal';
-        this.avatarOption = 'full';
+        this.modelType = 'minimal';
         this.fetchSkinMethod = 'mojang';
-        
+        this.options = {};
+
         // DOM元素
         this.content = document.querySelector('.generator-content');
         this.uploadInput = document.querySelector('.file-upload-input');
         this.current = this.content.querySelector('div#active-content');
         this.currentCanvas = this.current.querySelector('canvas');
-    }
-    
-    setCustomBackground(img) {
-        this.customBackground = img;
+        this.dialog = document.querySelector('#edit-dialog');
+        this.dialogOverlay = document.querySelector('#edit-dialog-overlay');
     }
 }
 
@@ -46,53 +46,134 @@ class AppState {
 class AvatarGeneratorApp {
     constructor() {
         this.state = new AppState();
-        this.backgroundUploader = null;
     }
-    
+
     /**
      * 初始化应用
      */
     async init() {
         try {
-            // 加载操作数据
             // 初始化国际化
             // initI18n();
+            // 初始化对话框
+            this.initDialogs();
             // 初始化事件监听
             this.initEventListeners();
-            
+            // 从弹窗中读取默认选项
+            this.state.options = this.readOptions(this.state.modelType);
             console.log('应用初始化完成');
         } catch (error) {
             console.error('应用初始化失败:', error);
             popupTips('应用初始化失败！', 'error');
         }
     }
-    
+
+    initDialogs() {
+        const colorItems = this.state.dialog.querySelectorAll('div.color-item');
+        colorItems.forEach(item => {
+            console.log(item);
+            const colors = item.getAttribute('value').split(',');
+            if (colors.length <= 1) item.style.background = colors[0];
+            else item.style.background = 'linear-gradient(to right, ' + colors.join(', ') + ')';
+        });
+    }
+
+    /**
+     * 更新对话框
+     */
+    updateDialogs(dialog) {
+        if (dialog.id.includes('background')) {
+            let flag = false;
+            const currentColor = this.state.options.background.colors.join(',');
+            const colorItems = dialog.querySelectorAll('div.color-item');
+            colorItems.forEach(item => {
+                if (item.getAttribute('value') === currentColor) {
+                    item.id = 'selected';
+                    flag = true;
+                } else item.id = '';
+            });
+            if (!this.state.options.background.image && !flag)
+                dialog.querySelectorAll('input.color-picker').forEach(item => item.id = 'selected');
+        }
+
+        const rangeInputs = dialog.querySelectorAll('input.range-slider');
+        rangeInputs.forEach(input => {
+            // 初始化进度条
+            const [ type, option ] = input.getAttribute('option').split('-');
+            input.value = this.state.options[type][option];
+            this.updateRangeProgress(input);
+        });
+    }
+
     /**
      * 初始化事件监听
      */
     initEventListeners() {
         // 全局点击事件
         window.addEventListener('click', closeSelections);
-        
-        // 头像图像加载事件
-        this.state.currentAvatarImage.addEventListener('load', () => this.updateCanvas());
-        
+        // 添加关闭对话框的事件
+        this.state.dialogOverlay.addEventListener('click', event => event.target === this.state.dialogOverlay && this.hideEditDialog());
+
+        this.state.currentAvatarImage.onload = () => {
+            this.state.currentAvatarImage.onload = null;
+            this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
+            this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
+            this.updateCanvas();
+        };
+
         // 文件上传事件
-        this.state.uploadInput.addEventListener('change', () => {
-            if (this.state.uploadInput.files && this.state.uploadInput.files[0]) popupTips('成功选择皮肤文件！', 'success');
-            else popupTips('未选择任何文件！', 'warning');
+        this.state.uploadInput.addEventListener('change', async event => {
+            try {
+                this.state.currentSkinImage = await handleUploader(event);
+                popupTips('成功选择皮肤文件！', 'success');
+            } catch (error) {
+                this.state.currentSkinImage = null;
+                popupTips(error.message, 'error');
+            }
         });
-        
-        // 头像类型选择事件（仅Minimal）
+
+        // 头像类型选择事件（仅Minimal）额外判断
         document.querySelectorAll('input[name=minimal-option]').forEach(radio =>
-            radio.addEventListener('change', event => this.state.avatarOption = event.target.id)
+            radio.addEventListener('change', event => this.state.options.generate.type = event.target.id)
         );
-        
+
+        // 滑块通用选项改变
+        document.querySelectorAll('input.range-slider').forEach(input => {
+            function updateOptions(event) {
+                this.updateRangeProgress(event.target);
+                const [ type, option ] = event.target.getAttribute('option').split('-');
+                this.state.options[type][option] = event.target.value;
+                if (type === 'generate')
+                    this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
+                else this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
+                this.updateCanvas();
+            }
+            
+            input.addEventListener('input', updateOptions.bind(this));
+        });
+
+        // 默认颜色选择
+        document.querySelectorAll('div.color-item, input.color-picker').forEach(item => {
+            function updateColorOptions(event) {
+                const colors = event.target.tagName === 'INPUT' ? [event.target.value] : event.target.getAttribute('value').split(',');
+                const lastSelected = document.querySelectorAll('div[option]#selected');
+                if (lastSelected) lastSelected.forEach(item => item.id = '');
+                event.target.id = 'selected';
+                const [ type, option ] = event.target.getAttribute('option').split('-');
+                this.state.options.background.image = null;
+                this.state.options[type][option] = colors;
+                this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
+                this.updateCanvas();
+            }
+            item.addEventListener('click', updateColorOptions.bind(this));
+            item.addEventListener('input', updateColorOptions.bind(this));
+        });
+
         // 下载事件
         document.querySelectorAll('button[download-type]').forEach(item =>
             item.addEventListener('click', event => this.handleDownload(event))
         );
-        
+
         // 标签页切换事件
         document.querySelectorAll('input[name=tabs]').forEach((tab, index) =>
             tab.addEventListener('change', this.switchPanel(index))
@@ -100,9 +181,9 @@ class AvatarGeneratorApp {
 
         // 头像类型切换事件
         document.querySelectorAll('input[name=model-type]').forEach(button =>
-            button.addEventListener('click', event => this.switchAvatarType(event))
+            button.addEventListener('click', event => this.switchModelType(event))
         );
-        
+
         // 输入验证事件
         document.querySelectorAll('input.text-input').forEach(input =>
             input.addEventListener('input', checkInputValue(/[^a-zA-Z0-9-_.]/g))
@@ -112,7 +193,10 @@ class AvatarGeneratorApp {
             input.addEventListener('change', async event => {
                 try {
                     const image = await handleUploader(event);
-                    this.state.setCustomBackground(image);
+                    const colorSelected = document.querySelector('#selected');
+                    if (colorSelected) colorSelected.id = '';
+                    this.state.options.background.image = image;
+                    this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
                     this.updateCanvas();
                     popupTips('背景图片上传成功！', 'success');
                 } catch (error) {
@@ -121,7 +205,7 @@ class AvatarGeneratorApp {
             })
         );
 
-        document.querySelectorAll('button.generate').forEach(button => 
+        document.querySelectorAll('button.generate').forEach(button =>
             button.addEventListener('click', _ => {
                 if (this.state.fetchSkinMethod == 'upload') this.generateUpload();
                 else this.generate();
@@ -129,36 +213,147 @@ class AvatarGeneratorApp {
         );
 
         // 编辑按钮事件
-        document.querySelectorAll('.edit-generate, .edit-background').forEach(button => {
-            button.addEventListener('click', (event) => {
-                this.showEditDialog(event);
-            });
-        });
-
-        // 色块选择交互
-        document.querySelectorAll('.color-list').forEach(list => {
-            list.querySelectorAll('.color-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    list.querySelectorAll('.color-item').forEach(i => i.classList.remove('selected'));
-                    item.classList.add('selected');
-                });
-            });
-        });
-
+        document.querySelectorAll('button.edit-generate, button.edit-background').forEach(button =>
+            button.addEventListener('click', event => this.showEditDialog(event))
+        );
         // 拖动条进度条效果
-        this.initRangeSliders();
+        this.initDialogs();
     }
-    
-    switchAvatarType(event) {
-        const avatarType = event.target.id;
-        if (this.state.avatarType === avatarType) return;
-        const avatarTypeName = avatarType.charAt(0).toUpperCase() + avatarType.slice(1);
-        this.state.avatarType = avatarType;
+
+    /**
+     * 从弹窗中读取默认选项
+     */
+    readOptions(modelType) {
+        const newOptions = { generate: {}, background: {} };
+
+        // 读取生成选项
+        const generateDialog = document.getElementById(`dialog-${modelType}-generate`);
+        if (generateDialog) {
+            const rangeInputs = generateDialog.querySelectorAll('input.range-slider');
+            rangeInputs.forEach(input => {
+                const [type, option] = input.getAttribute('option').split('-');
+                newOptions[type][option] = parseInt(input.value);
+            });
+
+            // 读取单选按钮选项（如Minimal的生成模式）
+            const radioInputs = generateDialog.querySelectorAll('input[type="radio"]:checked');
+            radioInputs.forEach(radio => {
+                if (radio.name === 'minimal-option') {
+                    newOptions.generate.type = radio.id;
+                }
+            });
+
+            // 读取颜色选择器
+            const colorPicker = generateDialog.querySelector('input.color-picker');
+            if (colorPicker) {
+                // 检查是否有option属性
+                const option = colorPicker.getAttribute('option');
+                if (option) {
+                    const [type, optionName] = option.split('-');
+                    newOptions[type][optionName] = [colorPicker.value];
+                } else {
+                    // 没有option属性时，假设是生成选项的颜色
+                    newOptions.generate.borderColor = colorPicker.value;
+                }
+            }
+            
+            // 检查生成弹窗中的color-item（如Vintage模型的边线颜色）
+            const colorItems = generateDialog.querySelectorAll('div.color-item');
+            if (colorItems.length > 0) {
+                const selectedColorItem = generateDialog.querySelector('div.color-item#selected');
+                if (selectedColorItem) {
+                    // 如果有选中的color-item，使用其值
+                    const colors = selectedColorItem.getAttribute('value').split(',');
+                    newOptions.generate.borderColor = colors[0]; // 对于生成选项，通常只需要第一个颜色
+                } else {
+                    // 如果没有选中的color-item，使用第一个color-item的值
+                    const firstColorItem = colorItems[0];
+                    const colors = firstColorItem.getAttribute('value').split(',');
+                    newOptions.generate.borderColor = colors[0];
+                }
+            }
+        }
+
+        // 读取背景选项
+        const backgroundDialogId = modelType === 'vintage' ? 'dialog-vintage-background' : 'dialog-common-background';
+        const backgroundDialog = document.getElementById(backgroundDialogId);
+        if (backgroundDialog) {
+            const rangeInputs = backgroundDialog.querySelectorAll('input.range-slider');
+            rangeInputs.forEach(input => {
+                const [type, option] = input.getAttribute('option').split('-');
+                newOptions[type][option] = parseInt(input.value);
+            });
+
+            // 读取颜色选择器
+            const colorPicker = backgroundDialog.querySelector('input.color-picker');
+            const colorItems = backgroundDialog.querySelectorAll('div.color-item');
+            
+            if (colorPicker) {
+                // 检查是否有option属性
+                const option = colorPicker.getAttribute('option');
+                if (option) {
+                    const [type, optionName] = option.split('-');
+                    // 检查是否有选中的color-item
+                    const selectedColorItem = backgroundDialog.querySelector('div.color-item#selected');
+                    if (selectedColorItem) {
+                        // 如果有选中的color-item，使用其值
+                        const colors = selectedColorItem.getAttribute('value').split(',');
+                        newOptions[type][optionName] = colors;
+                    } else {
+                        // 如果没有选中的color-item，使用第一个color-item的值
+                        const firstColorItem = colorItems[0];
+                        if (firstColorItem) {
+                            const colors = firstColorItem.getAttribute('value').split(',');
+                            newOptions[type][optionName] = colors;
+                        } else {
+                            // 如果连color-item都没有，才使用color-picker的值
+                            newOptions[type][optionName] = [colorPicker.value];
+                        }
+                    }
+                } else {
+                    // 没有option属性时，假设是背景颜色
+                    const selectedColorItem = backgroundDialog.querySelector('div.color-item#selected');
+                    if (selectedColorItem) {
+                        const colors = selectedColorItem.getAttribute('value').split(',');
+                        newOptions.background.colors = colors;
+                    } else {
+                        const firstColorItem = colorItems[0];
+                        if (firstColorItem) {
+                            const colors = firstColorItem.getAttribute('value').split(',');
+                            newOptions.background.colors = colors;
+                        } else {
+                            newOptions.background.colors = [colorPicker.value];
+                        }
+                    }
+                }
+            } else if (colorItems.length > 0) {
+                const firstColorItem = colorItems[0];
+                const colors = firstColorItem.getAttribute('value').split(',');
+                newOptions.background.colors = colors;
+            }
+        }
+
+        return newOptions;
+    }
+
+    switchModelType(event) {
+        const modelType = event.target.id;
+        if (this.state.modelType === modelType) return;
+        // 更新选项，保留一些通用设置
+        this.state.options = this.readOptions(modelType);
+        const avatarTypeName = modelType.charAt(0).toUpperCase() + modelType.slice(1);
+        this.state.modelType = modelType;
+        this.state.currentAvatarImage = new Image();
         this.state.currentAvatarImage.src = `Resources/Avatars/${avatarTypeName}.png`;
-        this.updateCanvas();
+        this.state.currentAvatarImage.onload = () => {
+            this.state.currentAvatarImage.onload = null;
+            this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
+            this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
+            this.updateCanvas();
+        }
         popupTips(`已切换到 ${avatarTypeName} 头像类型！`, 'success');
     }
-    
+
     /**
      * 切换内容面板
      */
@@ -175,68 +370,32 @@ class AvatarGeneratorApp {
             this.updateCanvas();
         };
     }
-    
+
     /**
      * 更新画布
      */
     updateCanvas() {
         const context = this.state.currentCanvas.getContext('2d');
-        
         // 清空画布
         context.clearRect(0, 0, 1000, 1000);
-        
-        // 绘制背景
-        if (this.state.customBackground) {
-            // 如果有自定义背景，绘制自定义背景
-            const imageRatio = this.state.customBackground.width / this.state.customBackground.height;
-            const canvasRatio = this.state.currentCanvas.width / this.state.currentCanvas.height;
-            
-            let drawWidth, drawHeight, offsetX, offsetY;
-            
-            if (imageRatio > canvasRatio) {
-                drawHeight = this.state.currentCanvas.height;
-                drawWidth = this.state.customBackground.width * (drawHeight / this.state.customBackground.height);
-                offsetX = (this.state.currentCanvas.width - drawWidth) / 2;
-                offsetY = 0;
-            } else {
-                drawWidth = this.state.currentCanvas.width;
-                drawHeight = this.state.customBackground.height * (drawWidth / this.state.customBackground.width);
-                offsetX = 0;
-                offsetY = (this.state.currentCanvas.height - drawHeight) / 2;
-            }
-            
-            context.drawImage(this.state.customBackground, offsetX, offsetY, drawWidth, drawHeight);
-        } else {
-            // 否则绘制预设背景
-            // const background = this.state.getCurrentBackground();
-            // if (background.startsWith('linear-gradient')) {
-            //     const colors = background.match(/#\w{6}/g);
-            //     const gradient = context.createLinearGradient(0, 0, 1000, 1000);
-            //     gradient.addColorStop(0, colors[0]);
-            //     gradient.addColorStop(1, colors[1]);
-            //     context.fillStyle = gradient;
-            // } else context.fillStyle = background;
-            // context.fillRect(0, 0, 1000, 1000);
-        }
-        
-        // 绘制头像
-        context.drawImage(this.state.currentAvatarImage, 0, 0, 1000, 1000);
+        context.drawImage(this.state.currentRegulatedBackgroundImage, 0, 0, 1000, 1000);
+        context.drawImage(this.state.currentRegulatedAvatarImage, 0, 0, 1000, 1000);
     }
-    
+
     /**
      * 生成头像（Mojang/皮肤站）
      */
     async generate() {
-        
+
         const input = this.state.current.querySelector('input.player-name');
-        
+
         if (!input.value) return popupTips('请输入用户名！', 'warning');
         if (this.state.fetchSkinMethod === 'website' && !this.state.skinWebsiteInput.value)
             return popupTips('请输入皮肤站地址！', 'warning');
-        
+
         const mask = this.state.current.querySelector('.loading-overlay');
         mask.style.opacity = 1;
-        
+
         try {
             let skinUrl = null;
             if (this.state.fetchSkinMethod === 'website') {
@@ -253,50 +412,47 @@ class AvatarGeneratorApp {
                 if (!profile) throw new Error('未找到该玩家的信息！');
                 skinUrl = `https://crafatar.com/skins/${profile.id}`;
             }
-            
+
             // 加载皮肤图像
-            const skinImage = new Image();
-            skinImage.crossOrigin = 'anonymous';
-            skinImage.onload = () => {
+            if (!this.state.currentSkinImage) {
+                this.state.currentSkinImage = new Image();
+                this.state.currentSkinImage.crossOrigin = 'anonymous';
+            }
+            this.state.currentSkinImage.onload = () => {
                 // 渲染头像
-                const renderedCanvas = renderAvatar(skinImage, this.state.avatarType, this.state.avatarOption);
-                
-                // 更新当前头像
-                this.state.currentAvatarImage.src = renderedCanvas.toDataURL('image/png');
-                
+                this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate.type);
+                this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
+                this.updateCanvas();
+
                 mask.style.opacity = 0;
                 popupTips('生成头像成功！', 'success');
             };
-            
-            skinImage.onerror = () => {
+
+            this.state.currentSkinImage.onerror = () => {
                 mask.style.opacity = 0;
                 popupTips('加载皮肤图像失败！', 'error');
             };
-            
-            skinImage.src = skinUrl;
-            
+
+            this.state.currentSkinImage.src = skinUrl;
+
         } catch (error) {
             console.error('生成头像失败：', error);
             mask.style.opacity = 0;
             popupTips(`生成头像失败，${error.message}`, 'error');
         }
     }
-    
+
     /**
      * 生成头像（文件上传）
      */
-    async generateUpload(event) {
-        if (!this.state.uploadInput.files || !this.state.uploadInput.files[0]) {
-            return popupTips('请先上传皮肤！', 'warning');
-        }
-        
+    async generateUpload() {
+        if (!this.state.currentSkinImage) return popupTips('请先上传皮肤！', 'warning');
         const mask = this.state.current.querySelector('.loading-overlay');
         mask.style.opacity = 1;
-        
         try {
-            const skinImage = await handleUploader(event);
-            const renderedCanvas = renderAvatar(skinImage, this.state.avatarType, this.state.avatarOption);
-            this.state.currentAvatarImage.src = renderedCanvas.toDataURL('image/png');
+            this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate.type);
+            this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
+            this.updateCanvas();
             mask.style.opacity = 0;
             popupTips('生成头像成功！', 'success');
         } catch (error) {
@@ -305,31 +461,14 @@ class AvatarGeneratorApp {
             popupTips('生成头像失败！', 'error');
         }
     }
-    
+
     /**
      * 处理下载
      */
     handleDownload(event) {
         const downloadType = event.target.getAttribute('download-type');
         if (downloadType === 'background') downloadWithBackground(this.state.currentCanvas);
-        else if (downloadType === 'transparent') downloadTransparent(this.state.currentAvatarImage);
-    }
-
-    /**
-     * 初始化拖动条进度条效果
-     */
-    initRangeSliders() {
-        const rangeInputs = document.querySelectorAll('.range-slider');
-        
-        rangeInputs.forEach(input => {
-            // 初始化进度条
-            this.updateRangeProgress(input);
-            // 监听输入事件
-            input.addEventListener('input', () => this.updateRangeProgress(input));
-            // 监听鼠标事件
-            input.addEventListener('mousedown', () => this.updateRangeProgress(input));
-            input.addEventListener('mousemove', () => input.matches(':active') && this.updateRangeProgress(input));
-        });
+        else if (downloadType === 'transparent') downloadTransparent(this.state.currentRegulatedAvatarImage);
     }
 
     /**
@@ -351,30 +490,24 @@ class AvatarGeneratorApp {
         const button = event.target;
         const dialogType = button.classList.contains('edit-generate') ? 'generate' : 'background';
         // 构建对话框ID
-        const avatarType = dialogType === 'background' && this.state.avatarType != 'vintage' ? 'common' : this.state.avatarType;
+        const avatarType = dialogType === 'background' && this.state.modelType != 'vintage' ? 'common' : this.state.modelType;
         const dialog = document.getElementById(`dialog-${avatarType}-${dialogType}`);
 
         if (dialog) {
             // 显示遮罩层和对话框
-            const overlay = document.getElementById('edit-dialog-overlay');
-            const editDialog = document.getElementById('edit-dialog');
+            this.updateDialogs(dialog);
             // 强制重绘，然后添加动画类
             requestAnimationFrame(() => {
-                overlay.classList.add('show');
-                editDialog.classList.add('show');
+                this.state.dialogOverlay.classList.add('show');
+                this.state.dialog.classList.add('show');
             });
-            overlay.classList.remove('hidden');
+            this.state.dialogOverlay.classList.remove('hidden');
             // 隐藏所有对话框内容
-            overlay.querySelectorAll('.dialog-content').forEach(content =>
+            this.state.dialogOverlay.querySelectorAll('.dialog-content').forEach(content =>
                 content.classList.add('hidden')
             );
             // 显示对应的对话框内容
             dialog.classList.remove('hidden');
-            // 初始化对话框中的拖动条
-            this.initRangeSliders();
-            // 添加关闭对话框的事件
-            overlay.addEventListener('click', event => event.target === overlay && this.hideEditDialog());
-            // 阻止事件冒泡
             event.stopPropagation();
         }
     }
@@ -383,15 +516,12 @@ class AvatarGeneratorApp {
      * 隐藏编辑对话框
      */
     hideEditDialog() {
-        const overlay = document.getElementById('edit-dialog-overlay');
-        const editDialog = document.getElementById('edit-dialog');
-        
         // 移除动画类
-        overlay.classList.remove('show');
-        editDialog.classList.remove('show');
-        
+        this.state.dialogOverlay.classList.remove('show');
+        this.state.dialog.classList.remove('show');
+
         // 等待动画完成后隐藏元素
-        setTimeout(() => overlay.classList.add('hidden'), 300);
+        setTimeout(() => this.state.dialogOverlay.classList.add('hidden'), 300);
     }
 }
 
