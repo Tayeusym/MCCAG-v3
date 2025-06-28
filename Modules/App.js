@@ -397,6 +397,12 @@ class AvatarGeneratorApp {
             this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
             this.updateCanvas();
         }
+        this.state.currentAvatarImage.onerror = () => {
+            this.state.currentAvatarImage.src = null;
+            this.state.currentAvatarImage.onerror = null;
+            this.updateCanvas();
+            popupTips('加载默认头像失败！', 'error');
+        };
         popupTips(`已切换到 ${avatarTypeName} 头像类型！`, 'success');
     }
 
@@ -475,7 +481,10 @@ class AvatarGeneratorApp {
             };
 
             this.state.currentSkinImage.onerror = () => {
+                this.state.currentSkinImage.src = null;
+                this.state.currentSkinImage.onerror = null;
                 mask.style.opacity = 0;
+                this.updateCanvas();
                 popupTips('加载皮肤图像失败！', 'error');
             };
 
