@@ -120,6 +120,14 @@ class AvatarGeneratorApp {
             })
         );
 
+        // 头像类型选择事件（仅Minimal）额外判断
+        document.querySelectorAll('input[name=side-option]').forEach(radio =>
+            radio.addEventListener('change', event => {
+                this.state.options.generate.texture = event.target.id == 'enable';
+                this.renderAvatar();
+            })
+        );
+
         // 滑块通用选项改变
         document.querySelectorAll('input.range-slider').forEach(input => {
             function updateOptions(event) {
@@ -305,6 +313,8 @@ class AvatarGeneratorApp {
             radioInputs.forEach(radio => {
                 if (radio.name == 'minimal-option') {
                     newOptions.generate.type = radio.id;
+                } else if (radio.name == 'side-option') {
+                    newOptions.generate.texture = radio.id == 'enable';
                 }
             });
 
@@ -489,9 +499,9 @@ class AvatarGeneratorApp {
         return new Promise(async (resolve, reject) => {
             if (this.state.fetchSkinMethod == 'upload') resolve(this.state.currentSkinImage);
             const input = this.state.current.querySelector('input.player-name');
-            if (!input.value) return popupTips('请输入用户名！', 'warning');
+            if (!input.value) resolve(popupTips('请输入用户名！', 'warning'));
             if (this.state.fetchSkinMethod == 'website' && !this.state.skinWebsiteInput.value)
-                return popupTips('请输入皮肤站地址！', 'warning');
+                resolve(popupTips('请输入皮肤站地址！', 'warning'));
             // 加载皮肤图像
             const skinImage = new Image();
             skinImage.onload = () => {
@@ -537,12 +547,12 @@ class AvatarGeneratorApp {
     }
 
     async generate() {
-        const mask = this.state.current.querySelector('.loading-overlay');
-        mask.style.opacity = 1;
+        const overlay = this.state.current.querySelector('.loading-overlay');
+        overlay.style.opacity = 1;
         try {
             const skinImage = await this.fetchSkin();
             if (!skinImage) {
-                mask.style.opacity = 0;
+                overlay.style.opacity = 0;
                 return;
             }
             this.state.currentSkinImage = skinImage;
@@ -550,8 +560,9 @@ class AvatarGeneratorApp {
             popupTips('生成头像成功！', 'success');
         } catch (error) {
             popupTips(`生成头像失败，${error.message}`, 'error');
+        } finally {
+            overlay.style.opacity = 0;
         }
-        mask.style.opacity = 0;
     }
 }
 

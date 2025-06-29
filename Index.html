@@ -31,6 +31,7 @@
             </ul>
         </div>
     </header>
+
     <main class="main-content">
         <ul class="notification-list"></ul>
 
@@ -49,7 +50,7 @@
                 <label for="side" class="model-selector-label">
                     <a class="float-tips-link" href="https://www.bilibili.com" rel="noopener" target="_blank">啊啊啊啊啊这是来源</a>
                 </label>
-                <button class="button button-secondary more-model">更多模型，敬请期待！</button>
+                <a href="https://qm.qq.com/q/apvmPE1Wes" rel="noopener" target="_blank" class="button button-secondary qq">交流群：597688340</a>
 
             </div>
         </section>
@@ -167,11 +168,11 @@
                     <label>生成模式</label>
                     <div class="button-group">
                         <input checked type="radio" id="full" name="minimal-option" class="hidden option-input">
-                        <label for="full" class="minimal-option" data-i18n="avatar_full">全身照</label>
+                        <label for="full" class="options" data-i18n="avatar_full">全身照</label>
                         <input type="radio" id="big-head" name="minimal-option" class="hidden option-input">
-                        <label for="big-head" class="minimal-option" data-i18n="avatar_half">半身照</label>
+                        <label for="big-head" class="options" data-i18n="avatar_half">半身照</label>
                         <input type="radio" id="head" name="minimal-option" class="hidden option-input">
-                        <label for="head" class="minimal-option" data-i18n="avatar_head">仅头像</label>
+                        <label for="head" class="options" data-i18n="avatar_head">仅头像</label>
                     </div>
                 </div>
             </div>
@@ -212,7 +213,7 @@
                 <div class="dialog-row">
                     <label>边线粗细</label>
                     <input type="range" option="generate-border" min="1" max="5" value="2" class="range-slider">
-                    <p><span class="range-slider-value">2</span>px</p>
+                    <p><span class="range-slider-value">2</span></p>
                 </div>
                 <div class="dialog-row">
                     <label>图片缩放</label>
@@ -289,6 +290,15 @@
                     <label>图片缩放</label>
                     <input type="range" option="generate-scale" min="100" max="150" value="100" class="range-slider">
                     <p><span class="range-slider-value">100</span>%</p>
+                </div>
+                <div class="dialog-row">
+                    <label>阴影渲染</label>
+                    <div class="button-group">
+                        <input checked type="radio" id="enable" name="side-option" class="hidden option-input">
+                        <label for="enable" class="options">开启</label>
+                        <input type="radio" id="disable" name="side-option" class="hidden option-input">
+                        <label for="disable" class="options">关闭</label>
+                    </div>
                 </div>
             </div>
 

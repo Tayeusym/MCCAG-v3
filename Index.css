@@ -367,7 +367,7 @@ p {
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 6px 15px;
+  padding: 10px 15px;
   border-radius: var(--radius-sm);
   box-shadow: var(--theme-shadow);
   color: var(--theme-color);
@@ -378,7 +378,7 @@ p {
   color: var(--white);
   display: block;
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.4);
   border-radius: 3px;
   padding: 3px 5px;
   left: 5px;
@@ -387,8 +387,8 @@ p {
   -webkit-backdrop-filter: blur(5px);
 }
 
-.more-model {
-  cursor: default;
+.qq {
+  line-height: 35px;
 }
 
 /* 标签页切换 */
@@ -754,7 +754,7 @@ p {
 }
 
 /* Minimal生成模式选择美化 */
-.minimal-option {
+.options {
   border-radius: 100px;
   border: 1.5px solid var(--theme-color-alpha);
   background: #fff;
@@ -772,13 +772,13 @@ p {
   min-width: auto !important;
 }
 
-.minimal-option:hover,
-.option-input:checked + .minimal-option {
+.options:hover,
+.option-input:checked + .options {
   border-color: var(--theme-color);
   color: var(--theme-color);
 }
 
-.minimal-option:active {
+.options:active {
   transform: scale(0.95);
 }
 

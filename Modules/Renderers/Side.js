@@ -71,10 +71,10 @@ function darkenAreasBatch(context, areas, factor = 0.8) {
 /**
  * 渲染头像
  * @param {HTMLImageElement} skinImage - 皮肤图像
- * @param {string} avatarType - 头像类型 ('head', 'full', 'big_head')
+ * @param {boolean} texture - 是否渲染阴影纹理
  * @returns {HTMLCanvasElement} 渲染后的画布
  */
-export function renderAvatar(skinImage) {
+export function renderAvatar(skinImage, texture) {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     canvas.width = 1000;
@@ -94,18 +94,17 @@ export function renderAvatar(skinImage) {
     context.clearRect(620, 640, 40, 40);
 
     // 高性能颜色加深处理
-    // 需要加深的区域列表（可根据实际需求调整）
-    const darkenAreas = [
-        [300, 360, 120, 280], // 头部阴影
-        [340, 640, 320, 80],
-        [300, 720, 40, 280],
-        [340, 720, 40, 40],
-        [380, 720, 40, 280],
-        [580, 760, 40, 240],
-        [620, 720, 80, 40]
-    ];
-    // 合并像素操作，减少多次putImageData的性能损耗
-    darkenAreasBatch(context, darkenAreas);
+    if (texture) {
+        darkenAreasBatch(context, [
+            [300, 360, 120, 280], // 头部阴影
+            [340, 640, 320, 80],
+            [300, 720, 40, 280],
+            [340, 720, 40, 40],
+            [380, 720, 40, 280],
+            [580, 760, 40, 240],
+            [620, 720, 80, 40]
+        ]);
+    }
 
     // 渲染部分阴影
     
