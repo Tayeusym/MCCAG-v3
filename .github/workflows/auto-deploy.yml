@@ -18,13 +18,17 @@ jobs:
 
       - name: Create deployment package
         run: |
-          tar -czf website-deploy.tar.gz \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='node_modules' \
-            --exclude='*.log' \
-            --exclude='.DS_Store' \
-            .
+          mkdir -p temp_deploy
+          
+          cp -r Index.css Index.html Index.js LICENSE README.md temp_deploy/
+          cp -r Modules temp_deploy/
+          cp -r Resources temp_deploy/
+          
+          cd temp_deploy
+          tar -czf ../website-deploy.tar.gz .
+          cd ..
+          
+          rm -rf temp_deploy
 
       - name: Deploy to server
         run: |
