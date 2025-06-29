@@ -8,11 +8,30 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Run git pull on remote server
+      - name: Create deployment package
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /www/wwwroot/Website && git pull"
+          tar -czf website-deploy.tar.gz \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude='*.log' \
+            --exclude='.DS_Store' \
+            .
+
+      - name: Deploy to server
+        run: |
+          scp -o StrictHostKeyChecking=no website-deploy.tar.gz ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            cd /www/wwwroot/Website &&
+            tar -xzf /tmp/website-deploy.tar.gz --strip-components=0 &&
+            rm /tmp/website-deploy.tar.gz &&
+            echo 'Deploy completed!'
+          "
