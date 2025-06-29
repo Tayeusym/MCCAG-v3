@@ -2,7 +2,7 @@ name: Auto Deploy via SSH
 
 on:
   release:
-    types: [published]
+    types: [published, edited]
 
 jobs:
   deploy:
@@ -18,17 +18,13 @@ jobs:
 
       - name: Create deployment package
         run: |
-          mkdir -p temp_deploy
-          
-          cp -r Index.css Index.html Index.js LICENSE README.md temp_deploy/
-          cp -r Modules temp_deploy/
-          cp -r Resources temp_deploy/
-          
-          cd temp_deploy
-          tar -czf ../website-deploy.tar.gz .
-          cd ..
-          
-          rm -rf temp_deploy
+          tar -czf website-deploy.tar.gz \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude='*.log' \
+            --exclude='.DS_Store' \
+            .
 
       - name: Deploy to server
         run: |
