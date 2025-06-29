@@ -14,12 +14,13 @@ jobs:
       - name: Create deployment package
         run: |
           tar -czf website-deploy.tar.gz \
+            --exclude='website-deploy.tar.gz' \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='node_modules' \
             --exclude='*.log' \
             --exclude='.DS_Store' \
-            . || true
+            -C . .
 
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.9.0
