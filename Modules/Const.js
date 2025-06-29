@@ -31,7 +31,12 @@ export const translations = Object.freeze({
         'donate': '打赏给作者一杯咖啡！',
         'friendly_links': '友链：',
         'total_visits': '本站总访问量',
-        'times': '次'
+        'times': '次',
+        'donate_us': '捐助我们！',
+        'click_ad': '点击广告',
+        'maintain_website': '维持网站运营',
+        'help_development': '助力我们开发',
+        'perfect_product': '更完美的产品'
     },
     'en': {
         'language_name': 'English',
@@ -62,7 +67,12 @@ export const translations = Object.freeze({
         'donate': 'Buy the author a coffee!',
         'friendly_links': 'Friendly Links:',
         'total_visits': 'Total Visits:',
-        'times': 'times'
+        'times': 'times',
+        'donate_us': 'Donate to Us!',
+        'click_ad': 'Click Ad',
+        'maintain_website': 'Maintain Website',
+        'help_development': 'Help Us Develop',
+        'perfect_product': 'Better Products'
     },
     'jp': {
         'language_name': '日本語',
@@ -93,7 +103,12 @@ export const translations = Object.freeze({
         'donate': '作者にコーヒーをおごる！',
         'friendly_links': '友好リンク:',
         'total_visits': '総訪問数:',
-        'times': '回'
+        'times': '回',
+        'donate_us': '私たちに寄付！',
+        'click_ad': '広告をクリック',
+        'maintain_website': 'サイト運営維持',
+        'help_development': '開発を支援',
+        'perfect_product': 'より完璧な製品'
     },
     'ko': {
         'language_name': '한국어',
@@ -124,7 +139,12 @@ export const translations = Object.freeze({
         'donate': '작가에게 커피 한 잔 사주세요!',
         'friendly_links': '친구 링크:',
         'total_visits': '총 방문자 수:',
-        'times': '회'
+        'times': '회',
+        'donate_us': '우리에게 기부하세요!',
+        'click_ad': '광고 클릭',
+        'maintain_website': '웹사이트 운영 유지',
+        'help_development': '개발을 도와주세요',
+        'perfect_product': '더 완벽한 제품'
     },
     'fr': {
         'language_name': 'Français',
@@ -155,7 +175,12 @@ export const translations = Object.freeze({
         'donate': 'Offrez un café à l\'auteur!',
         'friendly_links': 'Liens amis:',
         'total_visits': 'Visites totales:',
-        'times': 'fois'
+        'times': 'fois',
+        'donate_us': 'Faites un don !',
+        'click_ad': 'Cliquez sur l\'annonce',
+        'maintain_website': 'Maintenir le site',
+        'help_development': 'Aidez-nous à développer',
+        'perfect_product': 'Des produits plus parfaits'
     },
     'de': {
         'language_name': 'Deutsch',
@@ -186,6 +211,11 @@ export const translations = Object.freeze({
         'donate': 'Spenden Sie dem Autor einen Kaffee!',
         'friendly_links': 'Freundschaftslinks:',
         'total_visits': 'Gesamtbesuche:',
-        'times': 'mal'
+        'times': 'mal',
+        'donate_us': 'Spenden Sie an uns!',
+        'click_ad': 'Werbung klicken',
+        'maintain_website': 'Website unterhalten',
+        'help_development': 'Helfen Sie uns bei der Entwicklung',
+        'perfect_product': 'Perfektere Produkte'
     }
 });

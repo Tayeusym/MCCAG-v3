@@ -2,13 +2,21 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.7">
+    <meta name="viewport" content="width=500, initial-scale=0.7">
     <meta name="description" content="可爱头像生成器（Minecraft Cute Avatar Generator）支持正版ID、皮肤站和自定义上传，轻松生成个性化Minecraft头像，支持多语言切换和多种下载选项。">
     <title data-i18n="title">可爱头像生成器 | Minecraft Cute Avatar Generator</title>
     <link rel="icon" type="image/png" href="Resources/Logo.png">
     <link rel="stylesheet" href="Index.css">
     <script type="module" src="Index.js"></script>
+    <!-- 统计 -->
     <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W8TBN24W92"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-W8TBN24W92');
+    </script>
 </head>
 <body>
     <header class="header-bar">
@@ -35,30 +43,51 @@
     <main class="main-content">
         <ul class="notification-list"></ul>
 
-        <section class="avatar-switcher">
+        <section class="model-section">
             <div class="title">选择模型</div>
             <div class="model-selector">
                 <input checked type="radio" id="minimal" name="model-type" class="hidden model-selector-input">
                 <label for="minimal" class="model-selector-label">
                     <span class="model-selector-label-text">Minimal</span>
-                    <a class="float-tips-link" href="https://www.bilibili.com" rel="noopener" target="_blank">啊啊啊啊啊这是来源</a>
+                    <a class="float-tips-link" href="https://www.bilibili.com/video/BV1rB4y1F7dW/" rel="noopener" target="_blank">灵感来源：噪音回放</a>
                 </label>
                 <input type="radio" id="vintage" name="model-type" class="hidden model-selector-input">
                 <label for="vintage" class="model-selector-label">
                     <span class="model-selector-label-text">Vintage</span>
-                    <a class="float-tips-link" href="https://www.bilibili.com" rel="noopener" target="_blank">啊啊啊啊啊这是来源</a>
+                    <a class="float-tips-link" href="https://www.youtube.com/watch?v=2_VWUkZH06g" rel="noopener" target="_blank">灵感来源：Henry Packs</a>
                 </label>
                 <input type="radio" id="side" name="model-type" class="hidden model-selector-input">
                 <label for="side" class="model-selector-label">
                     <span class="model-selector-label-text">Side</span>
-                    <a class="float-tips-link" href="https://www.bilibili.com" rel="noopener" target="_blank">啊啊啊啊啊这是来源</a>
+                    <a class="float-tips-link" rel="noopener" target="_blank">灵感来源：Minecraft Skin Avatar</a>
                 </label>
-                <a href="https://qm.qq.com/q/apvmPE1Wes" rel="noopener" target="_blank" class="button button-secondary qq">交流群：597688340</a>
+                <a href="https://qm.qq.com/q/apvmPE1Wes" rel="noopener" target="_blank" class="button button-secondary qq">MCCAG 交流群：597688340</a>
 
             </div>
         </section>
+
+        <section class="donate-section">
+            <a href="https://afdian.com/a/Keishi/" rel="noopener" target="_blank">
+                <div class="container">
+                    <div class="advertisement-image"></div>
+                    <div class="introduction">
+                        <p data-i18n="click_ad">点击广告</p>
+                        <p data-i18n="maintain_website">维持网站运营</p>
+                    </div>
+                </div>
+            </a>
+            <a href="https://afdian.com/a/Keishi/" rel="noopener" target="_blank">
+                <div class="container">
+                    <div class="donate-us-title" data-i18n="donate_us">捐助我们！</div>
+                    <div class="introduction">
+                        <p data-i18n="help_development">助力我们开发</p>
+                        <p data-i18n="perfect_product">更完美的产品</p>
+                    </div>
+                </div>
+            </a>
+        </section>
         
-        <section class="avatar-generator">
+        <section class="generator-section">
 
             <div class="tab-switcher">
                 <input checked type="radio" id="mojang" name="tabs" class="hidden">
@@ -137,9 +166,8 @@
         <p class="footer-text">
             <a href="https://github.com/MCCAG/" rel="noopener" target="_blank" class="footer-link">Github</a> |
             <span data-i18n="friendly_links">友链：</span>
-            <a href="http://klpbbs.com/" rel="noopener" target="_blank" class="footer-link">苦力怕论坛</a> 
-            <a href="https://www.minebbs.com/" rel="noopener" target="_blank" class="footer-link">MineBBS</a>
-            <a href="https://www.rainyun.com/" rel="noopener" target="_blank" class="footer-link">雨云服务器</a> |
+            <a href="https://www.mcnav.net/" rel="noopener" target="_blank" class="footer-link">苦力怕论坛</a>
+            <a href="https://www.rainyun.com/" rel="noopener" target="_blank" class="footer-link">MC导航网</a>  |
             <span id='busuanzi_container_site_pv'>
                 <span data-i18n="total_visits">本站总访问量</span> 
                 <span id="busuanzi_value_site_pv" class="footer-count"></span> 
@@ -315,8 +343,8 @@
                 <div class="dialog-row">
                     <label>预设颜色</label>
                     <div class="color-list">
-                        <div class="color-item" option="background-colors" value="#FBDA61,#FF5ACD"></div>
                         <div class="color-item" option="background-colors" value="#A9C9FF,#FFBBEC"></div>
+                        <div class="color-item" option="background-colors" value="#FBDA61,#FF5ACD"></div>
                         <div class="color-item" option="background-colors" value="#F4D03F,#16A085"></div>
                         <div class="color-item" option="background-colors" value="#7F00FF,#E100FF"></div>
                         <div class="color-item" option="background-colors" value="#41D8DD,#5583EE"></div>
