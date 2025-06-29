@@ -40,13 +40,31 @@
 (max-width: 940px) {
   .main-content {
     padding: 70px;
+    gap: 30px !important;
     height: auto !important;
-    /* 上下交换 */
     flex-direction: column-reverse;
   }
 
   .footer-bar {
     height: auto !important;
+  }
+
+  .donate-section {
+    position: static !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 400px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+
+  .advertisement-image {
+    height: 90px !important;
+  }
+
+  .introduction {
+    text-align: center !important;
+    display: block !important;
   }
 }
 
