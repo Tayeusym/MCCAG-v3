@@ -59,8 +59,7 @@ export function closeSelections() {
  */
 export function handleUploader(event) {
     return new Promise((resolve, reject) => {
-        const fileInput = event.target;
-        const file = fileInput.files[0];
+        const file = event.target.files[0];
         // 验证文件类型
         if (!file.type.match('image.*')) reject('请上传图片文件！');
         // 验证文件大小（2MB = 2 * 1024 * 1024 字节）

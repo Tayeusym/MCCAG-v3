@@ -65,7 +65,7 @@ class AvatarGeneratorApp {
             this.initEventListeners();
             // 从弹窗中读取默认选项
             this.state.options = this.readOptions(this.state.modelType);
-            console.log('应用初始化完成');
+            console.log('初始化应用完成！');
         } catch (error) {
             console.error('应用初始化失败:', error);
             popupTips('应用初始化失败！', 'error');
@@ -113,10 +113,17 @@ class AvatarGeneratorApp {
             }
         });
 
+        this.state.uploadInput.addEventListener('click', async event => {
+            this.state.currentSkinImage = await handleUploader(event);
+            this.generateUpload();
+        });
+
         // 头像类型选择事件（仅Minimal）额外判断
         document.querySelectorAll('input[name=minimal-option]').forEach(radio =>
             radio.addEventListener('change', event => {
                 this.state.options.generate.type = event.target.id;
+                this.state.options.generate.scale = 100;
+                this.updateDialogs(event.target.parentElement.parentElement.parentElement);
                 if (this.state.fetchSkinMethod === 'upload') this.generateUpload();
                 else this.generate();
             })
@@ -343,29 +350,21 @@ class AvatarGeneratorApp {
             const colorItems = backgroundDialog.querySelectorAll('div.color-item');
             
             if (colorPicker) {
-                // 检查是否有option属性
                 const option = colorPicker.getAttribute('option');
                 if (option) {
                     const [type, optionName] = option.split('-');
-                    // 检查是否有选中的color-item
                     const selectedColorItem = backgroundDialog.querySelector('div.color-item#selected');
                     if (selectedColorItem) {
-                        // 如果有选中的color-item，使用其值
                         const colors = selectedColorItem.getAttribute('value').split(',');
                         newOptions[type][optionName] = colors;
                     } else {
-                        // 如果没有选中的color-item，使用第一个color-item的值
                         const firstColorItem = colorItems[0];
                         if (firstColorItem) {
                             const colors = firstColorItem.getAttribute('value').split(',');
                             newOptions[type][optionName] = colors;
-                        } else {
-                            // 如果连color-item都没有，才使用color-picker的值
-                            newOptions[type][optionName] = [colorPicker.value];
-                        }
+                        } else newOptions[type][optionName] = [colorPicker.value];
                     }
                 } else {
-                    // 没有option属性时，假设是背景颜色
                     const selectedColorItem = backgroundDialog.querySelector('div.color-item#selected');
                     if (selectedColorItem) {
                         const colors = selectedColorItem.getAttribute('value').split(',');
@@ -390,26 +389,38 @@ class AvatarGeneratorApp {
     switchModelType(event) {
         const modelType = event.target.id;
         if (this.state.modelType === modelType) return;
+        
         // 更新选项，保留一些通用设置
         this.state.options = this.readOptions(modelType);
-        console.log(this.state.options);
         const avatarTypeName = modelType.charAt(0).toUpperCase() + modelType.slice(1);
         this.state.modelType = modelType;
-        this.state.currentAvatarImage = new Image();
-        this.state.currentAvatarImage.src = `Resources/Avatars/${avatarTypeName}.png`;
-        this.state.currentAvatarImage.onload = () => {
-            this.state.currentAvatarImage.onload = null;
+        
+        // 检查是否有已上传的皮肤
+        if (this.state.currentSkinImage && this.state.currentSkinImage.src) {
+            // 如果有已上传的皮肤，重新渲染头像
+            this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
             this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
             this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
             this.updateCanvas();
+        } else {
+            // 如果没有皮肤，加载默认头像
+            this.state.currentAvatarImage = new Image();
+            this.state.currentAvatarImage.src = `Resources/Avatars/${avatarTypeName}.png`;
+            this.state.currentAvatarImage.onload = () => {
+                this.state.currentAvatarImage.onload = null;
+                this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
+                this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
+                this.updateCanvas();
+            }
+            this.state.currentAvatarImage.onerror = () => {
+                this.state.currentAvatarImage.src = null;
+                this.state.currentAvatarImage.onerror = null;
+                this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
+                this.updateCanvas();
+                popupTips('加载默认头像失败！', 'error');
+            };
         }
-        this.state.currentAvatarImage.onerror = () => {
-            this.state.currentAvatarImage.src = null;
-            this.state.currentAvatarImage.onerror = null;
-            this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
-            this.updateCanvas();
-            popupTips('加载默认头像失败！', 'error');
-        };
+        
         popupTips(`已切换到 ${avatarTypeName} 头像类型！`, 'success');
     }
 
@@ -530,7 +541,6 @@ class AvatarGeneratorApp {
             } else {
                 // Mojang模式
                 const profile = await fetchMojangProfile(input.value);
-                console.log(profile);
                 if (!profile) throw new Error('未找到该玩家的信息！');
                 skinUrl = `https://crafatar.com/skins/${profile.id}`;
             }
@@ -539,6 +549,7 @@ class AvatarGeneratorApp {
             if (!this.state.currentSkinImage) this.state.currentSkinImage = new Image();
             this.state.currentSkinImage.onload = () => {
                 // 渲染头像
+                this.state.currentSkinImage.onload = null;
                 this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
                 this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
                 this.updateCanvas();
