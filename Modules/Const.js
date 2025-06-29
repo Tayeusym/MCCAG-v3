@@ -130,7 +130,7 @@ export const translations = Object.freeze({
     "fr": "Produit plus parfait",
     "de": "Perfekteres Produkt"
   },
-  "tab-mojpng": {
+  "tab-mojang": {
     "zh": "正版 ID",
     "en": "Official ID",
     "ko": "정식 ID",
