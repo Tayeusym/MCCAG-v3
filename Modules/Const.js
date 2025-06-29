@@ -6,7 +6,7 @@ export const translations = Object.freeze({
     "zh": "可爱头像生成器 | Minecraft Cute Avatar Generator",
     "en": "Cute Avatar Generator | Minecraft Cute Avatar Generator",
     "ko": "귀여운 아바타 생성기 | Minecraft Cute Avatar Generator",
-    "ja": "かわいいアバター生成器 | Minecraft Cute Avatar Generator",
+    "jp": "かわいいアバター生成器 | Minecraft Cute Avatar Generator",
     "fr": "Générateur d'avatar mignon | Minecraft Cute Avatar Generator",
     "de": "Niedlicher Avatar-Generator | Minecraft Cute Avatar Generator"
   },
@@ -14,7 +14,7 @@ export const translations = Object.freeze({
     "zh": "Minecraft CAG",
     "en": "Minecraft CAG",
     "ko": "Minecraft CAG",
-    "ja": "Minecraft CAG",
+    "jp": "Minecraft CAG",
     "fr": "Minecraft CAG",
     "de": "Minecraft CAG"
   },
@@ -22,7 +22,7 @@ export const translations = Object.freeze({
     "zh": "选择语言",
     "en": "Select Language",
     "ko": "언어 선택",
-    "ja": "言語選択",
+    "jp": "言語選択",
     "fr": "Choisir la langue",
     "de": "Sprache auswählen"
   },
@@ -30,7 +30,7 @@ export const translations = Object.freeze({
     "zh": "选择模型",
     "en": "Select Model",
     "ko": "모델 선택",
-    "ja": "モデル選択",
+    "jp": "モデル選択",
     "fr": "Sélectionner le modèle",
     "de": "Modell auswählen"
   },
@@ -38,7 +38,7 @@ export const translations = Object.freeze({
     "zh": "Minimal",
     "en": "Minimal",
     "ko": "Minimal",
-    "ja": "Minimal",
+    "jp": "Minimal",
     "fr": "Minimal",
     "de": "Minimal"
   },
@@ -46,7 +46,7 @@ export const translations = Object.freeze({
     "zh": "灵感来源：噪音回放",
     "en": "Inspiration: Noise Replay",
     "ko": "영감: Noise Replay",
-    "ja": "インスピレーション: Noise Replay",
+    "jp": "インスピレーション: Noise Replay",
     "fr": "Inspiration : Noise Replay",
     "de": "Inspiration: Noise Replay"
   },
@@ -54,7 +54,7 @@ export const translations = Object.freeze({
     "zh": "Vintage",
     "en": "Vintage",
     "ko": "Vintage",
-    "ja": "Vintage",
+    "jp": "Vintage",
     "fr": "Vintage",
     "de": "Vintage"
   },
@@ -62,7 +62,7 @@ export const translations = Object.freeze({
     "zh": "灵感来源：Henry Packs",
     "en": "Inspiration: Henry Packs",
     "ko": "영감: Henry Packs",
-    "ja": "インスピレーション: Henry Packs",
+    "jp": "インスピレーション: Henry Packs",
     "fr": "Inspiration : Henry Packs",
     "de": "Inspiration: Henry Packs"
   },
@@ -70,7 +70,7 @@ export const translations = Object.freeze({
     "zh": "Side",
     "en": "Side",
     "ko": "Side",
-    "ja": "Side",
+    "jp": "Side",
     "fr": "Side",
     "de": "Side"
   },
@@ -78,7 +78,7 @@ export const translations = Object.freeze({
     "zh": "灵感来源：Minecraft Skin Avatar",
     "en": "Inspiration: Minecraft Skin Avatar",
     "ko": "영감: Minecraft Skin Avatar",
-    "ja": "インスピレーション: Minecraft Skin Avatar",
+    "jp": "インスピレーション: Minecraft Skin Avatar",
     "fr": "Inspiration : Minecraft Skin Avatar",
     "de": "Inspiration: Minecraft Skin Avatar"
   },
@@ -86,7 +86,7 @@ export const translations = Object.freeze({
     "zh": "MCCAG 交流群：597688340",
     "en": "MCCAG Communication Group: 597688340",
     "ko": "MCCAG 커뮤니티: 597688340",
-    "ja": "MCCAG交流グループ: 597688340",
+    "jp": "MCCAG交流グループ: 597688340",
     "fr": "Groupe de discussion MCCAG : 597688340",
     "de": "MCCAG Kommunikationsgruppe: 597688340"
   },
@@ -94,7 +94,7 @@ export const translations = Object.freeze({
     "zh": "点击广告",
     "en": "Click Ad",
     "ko": "광고 클릭",
-    "ja": "広告をクリック",
+    "jp": "広告をクリック",
     "fr": "Cliquer sur la pub",
     "de": "Anzeige klicken"
   },
@@ -102,7 +102,7 @@ export const translations = Object.freeze({
     "zh": "维持网站运营",
     "en": "Maintain Website",
     "ko": "웹사이트 유지",
-    "ja": "ウェブサイト維持",
+    "jp": "ウェブサイト維持",
     "fr": "Maintenir le site web",
     "de": "Website unterhalten"
   },
@@ -110,7 +110,7 @@ export const translations = Object.freeze({
     "zh": "捐助我们！",
     "en": "Donate to Us!",
     "ko": "기부하기!",
-    "ja": "寄付する！",
+    "jp": "寄付する！",
     "fr": "Faites un don !",
     "de": "Spenden Sie uns!"
   },
@@ -118,7 +118,7 @@ export const translations = Object.freeze({
     "zh": "助力我们开发",
     "en": "Support Development",
     "ko": "개발 지원",
-    "ja": "開発支援",
+    "jp": "開発支援",
     "fr": "Aider le développement",
     "de": "Entwicklung unterstützen"
   },
@@ -126,15 +126,15 @@ export const translations = Object.freeze({
     "zh": "更完美的产品",
     "en": "More Perfect Product",
     "ko": "더 완벽한 제품",
-    "ja": "より完璧な製品",
+    "jp": "より完璧な製品",
     "fr": "Produit plus parfait",
     "de": "Perfekteres Produkt"
   },
-  "tab-mojang": {
+  "tab-mojpng": {
     "zh": "正版 ID",
     "en": "Official ID",
     "ko": "정식 ID",
-    "ja": "公式ID",
+    "jp": "公式ID",
     "fr": "ID Officiel",
     "de": "Offizielle ID"
   },
@@ -142,7 +142,7 @@ export const translations = Object.freeze({
     "zh": "皮肤站",
     "en": "Skin Website",
     "ko": "스킨 사이트",
-    "ja": "スキンサイト",
+    "jp": "スキンサイト",
     "fr": "Site de skins",
     "de": "Skin-Website"
   },
@@ -150,7 +150,7 @@ export const translations = Object.freeze({
     "zh": "上传皮肤",
     "en": "Upload Skin",
     "ko": "스킨 업로드",
-    "ja": "スキンアップロード",
+    "jp": "スキンアップロード",
     "fr": "Télécharger un skin",
     "de": "Skin hochladen"
   },
@@ -158,7 +158,7 @@ export const translations = Object.freeze({
     "zh": "生成",
     "en": "Generate",
     "ko": "생성",
-    "ja": "生成",
+    "jp": "生成",
     "fr": "Générer",
     "de": "Generieren"
   },
@@ -166,7 +166,7 @@ export const translations = Object.freeze({
     "zh": "编辑生成",
     "en": "Edit & Generate",
     "ko": "편집 및 생성",
-    "ja": "編集して生成",
+    "jp": "編集して生成",
     "fr": "Modifier & Générer",
     "de": "Bearbeiten & Generieren"
   },
@@ -174,7 +174,7 @@ export const translations = Object.freeze({
     "zh": "编辑背景",
     "en": "Edit Background",
     "ko": "배경 편집",
-    "ja": "背景編集",
+    "jp": "背景編集",
     "fr": "Modifier l'arrière-plan",
     "de": "Hintergrund bearbeiten"
   },
@@ -182,7 +182,7 @@ export const translations = Object.freeze({
     "zh": "无背景保存",
     "en": "Save without Background",
     "ko": "배경 없이 저장",
-    "ja": "背景なしで保存",
+    "jp": "背景なしで保存",
     "fr": "Télécharger sans fond",
     "de": "Ohne Hintergrund speichern"
   },
@@ -190,7 +190,7 @@ export const translations = Object.freeze({
     "zh": "保存图片",
     "en": "Save Image",
     "ko": "이미지 저장",
-    "ja": "画像保存",
+    "jp": "画像保存",
     "fr": "Télécharger l'image",
     "de": "Bild speichern"
   },
@@ -198,7 +198,7 @@ export const translations = Object.freeze({
     "zh": "点击上传",
     "en": "Click to Upload",
     "ko": "업로드 클릭",
-    "ja": "クリックしてアップロード",
+    "jp": "クリックしてアップロード",
     "fr": "Cliquer pour télécharger",
     "de": "Zum Hochladen klicken"
   },
@@ -206,7 +206,7 @@ export const translations = Object.freeze({
     "zh": "请输入正版 ID",
     "en": "Enter Official ID",
     "ko": "정식 ID 입력",
-    "ja": "公式IDを入力",
+    "jp": "公式IDを入力",
     "fr": "Entrez l'ID Officiel",
     "de": "Offizielle ID eingeben"
   },
@@ -214,7 +214,7 @@ export const translations = Object.freeze({
     "zh": "请输入皮肤站网址",
     "en": "Enter Skin Website URL",
     "ko": "스킨 사이트 URL 입력",
-    "ja": "スキンサイトURLを入力",
+    "jp": "スキンサイトURLを入力",
     "fr": "Entrez l'URL du site de skins",
     "de": "Skin-Website-URL eingeben"
   },
@@ -222,7 +222,7 @@ export const translations = Object.freeze({
     "zh": "制作：",
     "en": "Produced by:",
     "ko": "제작:",
-    "ja": "制作:",
+    "jp": "制作:",
     "fr": "Produit par :",
     "de": "Erstellt von:"
   },
@@ -230,7 +230,7 @@ export const translations = Object.freeze({
     "zh": "打赏给作者一杯咖啡！",
     "en": "Buy the author a coffee!",
     "ko": "작가에게 커피 한 잔 사주세요!",
-    "ja": "作者にコーヒーをおごりましょう！",
+    "jp": "作者にコーヒーをおごりましょう！",
     "fr": "Offrez un café à l'auteur !",
     "de": "Kaufen Sie dem Autor einen Kaffee!"
   },
@@ -238,7 +238,7 @@ export const translations = Object.freeze({
     "zh": "友链：",
     "en": "Friendly Links:",
     "ko": "추천 링크:",
-    "ja": "おすすめリンク:",
+    "jp": "おすすめリンク:",
     "fr": "Liens amis :",
     "de": "Freundschaftliche Links:"
   },
@@ -246,7 +246,7 @@ export const translations = Object.freeze({
     "zh": "苦力怕论坛",
     "en": "Creeper Forum",
     "ko": "크리퍼 포럼",
-    "ja": "クリーパーフォーラム",
+    "jp": "クリーパーフォーラム",
     "fr": "Forum Creeper",
     "de": "Creeper-Forum"
   },
@@ -254,7 +254,7 @@ export const translations = Object.freeze({
     "zh": "MC导航网",
     "en": "MC Navigation",
     "ko": "MC 내비게이션",
-    "ja": "MCナビゲーション",
+    "jp": "MCナビゲーション",
     "fr": "Navigation MC",
     "de": "MC-Navigation"
   },
@@ -262,7 +262,7 @@ export const translations = Object.freeze({
     "zh": "本站总访问量",
     "en": "Total Site Visits",
     "ko": "총 사이트 방문 수",
-    "ja": "総サイト訪問数",
+    "jp": "総サイト訪問数",
     "fr": "Visites totales du site",
     "de": "Gesamte Seitenbesuche"
   },
@@ -270,7 +270,7 @@ export const translations = Object.freeze({
     "zh": "次",
     "en": "times",
     "ko": "회",
-    "ja": "回",
+    "jp": "回",
     "fr": "fois",
     "de": "Mal"
   },
@@ -278,7 +278,7 @@ export const translations = Object.freeze({
     "zh": "点击查看 B 站原视频",
     "en": "Click to view original Bilibili video",
     "ko": "Bilibili 원본 동영상 보기",
-    "ja": "Bilibiliオリジナル動画を見る",
+    "jp": "Bilibiliオリジナル動画を見る",
     "fr": "Cliquer pour voir la vidéo originale sur Bilibili",
     "de": "Originales Bilibili-Video ansehen"
   },
@@ -286,7 +286,7 @@ export const translations = Object.freeze({
     "zh": "点击查看 Youtube 原视频",
     "en": "Click to view original YouTube video",
     "ko": "YouTube 원본 동영상 보기",
-    "ja": "YouTubeオリジナル動画を見る",
+    "jp": "YouTubeオリジナル動画を見る",
     "fr": "Cliquer pour voir la vidéo originale sur YouTube",
     "de": "Originales YouTube-Video ansehen"
   },
@@ -294,7 +294,7 @@ export const translations = Object.freeze({
     "zh": "该网站已关闭",
     "en": "This website is closed",
     "ko": "해당 웹사이트는 폐쇄됨",
-    "ja": "このウェブサイトは閉鎖されました",
+    "jp": "このウェブサイトは閉鎖されました",
     "fr": "Ce site web est fermé",
     "de": "Diese Website ist geschlossen"
   },
@@ -302,7 +302,7 @@ export const translations = Object.freeze({
     "zh": "阴影深浅",
     "en": "Shadow Depth",
     "ko": "그림자 깊이",
-    "ja": "影の深さ",
+    "jp": "影の深さ",
     "fr": "Profondeur d'ombre",
     "de": "Schattentiefe"
   },
@@ -310,7 +310,7 @@ export const translations = Object.freeze({
     "zh": "图片缩放",
     "en": "Image Scale",
     "ko": "이미지 스케일",
-    "ja": "画像スケール",
+    "jp": "画像スケール",
     "fr": "Échelle d'image",
     "de": "Bildskalierung"
   },
@@ -318,7 +318,7 @@ export const translations = Object.freeze({
     "zh": "生成模式",
     "en": "Generation Mode",
     "ko": "생성 모드",
-    "ja": "生成モード",
+    "jp": "生成モード",
     "fr": "Mode de génération",
     "de": "Generierungsmodus"
   },
@@ -326,7 +326,7 @@ export const translations = Object.freeze({
     "zh": "全身照",
     "en": "Full Body",
     "ko": "전신",
-    "ja": "全身",
+    "jp": "全身",
     "fr": "Corps entier",
     "de": "Ganzkörper"
   },
@@ -334,7 +334,7 @@ export const translations = Object.freeze({
     "zh": "半身照",
     "en": "Half Body",
     "ko": "반신",
-    "ja": "半身",
+    "jp": "半身",
     "fr": "Mi-corps",
     "de": "Halbkörper"
   },
@@ -342,7 +342,7 @@ export const translations = Object.freeze({
     "zh": "仅头像",
     "en": "Head Only",
     "ko": "머리만",
-    "ja": "頭のみ",
+    "jp": "頭のみ",
     "fr": "Tête uniquement",
     "de": "Nur Kopf"
   },
@@ -350,7 +350,7 @@ export const translations = Object.freeze({
     "zh": "倾斜角度",
     "en": "Tilt Angle",
     "ko": "기울기 각도",
-    "ja": "傾斜角度",
+    "jp": "傾斜角度",
     "fr": "Angle d'inclinaison",
     "de": "Neigungswinkel"
   },
@@ -358,7 +358,7 @@ export const translations = Object.freeze({
     "zh": "预设颜色",
     "en": "Preset Colors",
     "ko": "프리셋 색상",
-    "ja": "プリセットカラー",
+    "jp": "プリセットカラー",
     "fr": "Couleurs prédéfinies",
     "de": "Voreingestellte Farben"
   },
@@ -366,7 +366,7 @@ export const translations = Object.freeze({
     "zh": "选择颜色",
     "en": "Select Color",
     "ko": "색상 선택",
-    "ja": "色選択",
+    "jp": "色選択",
     "fr": "Sélectionner couleur",
     "de": "Farbe auswählen"
   },
@@ -374,7 +374,7 @@ export const translations = Object.freeze({
     "zh": "上传背景",
     "en": "Upload Background",
     "ko": "배경 업로드",
-    "ja": "背景アップロード",
+    "jp": "背景アップロード",
     "fr": "Télécharger l'arrière-plan",
     "de": "Hintergrund hochladen"
   },
@@ -382,7 +382,7 @@ export const translations = Object.freeze({
     "zh": "边线粗细",
     "en": "Border Thickness",
     "ko": "테두리 두께",
-    "ja": "枠線の太さ",
+    "jp": "枠線の太さ",
     "fr": "Épaisseur de bordure",
     "de": "Rahmenstärke"
   },
@@ -390,7 +390,7 @@ export const translations = Object.freeze({
     "zh": "图片缩放",
     "en": "Image Scale",
     "ko": "이미지 스케일",
-    "ja": "画像スケール",
+    "jp": "画像スケール",
     "fr": "Échelle d'image",
     "de": "Bildskalierung"
   },
@@ -398,7 +398,7 @@ export const translations = Object.freeze({
     "zh": "边线颜色",
     "en": "Border Color",
     "ko": "테두리 색상",
-    "ja": "枠線の色",
+    "jp": "枠線の色",
     "fr": "Couleur de bordure",
     "de": "Rahmenfarbe"
   },
@@ -406,7 +406,7 @@ export const translations = Object.freeze({
     "zh": "选择颜色",
     "en": "Select Color",
     "ko": "색상 선택",
-    "ja": "色選択",
+    "jp": "色選択",
     "fr": "Sélectionner couleur",
     "de": "Farbe auswählen"
   },
@@ -414,7 +414,7 @@ export const translations = Object.freeze({
     "zh": "背景条数",
     "en": "Background Stripes",
     "ko": "배경 줄무늬",
-    "ja": "背景ストライプ",
+    "jp": "背景ストライプ",
     "fr": "Rayures d'arrière-plan",
     "de": "Hintergrundstreifen"
   },
@@ -422,7 +422,7 @@ export const translations = Object.freeze({
     "zh": "条",
     "en": "stripes",
     "ko": "줄",
-    "ja": "本",
+    "jp": "本",
     "fr": "rayures",
     "de": "Streifen"
   },
@@ -430,7 +430,7 @@ export const translations = Object.freeze({
     "zh": "暗角深浅",
     "en": "Vignette Depth",
     "ko": "비네팅 깊이",
-    "ja": "ビネットの深さ",
+    "jp": "ビネットの深さ",
     "fr": "Profondeur de vignette",
     "de": "Vignettenstärke"
   },
@@ -438,7 +438,7 @@ export const translations = Object.freeze({
     "zh": "倾斜角度",
     "en": "Tilt Angle",
     "ko": "기울기 각도",
-    "ja": "傾斜角度",
+    "jp": "傾斜角度",
     "fr": "Angle d'inclinaison",
     "de": "Neigungswinkel"
   },
@@ -446,7 +446,7 @@ export const translations = Object.freeze({
     "zh": "预设颜色",
     "en": "Preset Colors",
     "ko": "프리셋 색상",
-    "ja": "プリセットカラー",
+    "jp": "プリセットカラー",
     "fr": "Couleurs prédéfinies",
     "de": "Voreingestellte Farben"
   },
@@ -454,7 +454,7 @@ export const translations = Object.freeze({
     "zh": "上传背景",
     "en": "Upload Background",
     "ko": "배경 업로드",
-    "ja": "背景アップロード",
+    "jp": "背景アップロード",
     "fr": "Télécharger l'arrière-plan",
     "de": "Hintergrund hochladen"
   },
@@ -462,7 +462,7 @@ export const translations = Object.freeze({
     "zh": "阴影深浅",
     "en": "Shadow Depth",
     "ko": "그림자 깊이",
-    "ja": "影の深さ",
+    "jp": "影の深さ",
     "fr": "Profondeur d'ombre",
     "de": "Schattentiefe"
   },
@@ -470,7 +470,7 @@ export const translations = Object.freeze({
     "zh": "图片缩放",
     "en": "Image Scale",
     "ko": "이미지 스케일",
-    "ja": "画像スケール",
+    "jp": "画像スケール",
     "fr": "Échelle d'image",
     "de": "Bildskalierung"
   },
@@ -478,7 +478,7 @@ export const translations = Object.freeze({
     "zh": "阴影渲染",
     "en": "Shadow Rendering",
     "ko": "그림자 렌더링",
-    "ja": "影のレンダリング",
+    "jp": "影のレンダリング",
     "fr": "Rendu des ombres",
     "de": "Schatten-Rendering"
   },
@@ -486,7 +486,7 @@ export const translations = Object.freeze({
     "zh": "开启",
     "en": "Enable",
     "ko": "활성화",
-    "ja": "有効",
+    "jp": "有効",
     "fr": "Activer",
     "de": "Aktivieren"
   },
@@ -494,7 +494,7 @@ export const translations = Object.freeze({
     "zh": "关闭",
     "en": "Disable",
     "ko": "비활성화",
-    "ja": "無効",
+    "jp": "無効",
     "fr": "Désactiver",
     "de": "Deaktivieren"
   },
@@ -502,7 +502,7 @@ export const translations = Object.freeze({
     "zh": "倾斜角度",
     "en": "Tilt Angle",
     "ko": "기울기 각도",
-    "ja": "傾斜角度",
+    "jp": "傾斜角度",
     "fr": "Angle d'inclinaison",
     "de": "Neigungswinkel"
   },
@@ -510,7 +510,7 @@ export const translations = Object.freeze({
     "zh": "预设颜色",
     "en": "Preset Colors",
     "ko": "프리셋 색상",
-    "ja": "プリセットカラー",
+    "jp": "プリセットカラー",
     "fr": "Couleurs prédéfinies",
     "de": "Voreingestellte Farben"
   },
@@ -518,7 +518,7 @@ export const translations = Object.freeze({
     "zh": "选择颜色",
     "en": "Select Color",
     "ko": "색상 선택",
-    "ja": "色選択",
+    "jp": "色選択",
     "fr": "Sélectionner couleur",
     "de": "Farbe auswählen"
   },
@@ -526,7 +526,7 @@ export const translations = Object.freeze({
     "zh": "上传背景",
     "en": "Upload Background",
     "ko": "배경 업로드",
-    "ja": "背景アップロード",
+    "jp": "背景アップロード",
     "fr": "Télécharger l'arrière-plan",
     "de": "Hintergrund hochladen"
   }
