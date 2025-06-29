@@ -10,11 +10,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          sparse-checkout: |
-            /*
-            !.git
 
       - name: Create deployment package
         run: |
@@ -24,7 +19,7 @@ jobs:
             --exclude='node_modules' \
             --exclude='*.log' \
             --exclude='.DS_Store' \
-            .
+            . || true
 
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.9.0
