@@ -1,5 +1,5 @@
 // 渲染模块
-import { stereoscopicOperationData } from './Data.js';
+import { sideOperationData } from './Data.js';
 import { preprecessSkinImage, processImage } from './Image.js';
 
 
@@ -9,9 +9,9 @@ import { preprecessSkinImage, processImage } from './Image.js';
  * @returns {Array} 操作列表
  */
 function getOperations(skinSize) {
-    if (!stereoscopicOperationData) return [];
+    if (!sideOperationData) return [];
     const skinVersion = (skinSize[0] === 64 && skinSize[1] === 32) ? 'old' : 'new';
-    return stereoscopicOperationData[skinVersion];
+    return sideOperationData[skinVersion];
 }
 
 
