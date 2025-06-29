@@ -12,33 +12,29 @@ let currentLang = localStorage.getItem('language');
  * @param {string} lang - 语言代码
  */
 export function applyTranslation(lang) {
-    if (!translations[lang]) return;
-    
     currentLang = lang;
     document.documentElement.lang = lang === 'jp' ? 'ja' : lang;
     
     // 更新页面标题
-    const titleElement = document.querySelector('title[data-i18n]');
-    if (titleElement) titleElement.textContent = translations[lang][titleElement.getAttribute('data-i18n')];
+    const titleElement = document.querySelector('title[i18n]');
+    if (titleElement) titleElement.textContent = translations[titleElement.getAttribute('i18n')][lang];
     
     // 更新文本内容
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        if (translations[lang][key]) element.textContent = translations[lang][key];
+    document.querySelectorAll('[i18n]').forEach(element => {
+        const key = element.getAttribute('i18n');
+        if (translations[key][lang]) element.textContent = translations[key][lang];
     });
     
     // 更新alt属性
-    document.querySelectorAll('[data-i18n-alt]').forEach(element => {
-        const key = element.getAttribute('data-i18n-alt');
-        if (translations[lang][key]) element.setAttribute('alt', translations[lang][key]);
+    document.querySelectorAll('[i18n-alt]').forEach(element => {
+        const key = element.getAttribute('i18n-alt');
+        if (translations[key][lang]) element.setAttribute('alt', translations[key][lang]);
     });
     
     // 更新placeholder属性
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-        const key = element.getAttribute('data-i18n-placeholder');
-        if (translations[lang][key]) {
-            element.setAttribute('placeholder', translations[lang][key]);
-        }
+    document.querySelectorAll('[i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('i18n-placeholder');
+        if (translations[key][lang]) element.setAttribute('placeholder', translations[key][lang]);
     });
 }
 

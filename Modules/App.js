@@ -59,7 +59,7 @@ class AvatarGeneratorApp {
     async init() {
         try {
             // 初始化国际化
-            // initI18n();
+            initI18n();
             // 初始化对话框
             this.initDialogs();
             // 初始化事件监听

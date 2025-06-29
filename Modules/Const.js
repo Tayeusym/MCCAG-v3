@@ -2,220 +2,532 @@ export const corsProxy = 'https://proxy.mccag.cn/?url=';
 
 
 export const translations = Object.freeze({
-    'zh': {
-        'language_name': '汉语',
-        'title': '可爱头像生成器 | Minecraft Cute Avatar Generator',
-        'language_alt': '选择语言',
-        'tab_mojang': '正版 ID',
-        'tab_website': '皮肤站',
-        'tab_upload': '上传皮肤',
-        'placeholder_id': '请输入正版 ID',
-        'placeholder_website': '请输入皮肤站网址',
-        'btn_generate': '生成',
-        'avatar_full': '全身照',
-        'avatar_half': '半身照',
-        'avatar_head': '仅头像',
-        'btn_change_bg': '换背景',
-        'btn_download': '下载',
-        'download_with_bg': '保留背景',
-        'download_transparent': '透明背景',
-        'btn_publish': '发布作品',
-        'btn_share': '分享',
-        'btn_upload_bg': '上传背景',
-        'click_upload': '点击上传',
-        'under_construction': '正在施工',
-        'stay_tuned': '敬请期待',
-        'production': '制作：',
-        'inspiration': '灵感来源：噪音回放（B站视频链接）',
-        'sponsor': '赞助：DongYue',
-        'donate': '打赏给作者一杯咖啡！',
-        'friendly_links': '友链：',
-        'total_visits': '本站总访问量',
-        'times': '次',
-        'donate_us': '捐助我们！',
-        'click_ad': '点击广告',
-        'maintain_website': '维持网站运营',
-        'help_development': '助力我们开发',
-        'perfect_product': '更完美的产品'
-    },
-    'en': {
-        'language_name': 'English',
-        'title': 'Minecraft Cute Avatar Generator',
-        'language_alt': 'Select Language',
-        'tab_mojang': 'Mojang ID',
-        'tab_website': 'Skin Host',
-        'tab_upload': 'Upload Skin',
-        'placeholder_id': 'Enter your Minecraft ID',
-        'placeholder_website': 'Enter skin website URL',
-        'btn_generate': 'Generate',
-        'avatar_full': 'Full Body',
-        'avatar_half': 'Half Body',
-        'avatar_head': 'Head Only',
-        'btn_change_bg': 'Change Background',
-        'btn_download': 'Download',
-        'download_with_bg': 'With Background',
-        'download_transparent': 'Transparent',
-        'btn_publish': 'Publish',
-        'btn_share': 'Share',
-        'btn_upload_bg': 'Upload Background',
-        'click_upload': 'Click to Upload',
-        'under_construction': 'Under Construction',
-        'stay_tuned': 'Stay Tuned',
-        'production': 'Created by:',
-        'inspiration': 'Inspired by: Noise Playback (Bilibili Video)',
-        'sponsor': 'Sponsored by: DongYue',
-        'donate': 'Buy the author a coffee!',
-        'friendly_links': 'Friendly Links:',
-        'total_visits': 'Total Visits:',
-        'times': 'times',
-        'donate_us': 'Donate to Us!',
-        'click_ad': 'Click Ad',
-        'maintain_website': 'Maintain Website',
-        'help_development': 'Help Us Develop',
-        'perfect_product': 'Better Products'
-    },
-    'jp': {
-        'language_name': '日本語',
-        'title': 'Minecraft かわいいアバタージェネレーター',
-        'language_alt': '言語を選択',
-        'tab_mojang': 'Mojang ID',
-        'tab_website': 'スキンサイト',
-        'tab_upload': 'スキンをアップロード',
-        'placeholder_id': 'Minecraft IDを入力',
-        'placeholder_website': 'スキンサイトのURLを入力',
-        'btn_generate': '生成',
-        'avatar_full': '全身',
-        'avatar_half': '半身',
-        'avatar_head': '頭のみ',
-        'btn_change_bg': '背景を変更',
-        'btn_download': 'ダウンロード',
-        'download_with_bg': '背景あり',
-        'download_transparent': '背景透明',
-        'btn_publish': '公開',
-        'btn_share': '共有',
-        'btn_upload_bg': '背景をアップロード',
-        'click_upload': 'クリックでアップロード',
-        'under_construction': '工事中',
-        'stay_tuned': 'お楽しみに',
-        'production': '制作:',
-        'inspiration': 'インスピレーション: ノイズプレイバック（ビリビリ動画）',
-        'sponsor': 'スポンサー: DongYue',
-        'donate': '作者にコーヒーをおごる！',
-        'friendly_links': '友好リンク:',
-        'total_visits': '総訪問数:',
-        'times': '回',
-        'donate_us': '私たちに寄付！',
-        'click_ad': '広告をクリック',
-        'maintain_website': 'サイト運営維持',
-        'help_development': '開発を支援',
-        'perfect_product': 'より完璧な製品'
-    },
-    'ko': {
-        'language_name': '한국어',
-        'title': '마인크래프트 귀여운 아바타 생성기',
-        'language_alt': '언어 선택',
-        'tab_mojang': '모장 ID',
-        'tab_website': '스킨 사이트',
-        'tab_upload': '스킨 업로드',
-        'placeholder_id': '마인크래프트 ID를 입력하세요',
-        'placeholder_website': '스킨 사이트 URL을 입력하세요',
-        'btn_generate': '생성',
-        'avatar_full': '전신',
-        'avatar_half': '반신',
-        'avatar_head': '머리만',
-        'btn_change_bg': '배경 변경',
-        'btn_download': '다운로드',
-        'download_with_bg': '배경 포함',
-        'download_transparent': '투명 배경',
-        'btn_publish': '게시',
-        'btn_share': '공유',
-        'btn_upload_bg': '배경 업로드',
-        'click_upload': '클릭하여 업로드',
-        'under_construction': '공사 중',
-        'stay_tuned': '곧 시작됩니다',
-        'production': '제작:',
-        'inspiration': '영감: 노이즈 플레이백 (빌리빌리 영상)',
-        'sponsor': '스폰서: DongYue',
-        'donate': '작가에게 커피 한 잔 사주세요!',
-        'friendly_links': '친구 링크:',
-        'total_visits': '총 방문자 수:',
-        'times': '회',
-        'donate_us': '우리에게 기부하세요!',
-        'click_ad': '광고 클릭',
-        'maintain_website': '웹사이트 운영 유지',
-        'help_development': '개발을 도와주세요',
-        'perfect_product': '더 완벽한 제품'
-    },
-    'fr': {
-        'language_name': 'Français',
-        'title': 'Générateur d\'Avatars Mignons Minecraft',
-        'language_alt': 'Choisir la langue',
-        'tab_mojang': 'ID Mojang',
-        'tab_website': 'Site de Skins',
-        'tab_upload': 'Télécharger Skin',
-        'placeholder_id': 'Entrez votre ID Minecraft',
-        'placeholder_website': 'Entrez l\'URL du site de skins',
-        'btn_generate': 'Générer',
-        'avatar_full': 'Corps entier',
-        'avatar_half': 'Demi-corps',
-        'avatar_head': 'Tête uniquement',
-        'btn_change_bg': 'Changer l\'arrière-plan',
-        'btn_download': 'Télécharger',
-        'download_with_bg': 'Avec arrière-plan',
-        'download_transparent': 'Transparent',
-        'btn_publish': 'Publier',
-        'btn_share': 'Partager',
-        'btn_upload_bg': 'Télécharger arrière-plan',
-        'click_upload': 'Cliquez pour télécharger',
-        'under_construction': 'En construction',
-        'stay_tuned': 'Restez à l\'écoute',
-        'production': 'Créé par:',
-        'inspiration': 'Inspiré par: Noise Playback (Vidéo Bilibili)',
-        'sponsor': 'Sponsorisé par: DongYue',
-        'donate': 'Offrez un café à l\'auteur!',
-        'friendly_links': 'Liens amis:',
-        'total_visits': 'Visites totales:',
-        'times': 'fois',
-        'donate_us': 'Faites un don !',
-        'click_ad': 'Cliquez sur l\'annonce',
-        'maintain_website': 'Maintenir le site',
-        'help_development': 'Aidez-nous à développer',
-        'perfect_product': 'Des produits plus parfaits'
-    },
-    'de': {
-        'language_name': 'Deutsch',
-        'title': 'Minecraft Niedlicher Avatar Generator',
-        'language_alt': 'Sprache auswählen',
-        'tab_mojang': 'Mojang ID',
-        'tab_website': 'Skin-Host',
-        'tab_upload': 'Skin hochladen',
-        'placeholder_id': 'Geben Sie Ihre Minecraft ID ein',
-        'placeholder_website': 'Geben Sie die Skin-Website-URL ein',
-        'btn_generate': 'Generieren',
-        'avatar_full': 'Ganzkörper',
-        'avatar_half': 'Halbkörper',
-        'avatar_head': 'Nur Kopf',
-        'btn_change_bg': 'Hintergrund ändern',
-        'btn_download': 'Herunterladen',
-        'download_with_bg': 'Mit Hintergrund',
-        'download_transparent': 'Transparent',
-        'btn_publish': 'Veröffentlichen',
-        'btn_share': 'Teilen',
-        'btn_upload_bg': 'Hintergrund hochladen',
-        'click_upload': 'Klicken zum Hochladen',
-        'under_construction': 'In Bearbeitung',
-        'stay_tuned': 'Bleiben Sie dran',
-        'production': 'Erstellt von:',
-        'inspiration': 'Inspiriert von: Noise Playback (Bilibili Video)',
-        'sponsor': 'Gesponsert von: DongYue',
-        'donate': 'Spenden Sie dem Autor einen Kaffee!',
-        'friendly_links': 'Freundschaftslinks:',
-        'total_visits': 'Gesamtbesuche:',
-        'times': 'mal',
-        'donate_us': 'Spenden Sie an uns!',
-        'click_ad': 'Werbung klicken',
-        'maintain_website': 'Website unterhalten',
-        'help_development': 'Helfen Sie uns bei der Entwicklung',
-        'perfect_product': 'Perfektere Produkte'
-    }
+  "title": {
+    "zh": "可爱头像生成器 | Minecraft Cute Avatar Generator",
+    "en": "Cute Avatar Generator | Minecraft Cute Avatar Generator",
+    "ko": "귀여운 아바타 생성기 | Minecraft Cute Avatar Generator",
+    "ja": "かわいいアバター生成器 | Minecraft Cute Avatar Generator",
+    "fr": "Générateur d'avatar mignon | Minecraft Cute Avatar Generator",
+    "de": "Niedlicher Avatar-Generator | Minecraft Cute Avatar Generator"
+  },
+  "header-title": {
+    "zh": "Minecraft CAG",
+    "en": "Minecraft CAG",
+    "ko": "Minecraft CAG",
+    "ja": "Minecraft CAG",
+    "fr": "Minecraft CAG",
+    "de": "Minecraft CAG"
+  },
+  "language-alt": {
+    "zh": "选择语言",
+    "en": "Select Language",
+    "ko": "언어 선택",
+    "ja": "言語選択",
+    "fr": "Choisir la langue",
+    "de": "Sprache auswählen"
+  },
+  "model-section-title": {
+    "zh": "选择模型",
+    "en": "Select Model",
+    "ko": "모델 선택",
+    "ja": "モデル選択",
+    "fr": "Sélectionner le modèle",
+    "de": "Modell auswählen"
+  },
+  "model-minimal": {
+    "zh": "Minimal",
+    "en": "Minimal",
+    "ko": "Minimal",
+    "ja": "Minimal",
+    "fr": "Minimal",
+    "de": "Minimal"
+  },
+  "model-minimal-inspiration": {
+    "zh": "灵感来源：噪音回放",
+    "en": "Inspiration: Noise Replay",
+    "ko": "영감: Noise Replay",
+    "ja": "インスピレーション: Noise Replay",
+    "fr": "Inspiration : Noise Replay",
+    "de": "Inspiration: Noise Replay"
+  },
+  "model-vintage": {
+    "zh": "Vintage",
+    "en": "Vintage",
+    "ko": "Vintage",
+    "ja": "Vintage",
+    "fr": "Vintage",
+    "de": "Vintage"
+  },
+  "model-vintage-inspiration": {
+    "zh": "灵感来源：Henry Packs",
+    "en": "Inspiration: Henry Packs",
+    "ko": "영감: Henry Packs",
+    "ja": "インスピレーション: Henry Packs",
+    "fr": "Inspiration : Henry Packs",
+    "de": "Inspiration: Henry Packs"
+  },
+  "model-side": {
+    "zh": "Side",
+    "en": "Side",
+    "ko": "Side",
+    "ja": "Side",
+    "fr": "Side",
+    "de": "Side"
+  },
+  "model-side-inspiration": {
+    "zh": "灵感来源：Minecraft Skin Avatar",
+    "en": "Inspiration: Minecraft Skin Avatar",
+    "ko": "영감: Minecraft Skin Avatar",
+    "ja": "インスピレーション: Minecraft Skin Avatar",
+    "fr": "Inspiration : Minecraft Skin Avatar",
+    "de": "Inspiration: Minecraft Skin Avatar"
+  },
+  "qq-group": {
+    "zh": "MCCAG 交流群：597688340",
+    "en": "MCCAG Communication Group: 597688340",
+    "ko": "MCCAG 커뮤니티: 597688340",
+    "ja": "MCCAG交流グループ: 597688340",
+    "fr": "Groupe de discussion MCCAG : 597688340",
+    "de": "MCCAG Kommunikationsgruppe: 597688340"
+  },
+  "click-ad": {
+    "zh": "点击广告",
+    "en": "Click Ad",
+    "ko": "광고 클릭",
+    "ja": "広告をクリック",
+    "fr": "Cliquer sur la pub",
+    "de": "Anzeige klicken"
+  },
+  "maintain-website": {
+    "zh": "维持网站运营",
+    "en": "Maintain Website",
+    "ko": "웹사이트 유지",
+    "ja": "ウェブサイト維持",
+    "fr": "Maintenir le site web",
+    "de": "Website unterhalten"
+  },
+  "donate-us": {
+    "zh": "捐助我们！",
+    "en": "Donate to Us!",
+    "ko": "기부하기!",
+    "ja": "寄付する！",
+    "fr": "Faites un don !",
+    "de": "Spenden Sie uns!"
+  },
+  "help-development": {
+    "zh": "助力我们开发",
+    "en": "Support Development",
+    "ko": "개발 지원",
+    "ja": "開発支援",
+    "fr": "Aider le développement",
+    "de": "Entwicklung unterstützen"
+  },
+  "perfect-product": {
+    "zh": "更完美的产品",
+    "en": "More Perfect Product",
+    "ko": "더 완벽한 제품",
+    "ja": "より完璧な製品",
+    "fr": "Produit plus parfait",
+    "de": "Perfekteres Produkt"
+  },
+  "tab-mojang": {
+    "zh": "正版 ID",
+    "en": "Official ID",
+    "ko": "정식 ID",
+    "ja": "公式ID",
+    "fr": "ID Officiel",
+    "de": "Offizielle ID"
+  },
+  "tab-website": {
+    "zh": "皮肤站",
+    "en": "Skin Website",
+    "ko": "스킨 사이트",
+    "ja": "スキンサイト",
+    "fr": "Site de skins",
+    "de": "Skin-Website"
+  },
+  "tab-upload": {
+    "zh": "上传皮肤",
+    "en": "Upload Skin",
+    "ko": "스킨 업로드",
+    "ja": "スキンアップロード",
+    "fr": "Télécharger un skin",
+    "de": "Skin hochladen"
+  },
+  "btn-generate": {
+    "zh": "生成",
+    "en": "Generate",
+    "ko": "생성",
+    "ja": "生成",
+    "fr": "Générer",
+    "de": "Generieren"
+  },
+  "btn-edit-generate": {
+    "zh": "编辑生成",
+    "en": "Edit & Generate",
+    "ko": "편집 및 생성",
+    "ja": "編集して生成",
+    "fr": "Modifier & Générer",
+    "de": "Bearbeiten & Generieren"
+  },
+  "btn-edit-background": {
+    "zh": "编辑背景",
+    "en": "Edit Background",
+    "ko": "배경 편집",
+    "ja": "背景編集",
+    "fr": "Modifier l'arrière-plan",
+    "de": "Hintergrund bearbeiten"
+  },
+  "download-transparent": {
+    "zh": "无背景保存",
+    "en": "Save without Background",
+    "ko": "배경 없이 저장",
+    "ja": "背景なしで保存",
+    "fr": "Télécharger sans fond",
+    "de": "Ohne Hintergrund speichern"
+  },
+  "download-with-bg": {
+    "zh": "保存图片",
+    "en": "Save Image",
+    "ko": "이미지 저장",
+    "ja": "画像保存",
+    "fr": "Télécharger l'image",
+    "de": "Bild speichern"
+  },
+  "click-upload": {
+    "zh": "点击上传",
+    "en": "Click to Upload",
+    "ko": "업로드 클릭",
+    "ja": "クリックしてアップロード",
+    "fr": "Cliquer pour télécharger",
+    "de": "Zum Hochladen klicken"
+  },
+  "placeholder-id": {
+    "zh": "请输入正版 ID",
+    "en": "Enter Official ID",
+    "ko": "정식 ID 입력",
+    "ja": "公式IDを入力",
+    "fr": "Entrez l'ID Officiel",
+    "de": "Offizielle ID eingeben"
+  },
+  "placeholder-website": {
+    "zh": "请输入皮肤站网址",
+    "en": "Enter Skin Website URL",
+    "ko": "스킨 사이트 URL 입력",
+    "ja": "スキンサイトURLを入力",
+    "fr": "Entrez l'URL du site de skins",
+    "de": "Skin-Website-URL eingeben"
+  },
+  "production": {
+    "zh": "制作：",
+    "en": "Produced by:",
+    "ko": "제작:",
+    "ja": "制作:",
+    "fr": "Produit par :",
+    "de": "Erstellt von:"
+  },
+  "donate": {
+    "zh": "打赏给作者一杯咖啡！",
+    "en": "Buy the author a coffee!",
+    "ko": "작가에게 커피 한 잔 사주세요!",
+    "ja": "作者にコーヒーをおごりましょう！",
+    "fr": "Offrez un café à l'auteur !",
+    "de": "Kaufen Sie dem Autor einen Kaffee!"
+  },
+  "friendly-links": {
+    "zh": "友链：",
+    "en": "Friendly Links:",
+    "ko": "추천 링크:",
+    "ja": "おすすめリンク:",
+    "fr": "Liens amis :",
+    "de": "Freundschaftliche Links:"
+  },
+  "friendly-link-1": {
+    "zh": "苦力怕论坛",
+    "en": "Creeper Forum",
+    "ko": "크리퍼 포럼",
+    "ja": "クリーパーフォーラム",
+    "fr": "Forum Creeper",
+    "de": "Creeper-Forum"
+  },
+  "friendly-link-2": {
+    "zh": "MC导航网",
+    "en": "MC Navigation",
+    "ko": "MC 내비게이션",
+    "ja": "MCナビゲーション",
+    "fr": "Navigation MC",
+    "de": "MC-Navigation"
+  },
+  "total-visits": {
+    "zh": "本站总访问量",
+    "en": "Total Site Visits",
+    "ko": "총 사이트 방문 수",
+    "ja": "総サイト訪問数",
+    "fr": "Visites totales du site",
+    "de": "Gesamte Seitenbesuche"
+  },
+  "times": {
+    "zh": "次",
+    "en": "times",
+    "ko": "회",
+    "ja": "回",
+    "fr": "fois",
+    "de": "Mal"
+  },
+  "float-tips-minimal": {
+    "zh": "点击查看 B 站原视频",
+    "en": "Click to view original Bilibili video",
+    "ko": "Bilibili 원본 동영상 보기",
+    "ja": "Bilibiliオリジナル動画を見る",
+    "fr": "Cliquer pour voir la vidéo originale sur Bilibili",
+    "de": "Originales Bilibili-Video ansehen"
+  },
+  "float-tips-vintage": {
+    "zh": "点击查看 Youtube 原视频",
+    "en": "Click to view original YouTube video",
+    "ko": "YouTube 원본 동영상 보기",
+    "ja": "YouTubeオリジナル動画を見る",
+    "fr": "Cliquer pour voir la vidéo originale sur YouTube",
+    "de": "Originales YouTube-Video ansehen"
+  },
+  "float-tips-side": {
+    "zh": "该网站已关闭",
+    "en": "This website is closed",
+    "ko": "해당 웹사이트는 폐쇄됨",
+    "ja": "このウェブサイトは閉鎖されました",
+    "fr": "Ce site web est fermé",
+    "de": "Diese Website ist geschlossen"
+  },
+  "dialog-minimal-shadow-depth": {
+    "zh": "阴影深浅",
+    "en": "Shadow Depth",
+    "ko": "그림자 깊이",
+    "ja": "影の深さ",
+    "fr": "Profondeur d'ombre",
+    "de": "Schattentiefe"
+  },
+  "dialog-minimal-image-scale": {
+    "zh": "图片缩放",
+    "en": "Image Scale",
+    "ko": "이미지 스케일",
+    "ja": "画像スケール",
+    "fr": "Échelle d'image",
+    "de": "Bildskalierung"
+  },
+  "dialog-minimal-generation-mode": {
+    "zh": "生成模式",
+    "en": "Generation Mode",
+    "ko": "생성 모드",
+    "ja": "生成モード",
+    "fr": "Mode de génération",
+    "de": "Generierungsmodus"
+  },
+  "avatar-full": {
+    "zh": "全身照",
+    "en": "Full Body",
+    "ko": "전신",
+    "ja": "全身",
+    "fr": "Corps entier",
+    "de": "Ganzkörper"
+  },
+  "avatar-half": {
+    "zh": "半身照",
+    "en": "Half Body",
+    "ko": "반신",
+    "ja": "半身",
+    "fr": "Mi-corps",
+    "de": "Halbkörper"
+  },
+  "avatar-head": {
+    "zh": "仅头像",
+    "en": "Head Only",
+    "ko": "머리만",
+    "ja": "頭のみ",
+    "fr": "Tête uniquement",
+    "de": "Nur Kopf"
+  },
+  "dialog-minimal-tilt-angle": {
+    "zh": "倾斜角度",
+    "en": "Tilt Angle",
+    "ko": "기울기 각도",
+    "ja": "傾斜角度",
+    "fr": "Angle d'inclinaison",
+    "de": "Neigungswinkel"
+  },
+  "dialog-minimal-preset-colors": {
+    "zh": "预设颜色",
+    "en": "Preset Colors",
+    "ko": "프리셋 색상",
+    "ja": "プリセットカラー",
+    "fr": "Couleurs prédéfinies",
+    "de": "Voreingestellte Farben"
+  },
+  "dialog-minimal-select-color": {
+    "zh": "选择颜色",
+    "en": "Select Color",
+    "ko": "색상 선택",
+    "ja": "色選択",
+    "fr": "Sélectionner couleur",
+    "de": "Farbe auswählen"
+  },
+  "dialog-minimal-upload-background": {
+    "zh": "上传背景",
+    "en": "Upload Background",
+    "ko": "배경 업로드",
+    "ja": "背景アップロード",
+    "fr": "Télécharger l'arrière-plan",
+    "de": "Hintergrund hochladen"
+  },
+  "dialog-vintage-border-thickness": {
+    "zh": "边线粗细",
+    "en": "Border Thickness",
+    "ko": "테두리 두께",
+    "ja": "枠線の太さ",
+    "fr": "Épaisseur de bordure",
+    "de": "Rahmenstärke"
+  },
+  "dialog-vintage-image-scale": {
+    "zh": "图片缩放",
+    "en": "Image Scale",
+    "ko": "이미지 스케일",
+    "ja": "画像スケール",
+    "fr": "Échelle d'image",
+    "de": "Bildskalierung"
+  },
+  "dialog-vintage-border-color": {
+    "zh": "边线颜色",
+    "en": "Border Color",
+    "ko": "테두리 색상",
+    "ja": "枠線の色",
+    "fr": "Couleur de bordure",
+    "de": "Rahmenfarbe"
+  },
+  "dialog-vintage-select-color": {
+    "zh": "选择颜色",
+    "en": "Select Color",
+    "ko": "색상 선택",
+    "ja": "色選択",
+    "fr": "Sélectionner couleur",
+    "de": "Farbe auswählen"
+  },
+  "dialog-vintage-background-stripes": {
+    "zh": "背景条数",
+    "en": "Background Stripes",
+    "ko": "배경 줄무늬",
+    "ja": "背景ストライプ",
+    "fr": "Rayures d'arrière-plan",
+    "de": "Hintergrundstreifen"
+  },
+  "dialog-vintage-stripes-unit": {
+    "zh": "条",
+    "en": "stripes",
+    "ko": "줄",
+    "ja": "本",
+    "fr": "rayures",
+    "de": "Streifen"
+  },
+  "dialog-vintage-vignette-depth": {
+    "zh": "暗角深浅",
+    "en": "Vignette Depth",
+    "ko": "비네팅 깊이",
+    "ja": "ビネットの深さ",
+    "fr": "Profondeur de vignette",
+    "de": "Vignettenstärke"
+  },
+  "dialog-vintage-tilt-angle": {
+    "zh": "倾斜角度",
+    "en": "Tilt Angle",
+    "ko": "기울기 각도",
+    "ja": "傾斜角度",
+    "fr": "Angle d'inclinaison",
+    "de": "Neigungswinkel"
+  },
+  "dialog-vintage-preset-colors": {
+    "zh": "预设颜色",
+    "en": "Preset Colors",
+    "ko": "프리셋 색상",
+    "ja": "プリセットカラー",
+    "fr": "Couleurs prédéfinies",
+    "de": "Voreingestellte Farben"
+  },
+  "dialog-vintage-upload-background": {
+    "zh": "上传背景",
+    "en": "Upload Background",
+    "ko": "배경 업로드",
+    "ja": "背景アップロード",
+    "fr": "Télécharger l'arrière-plan",
+    "de": "Hintergrund hochladen"
+  },
+  "dialog-side-shadow-depth": {
+    "zh": "阴影深浅",
+    "en": "Shadow Depth",
+    "ko": "그림자 깊이",
+    "ja": "影の深さ",
+    "fr": "Profondeur d'ombre",
+    "de": "Schattentiefe"
+  },
+  "dialog-side-image-scale": {
+    "zh": "图片缩放",
+    "en": "Image Scale",
+    "ko": "이미지 스케일",
+    "ja": "画像スケール",
+    "fr": "Échelle d'image",
+    "de": "Bildskalierung"
+  },
+  "dialog-side-shadow-rendering": {
+    "zh": "阴影渲染",
+    "en": "Shadow Rendering",
+    "ko": "그림자 렌더링",
+    "ja": "影のレンダリング",
+    "fr": "Rendu des ombres",
+    "de": "Schatten-Rendering"
+  },
+  "dialog-side-enable": {
+    "zh": "开启",
+    "en": "Enable",
+    "ko": "활성화",
+    "ja": "有効",
+    "fr": "Activer",
+    "de": "Aktivieren"
+  },
+  "dialog-side-disable": {
+    "zh": "关闭",
+    "en": "Disable",
+    "ko": "비활성화",
+    "ja": "無効",
+    "fr": "Désactiver",
+    "de": "Deaktivieren"
+  },
+  "dialog-side-tilt-angle": {
+    "zh": "倾斜角度",
+    "en": "Tilt Angle",
+    "ko": "기울기 각도",
+    "ja": "傾斜角度",
+    "fr": "Angle d'inclinaison",
+    "de": "Neigungswinkel"
+  },
+  "dialog-side-preset-colors": {
+    "zh": "预设颜色",
+    "en": "Preset Colors",
+    "ko": "프리셋 색상",
+    "ja": "プリセットカラー",
+    "fr": "Couleurs prédéfinies",
+    "de": "Voreingestellte Farben"
+  },
+  "dialog-side-select-color": {
+    "zh": "选择颜色",
+    "en": "Select Color",
+    "ko": "색상 선택",
+    "ja": "色選択",
+    "fr": "Sélectionner couleur",
+    "de": "Farbe auswählen"
+  },
+  "dialog-side-upload-background": {
+    "zh": "上传背景",
+    "en": "Upload Background",
+    "ko": "배경 업로드",
+    "ja": "背景アップロード",
+    "fr": "Télécharger l'arrière-plan",
+    "de": "Hintergrund hochladen"
+  }
 });

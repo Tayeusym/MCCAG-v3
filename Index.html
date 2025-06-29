@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=500, initial-scale=0.7">
     <meta name="description" content="可爱头像生成器（Minecraft Cute Avatar Generator）支持正版ID、皮肤站和自定义上传，轻松生成个性化Minecraft头像，支持多语言切换和多种下载选项。">
-    <title data-i18n="title">可爱头像生成器 | Minecraft Cute Avatar Generator</title>
+    <title i18n="title">可爱头像生成器 | Minecraft Cute Avatar Generator</title>
     <link rel="icon" type="image/png" href="Resources/Logo.png">
     <link rel="stylesheet" href="Index.css">
     <script type="module" src="Index.js"></script>
@@ -22,12 +22,12 @@
     <header class="header-bar">
         <div class="header-logo">
             <img src="Resources/Logo.png" alt="Logo" class="header-logo-image">
-            <h1 class="header-title">Minecraft CAG</h1>
+            <h1 class="header-title" i18n="header-title">Minecraft CAG</h1>
         </div>
         <div class="language-selector">
             <input type="checkbox" id="language-switch" value="0" class="hidden language-selector-checkbox">
             <label for="language-switch" class="language-selector-label">
-                <img src="Resources/Icons/Language.svg" alt="选择语言" data-i18n-alt="language_alt" class="language-selector-icon">
+                <img src="Resources/Icons/Language.svg" alt="选择语言" i18n-alt="language-alt" class="language-selector-icon">
             </label>
             <ul class="language-selector-list">
                 <li class="language-selector-item" id="chinese" data-lang="zh">汉语</li>
@@ -44,24 +44,24 @@
         <ul class="notification-list"></ul>
 
         <section class="model-section">
-            <div class="title">选择模型</div>
+            <div class="title" i18n="model-section-title">选择模型</div>
             <div class="model-selector">
                 <input checked type="radio" id="minimal" name="model-type" class="hidden model-selector-input">
                 <label for="minimal" class="model-selector-label">
-                    <span class="model-selector-label-text">Minimal</span>
-                    <a class="float-tips-link" href="https://www.bilibili.com/video/BV1rB4y1F7dW/" rel="noopener" target="_blank">灵感来源：噪音回放</a>
+                    <span class="model-selector-label-text" i18n="model-minimal">Minimal</span>
+                    <a class="float-tips-link" href="https://www.bilibili.com/video/BV1rB4y1F7dW/" rel="noopener" target="_blank" i18n="model-minimal-inspiration">灵感来源：噪音回放</a>
                 </label>
                 <input type="radio" id="vintage" name="model-type" class="hidden model-selector-input">
                 <label for="vintage" class="model-selector-label">
-                    <span class="model-selector-label-text">Vintage</span>
-                    <a class="float-tips-link" href="https://www.youtube.com/watch?v=2_VWUkZH06g" rel="noopener" target="_blank">灵感来源：Henry Packs</a>
+                    <span class="model-selector-label-text" i18n="model-vintage">Vintage</span>
+                    <a class="float-tips-link" href="https://www.youtube.com/watch?v=2_VWUkZH06g" rel="noopener" target="_blank" i18n="model-vintage-inspiration">灵感来源：Henry Packs</a>
                 </label>
                 <input type="radio" id="side" name="model-type" class="hidden model-selector-input">
                 <label for="side" class="model-selector-label">
-                    <span class="model-selector-label-text">Side</span>
-                    <a class="float-tips-link" rel="noopener" target="_blank">灵感来源：Minecraft Skin Avatar</a>
+                    <span class="model-selector-label-text" i18n="model-side">Side</span>
+                    <a class="float-tips-link" rel="noopener" target="_blank" i18n="model-side-inspiration">灵感来源：Minecraft Skin Avatar</a>
                 </label>
-                <a href="https://qm.qq.com/q/apvmPE1Wes" rel="noopener" target="_blank" class="button button-secondary qq">MCCAG 交流群：597688340</a>
+                <a href="https://qm.qq.com/q/apvmPE1Wes" rel="noopener" target="_blank" class="button button-secondary qq" i18n="qq-group">MCCAG 交流群：597688340</a>
 
             </div>
         </section>
@@ -71,17 +71,17 @@
                 <div class="container">
                     <div class="advertisement-image"></div>
                     <div class="introduction">
-                        <span data-i18n="click_ad">点击广告</span>
-                        <span data-i18n="maintain_website">维持网站运营</span>
+                        <span i18n="click-ad">点击广告</span>
+                        <span i18n="maintain-website">维持网站运营</span>
                     </div>
                 </div>
             </a>
             <a href="https://afdian.com/a/Keishi/" rel="noopener" target="_blank">
                 <div class="container">
-                    <div class="donate-us-title" data-i18n="donate_us">捐助我们！</div>
+                    <div class="donate-us-title" i18n="donate-us">捐助我们！</div>
                     <div class="introduction">
-                        <span data-i18n="help_development">助力我们开发</span>
-                        <span data-i18n="perfect_product">更完美的产品</span>
+                        <span i18n="help-development">助力我们开发</span>
+                        <span i18n="perfect-product">更完美的产品</span>
                     </div>
                 </div>
             </a>
@@ -91,64 +91,64 @@
 
             <div class="tab-switcher">
                 <input checked type="radio" id="mojang" name="tabs" class="hidden">
-                <label for="mojang" data-i18n="tab_mojang" class="tab-switcher-label">正版 ID</label>
+                <label for="mojang" i18n="tab-mojang" class="tab-switcher-label">正版 ID</label>
                 <input type="radio" id="website" name="tabs" class="hidden">
-                <label for="website" data-i18n="tab_website" class="tab-switcher-label">皮肤站</label>
+                <label for="website" i18n="tab-website" class="tab-switcher-label">皮肤站</label>
                 <input type="radio" id="upload" name="tabs" class="hidden">
-                <label for="upload" data-i18n="tab_upload" class="tab-switcher-label">上传皮肤</label>
+                <label for="upload" i18n="tab-upload" class="tab-switcher-label">上传皮肤</label>
                 <span class="tab-switcher-glider"></span>
             </div>
 
             <div class="generator-content">
 
                 <div class="tab-panel tab-panel-mojang" id="active-content">
-                    <input type="text" placeholder="请输入正版 ID" data-i18n-placeholder="placeholder_id" class="text-input player-name">
+                    <input type="text" placeholder="请输入正版 ID" i18n-placeholder="placeholder-id" class="text-input player-name">
                     <div class="action-list" columns="3">
-                        <button class="button button-primary generate" data-i18n="btn_generate">生成</button>
-                        <button class="button button-secondary edit-generate" data-i18n="btn_edit_generate">编辑生成</button>
-                        <button class="button button-secondary edit-background" data-i18n="btn_edit_background">编辑背景</button>
+                        <button class="button button-primary generate" i18n="btn-generate">生成</button>
+                        <button class="button button-secondary edit-generate" i18n="btn-edit-generate">编辑生成</button>
+                        <button class="button button-secondary edit-background" i18n="btn-edit-background">编辑背景</button>
                     </div>
                     <canvas height="1000" width="1000" class="avatar-preview-canvas"></canvas>
                     <div class="loading-overlay"></div>
                     <div class="action-list" columns="2">
-                        <button class="button button-secondary" data-i18n="download_transparent" download-type="transparent">无背景保存</button>
-                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
+                        <button class="button button-secondary" i18n="download-transparent" download-type="transparent">无背景保存</button>
+                        <button class="button button-secondary" i18n="download-with-bg" download-type="background">保存图片</button>
                     </div>
                 </div>
 
                 <div class="tab-panel tab-panel-website">
                     <div class="form-section">
                         <div class="form-fields">
-                            <input type="text" placeholder="请输入正版 ID" data-i18n-placeholder="placeholder_id" class="text-input player-name">
-                            <input type="text" value="littleskin.cn" placeholder="请输入皮肤站网址" data-i18n-placeholder="placeholder_website" class="text-input skin-website">
+                            <input type="text" placeholder="请输入正版 ID" i18n-placeholder="placeholder-id" class="text-input player-name">
+                            <input type="text" value="littleskin.cn" placeholder="请输入皮肤站网址" i18n-placeholder="placeholder-website" class="text-input skin-website">
                         </div>
                         <div class="action-list" columns="3">
-                            <button class="button button-primary generate" data-i18n="btn_generate">生成</button>
-                            <button class="button button-secondary edit-generate" data-i18n="btn_edit_generate">编辑生成</button>
-                            <button class="button button-secondary edit-background" data-i18n="btn_edit_background">编辑背景</button>
+                            <button class="button button-primary generate" i18n="btn-generate">生成</button>
+                            <button class="button button-secondary edit-generate" i18n="btn-edit-generate">编辑生成</button>
+                            <button class="button button-secondary edit-background" i18n="btn-edit-background">编辑背景</button>
                         </div>
                     </div>
                     <canvas height="1000" width="1000" class="avatar-preview-canvas"></canvas>
                     <div class="loading-overlay"></div>
                     <div class="action-list" columns="2">
-                        <button class="button button-secondary" data-i18n="download_transparent" download-type="transparent">无背景保存</button>
-                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
+                        <button class="button button-secondary" i18n="download-transparent" download-type="transparent">无背景保存</button>
+                        <button class="button button-secondary" i18n="download-with-bg" download-type="background">保存图片</button>
                     </div>
                 </div>
 
                 <div class="tab-panel tab-panel-upload">
                     <input type="file" id="upload-file" accept="image/*" class="file-upload-input">
-                    <label for="upload-file" data-i18n="click_upload" class="file-upload-label">点击上传</label>
+                    <label for="upload-file" i18n="click-upload" class="file-upload-label">点击上传</label>
                     <div class="action-list" columns="3">
-                        <button class="button button-primary generate" data-i18n="btn_generate">生成</button>
-                        <button class="button button-secondary edit-generate" data-i18n="btn_edit_generate">编辑生成</button>
-                        <button class="button button-secondary edit-background" data-i18n="btn_edit_background">编辑背景</button>
+                        <button class="button button-primary generate" i18n="btn-generate">生成</button>
+                        <button class="button button-secondary edit-generate" i18n="btn-edit-generate">编辑生成</button>
+                        <button class="button button-secondary edit-background" i18n="btn-edit-background">编辑背景</button>
                     </div>
                     <canvas height="1000" width="1000" class="avatar-preview-canvas"></canvas>
                     <div class="loading-overlay"></div>
                     <div class="action-list" columns="2">
-                        <button class="button button-secondary" data-i18n="download_transparent" download-type="transparent">无背景保存</button>
-                        <button class="button button-secondary" data-i18n="download_with_bg" download-type="background">保存图片</button>
+                        <button class="button button-secondary" i18n="download-transparent" download-type="transparent">无背景保存</button>
+                        <button class="button button-secondary" i18n="download-with-bg" download-type="background">保存图片</button>
                     </div>
                 </div>
 
@@ -158,27 +158,27 @@
 
     <footer class="footer-bar">
         <p class="footer-text">
-            <span data-i18n="production">制作：</span>
+            <span i18n="production">制作：</span>
             <a href="https://github.com/Lonely-Sails/" rel="noopener" target="_blank" class="footer-link">LonelySail</a> 
             <a href="https://space.bilibili.com/23785358/" rel="noopener" target="_blank" class="footer-link">Keishi</a> | 
-            <a href="https://afdian.com/a/Keishi/" rel="noopener" target="_blank" data-i18n="donate" class="footer-link">打赏给作者一杯咖啡！</a>
+            <a href="https://afdian.com/a/Keishi/" rel="noopener" target="_blank" i18n="donate" class="footer-link">打赏给作者一杯咖啡！</a>
         </p>
         <p class="footer-text">
-            <a href="https://github.com/MCCAG/" rel="noopener" target="_blank" class="footer-link">Github</a> |
-            <span data-i18n="friendly_links">友链：</span>
-            <a href="https://www.mcnav.net/" rel="noopener" target="_blank" class="footer-link">苦力怕论坛</a>
-            <a href="https://www.rainyun.com/" rel="noopener" target="_blank" class="footer-link">MC导航网</a>  |
-            <span id='busuanzi_container_site_pv'>
-                <span data-i18n="total_visits">本站总访问量</span> 
-                <span id="busuanzi_value_site_pv" class="footer-count"></span> 
-                <span data-i18n="times">次</span>
+            <a href="https://github.com/MCCAG/" rel="noopener" target="-blank" class="footer-link">Github</a> |
+            <span i18n="friendly-links">友链：</span>
+            <a href="https://www.mcnav.net/" rel="noopener" target="_blank" class="footer-link" i18n="friendly-link-1">苦力怕论坛</a>
+            <a href="https://www.rainyun.com/" rel="noopener" target="_blank" class="footer-link" i18n="friendly-link-2">MC导航网</a>  |
+            <span id='busuanzi-container-site-pv'>
+                <span i18n="total-visits">本站总访问量</span> 
+                <span id="busuanzi-value-site-pv" class="footer-count"></span> 
+                <span i18n="times">次</span>
             </span>
         </p>
     </footer>
 
-    <div class="float-tips hidden" for="minimal">点击查看 B 站原视频</div>
-    <div class="float-tips hidden" for="vintage">点击查看 Youtube 原视频</div>
-    <div class="float-tips hidden" for="side">该网站已关闭</div>
+    <div class="float-tips hidden" for="minimal" i18n="float-tips-minimal">点击查看 B 站原视频</div>
+    <div class="float-tips hidden" for="vintage" i18n="float-tips-vintage">点击查看 Youtube 原视频</div>
+    <div class="float-tips hidden" for="side" i18n="float-tips-side">该网站已关闭</div>
 
     <div id="edit-dialog-overlay" class="hidden edit-dialog-overlay">
         <div id="edit-dialog" class="edit-dialog">
@@ -186,24 +186,24 @@
             <!-- Minimal 生成编辑 -->
             <div id="dialog-minimal-generate" class="hidden dialog-content">
                 <div class="dialog-row">
-                    <label>阴影深浅</label>
+                    <label i18n="dialog-minimal-shadow-depth">阴影深浅</label>
                     <input type="range" option="generate-shadow" min="0" max="100" value="0" class="range-slider">
                     <p><span class="range-slider-value">0</span>%</p>
                 </div>
                 <div class="dialog-row">
-                    <label>图片缩放</label>
+                    <label i18n="dialog-minimal-image-scale">图片缩放</label>
                     <input type="range" option="generate-scale" min="50" max="150" value="100" class="range-slider">
                     <p><span class="range-slider-value">100</span>%</p>
                 </div>
                 <div class="dialog-row">
-                    <label>生成模式</label>
+                    <label i18n="dialog-minimal-generation-mode">生成模式</label>
                     <div class="button-group">
                         <input checked type="radio" id="full" name="minimal-option" class="hidden option-input">
-                        <label for="full" class="options" data-i18n="avatar_full">全身照</label>
+                        <label for="full" class="options" i18n="avatar-full">全身照</label>
                         <input type="radio" id="big-head" name="minimal-option" class="hidden option-input">
-                        <label for="big-head" class="options" data-i18n="avatar_half">半身照</label>
+                        <label for="big-head" class="options" i18n="avatar-half">半身照</label>
                         <input type="radio" id="head" name="minimal-option" class="hidden option-input">
-                        <label for="head" class="options" data-i18n="avatar_head">仅头像</label>
+                        <label for="head" class="options" i18n="avatar-head">仅头像</label>
                     </div>
                 </div>
             </div>
@@ -211,12 +211,12 @@
             <!-- Minimal 背景编辑 -->
             <div id="dialog-minimal-background" class="dialog-content hidden">
                 <div class="dialog-row">
-                    <label>倾斜角度</label>
+                    <label i18n="dialog-minimal-tilt-angle">倾斜角度</label>
                     <input type="range" option="background-angle" min="0" max="180" value="45" class="range-slider">
                     <p><span class="range-slider-value">45</span>°</p>
                 </div>
                 <div class="dialog-row">
-                    <label>预设颜色</label>
+                    <label i18n="dialog-minimal-preset-colors">预设颜色</label>
                     <div class="color-list">
                         <div class="color-item" option="background-colors" value="#FFCCCB"></div>
                         <div class="color-item" option="background-colors" value="#ADD8E6"></div>
@@ -228,13 +228,13 @@
                     </div>
                 </div>
                 <div class="dialog-row">
-                    <label>选择颜色</label>
+                    <label i18n="dialog-minimal-select-color">选择颜色</label>
                     <input type="color" option="background-colors" class="color-picker">
                     <input type="color" option="background-colors" class="color-picker">
                 </div>
                 <div class="dialog-row">
-                    <label>上传背景</label>
-                    <label for="upload-background-2" class="button button-secondary upload-label">点击上传</label>
+                    <label i18n="dialog-minimal-upload-background">上传背景</label>
+                    <label for="upload-background-2" class="button button-secondary upload-label" i18n="click-upload">点击上传</label>
                     <input type="file" id="upload-background-2" accept="image/*" class="upload-background hidden">
                 </div>
             </div>
@@ -242,17 +242,17 @@
             <!-- Vintage 生成编辑 -->
             <div id="dialog-vintage-generate" class="dialog-content hidden">
                 <div class="dialog-row">
-                    <label>边线粗细</label>
+                    <label i18n="dialog-vintage-border-thickness">边线粗细</label>
                     <input type="range" option="generate-border" min="1" max="5" value="2" class="range-slider">
                     <p><span class="range-slider-value">2</span></p>
                 </div>
                 <div class="dialog-row">
-                    <label>图片缩放</label>
+                    <label i18n="dialog-vintage-image-scale">图片缩放</label>
                     <input type="range" option="generate-scale" min="40" max="150" value="90" class="range-slider">
                     <p><span class="range-slider-value">90</span>%</p>
                 </div>
                 <div class="dialog-row">
-                    <label>边线颜色</label>
+                    <label i18n="dialog-vintage-border-color">边线颜色</label>
                     <div class="color-list">
                         <div class="color-item" option="generate-color" value="#000000"></div>
                         <div class="color-item" option="generate-color" value="#000000"></div>
@@ -267,7 +267,7 @@
                     </div>
                 </div>
                 <div class="dialog-row">
-                    <label>选择颜色</label>
+                    <label i18n="dialog-vintage-select-color">选择颜色</label>
                     <input type="color" option="generate-color" class="color-picker">
                 </div>
             </div>
@@ -275,22 +275,22 @@
             <!-- Vintage 背景编辑 -->
             <div id="dialog-vintage-background" class="dialog-content hidden">
                 <div class="dialog-row">
-                    <label>背景条数</label>
+                    <label i18n="dialog-vintage-background-stripes">背景条数</label>
                     <input type="range" option="background-count" min="6" max="26" value="16" step="2" class="range-slider">
-                    <p><span class="range-slider-value">16</span>条</p>
+                    <p><span class="range-slider-value">16</span><span i18n="dialog-vintage-stripes-unit">条</span></p>
                 </div>
                 <div class="dialog-row">
-                    <label>暗角深浅</label>
+                    <label i18n="dialog-vintage-vignette-depth">暗角深浅</label>
                     <input type="range" option="background-vignette" min="0" max="100" value="20" class="range-slider">
                     <p><span class="range-slider-value">20</span>%</p>
                 </div>
                 <div class="dialog-row">
-                    <label>倾斜角度</label>
+                    <label i18n="dialog-vintage-tilt-angle">倾斜角度</label>
                     <input type="range" option="background-angle" min="0" max="180" value="0" class="range-slider">
                     <p><span class="range-slider-value">0</span>°</p>
                 </div>
                 <div class="dialog-row">
-                    <label>预设颜色</label>
+                    <label i18n="dialog-vintage-preset-colors">预设颜色</label>
                     <div class="color-list">
                         <div class="color-item" option="background-colors" value="#FFF5DA,#FD434D"></div>
                         <div class="color-item" option="background-colors" value="#FD444E,#5DB6FC"></div>
@@ -299,13 +299,13 @@
                     </div>
                 </div>
                 <div class="dialog-row">
-                    <label>选择颜色</label>
+                    <label i18n="dialog-vintage-select-color">选择颜色</label>
                     <input type="color" option="background-colors" class="color-picker">
                     <input type="color" option="background-colors" class="color-picker">
                 </div>
                 <div class="dialog-row">
-                    <label>上传背景</label>
-                    <label for="upload-background-1" class="button button-secondary upload-label">点击上传</label>
+                    <label i18n="dialog-vintage-upload-background">上传背景</label>
+                    <label for="upload-background-1" class="button button-secondary upload-label" i18n="click-upload">点击上传</label>
                     <input type="file" id="upload-background-1" accept="image/*" class="upload-background hidden">
                 </div>
             </div>
@@ -313,22 +313,22 @@
             <!-- Side 生成编辑 -->
             <div id="dialog-side-generate" class="dialog-content hidden">
                 <div class="dialog-row">
-                    <label>阴影深浅</label>
+                    <label i18n="dialog-side-shadow-depth">阴影深浅</label>
                     <input type="range" option="generate-shadow" min="0" max="100" value="0" class="range-slider">
                     <p><span class="range-slider-value">40</span>%</p>
                 </div>
                 <div class="dialog-row">
-                    <label>图片缩放</label>
+                    <label i18n="dialog-side-image-scale">图片缩放</label>
                     <input type="range" option="generate-scale" min="100" max="150" value="100" class="range-slider">
                     <p><span class="range-slider-value">100</span>%</p>
                 </div>
                 <div class="dialog-row">
-                    <label>阴影渲染</label>
+                    <label i18n="dialog-side-shadow-rendering">阴影渲染</label>
                     <div class="button-group">
                         <input checked type="radio" id="enable" name="side-option" class="hidden option-input">
-                        <label for="enable" class="options">开启</label>
+                        <label for="enable" class="options" i18n="dialog-side-enable">开启</label>
                         <input type="radio" id="disable" name="side-option" class="hidden option-input">
-                        <label for="disable" class="options">关闭</label>
+                        <label for="disable" class="options" i18n="dialog-side-disable">关闭</label>
                     </div>
                 </div>
             </div>
@@ -336,12 +336,12 @@
             <!-- Side 背景编辑 -->
             <div id="dialog-side-background" class="dialog-content hidden">
                 <div class="dialog-row">
-                    <label>倾斜角度</label>
+                    <label i18n="dialog-side-tilt-angle">倾斜角度</label>
                     <input type="range" option="background-angle" min="0" max="180" value="90" class="range-slider">
                     <p><span class="range-slider-value">90</span>°</p>
                 </div>
                 <div class="dialog-row">
-                    <label>预设颜色</label>
+                    <label i18n="dialog-side-preset-colors">预设颜色</label>
                     <div class="color-list">
                         <div class="color-item" option="background-colors" value="#A9C9FF,#FFBBEC"></div>
                         <div class="color-item" option="background-colors" value="#FBDA61,#FF5ACD"></div>
@@ -354,13 +354,13 @@
                     </div>
                 </div>
                 <div class="dialog-row">
-                    <label>选择颜色</label>
+                    <label i18n="dialog-side-select-color">选择颜色</label>
                     <input type="color" option="background-colors" class="color-picker">
                     <input type="color" option="background-colors" class="color-picker">
                 </div>
                 <div class="dialog-row">
-                    <label>上传背景</label>
-                    <label for="upload-background-2" class="button button-secondary upload-label">点击上传</label>
+                    <label i18n="dialog-side-upload-background">上传背景</label>
+                    <label for="upload-background-2" class="button button-secondary upload-label" i18n="click-upload">点击上传</label>
                     <input type="file" id="upload-background-2" accept="image/*" class="upload-background hidden">
                 </div>
             </div>
