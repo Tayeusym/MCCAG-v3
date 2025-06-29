@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  
 
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.9.0
@@ -18,13 +20,17 @@ jobs:
 
       - name: Create deployment package
         run: |
-          tar -czf website-deploy.tar.gz \
+          mkdir -p .deploy-temp
+          rsync -a \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='node_modules' \
             --exclude='*.log' \
             --exclude='.DS_Store' \
-            .
+            ./ .deploy-temp/
+          
+          tar -czf website-deploy.tar.gz -C .deploy-temp .
+          rm -rf .deploy-temp 
 
       - name: Deploy to server
         run: |
