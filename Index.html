@@ -39,15 +39,15 @@
             <div class="model-selector">
                 <input checked type="radio" id="minimal" name="model-type" class="hidden model-selector-input">
                 <label for="minimal" class="model-selector-label">
-                    <a href="https://www.bilibili.com" target="_blank">啊啊啊啊啊这是来源</a>
+                    <a class="float-tips-link" href="https://www.bilibili.com" rel="noopener" target="_blank">啊啊啊啊啊这是来源</a>
                 </label>
                 <input type="radio" id="vintage" name="model-type" class="hidden model-selector-input">
                 <label for="vintage" class="model-selector-label">
-                    <a href="https://www.bilibili.com" target="_blank">啊啊啊啊啊这是来源</a>
+                    <a class="float-tips-link" href="https://www.bilibili.com" rel="noopener" target="_blank">啊啊啊啊啊这是来源</a>
                 </label>
                 <input type="radio" id="side" name="model-type" class="hidden model-selector-input">
                 <label for="side" class="model-selector-label">
-                    <a href="https://www.bilibili.com" target="_blank">啊啊啊啊啊这是来源</a>
+                    <a class="float-tips-link" href="https://www.bilibili.com" rel="noopener" target="_blank">啊啊啊啊啊这是来源</a>
                 </label>
                 <button class="button button-secondary more-model">更多模型，敬请期待！</button>
 
@@ -122,6 +122,7 @@
             </div>
         </section>
     </main>
+
     <footer class="footer-bar">
         <p class="footer-text">
             <span data-i18n="production">制作：</span>
@@ -142,6 +143,10 @@
             </span>
         </p>
     </footer>
+
+    <div class="float-tips hidden" for="minimal">点击查看 B 站原视频</div>
+    <div class="float-tips hidden" for="vintage">点击查看 Youtube 原视频</div>
+    <div class="float-tips hidden" for="side">该网站已关闭</div>
 
     <div id="edit-dialog-overlay" class="hidden edit-dialog-overlay">
         <div id="edit-dialog" class="edit-dialog">
@@ -211,8 +216,8 @@
                 </div>
                 <div class="dialog-row">
                     <label>图片缩放</label>
-                    <input type="range" option="generate-scale" min="40" max="150" value="100" class="range-slider">
-                    <p><span class="range-slider-value">100</span>%</p>
+                    <input type="range" option="generate-scale" min="40" max="150" value="90" class="range-slider">
+                    <p><span class="range-slider-value">90</span>%</p>
                 </div>
                 <div class="dialog-row">
                     <label>边线颜色</label>

@@ -24,10 +24,11 @@ import { corsProxy } from './Const.js';
 // 应用状态
 class AppState {
     constructor() {
-        this.currentSkinImage = new Image();
-        this.currentSkinImage.crossOrigin = 'anonymous';
-        this.currentAvatarImage = new Image();
-        this.currentAvatarImage.src = 'Resources/Avatars/Minimal.png';
+        this.defaultSkin = new Image();
+        this.defaultSkin.src = 'Resources/Default.png';
+
+        this.currentSkinImage = null;
+        this.currentAvatarImage = null;
         this.currentRegulatedAvatarImage = null;
         this.currentRegulatedBackgroundImage = null;
 
@@ -65,6 +66,13 @@ class AvatarGeneratorApp {
             this.initEventListeners();
             // 从弹窗中读取默认选项
             this.state.options = this.readOptions(this.state.modelType);
+
+            this.state.defaultSkin.onerror = () => popupTips('加载默认头像失败！', 'error');
+            this.state.defaultSkin.onload = () => {
+                this.state.currentSkinImage = this.state.defaultSkin;
+                this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
+                this.renderAvatar();
+            };
             console.log('初始化应用完成！');
         } catch (error) {
             console.error('应用初始化失败:', error);
@@ -93,29 +101,13 @@ class AvatarGeneratorApp {
         // 全局点击事件
         window.addEventListener('click', closeSelections);
         // 添加关闭对话框的事件
-        this.state.dialogOverlay.addEventListener('click', event => event.target === this.state.dialogOverlay && this.hideEditDialog());
-
-        this.state.currentAvatarImage.onload = () => {
-            this.state.currentAvatarImage.onload = null;
-            this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
-            this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
-            this.updateCanvas();
-        };
+        this.state.dialogOverlay.addEventListener('click', event => event.target == this.state.dialogOverlay && this.hideEditDialog());
 
         // 文件上传事件
         this.state.uploadInput.addEventListener('change', async event => {
-            try {
-                this.state.currentSkinImage = await handleUploader(event);
-                this.generateUpload();
-            } catch (error) {
-                this.state.currentSkinImage = null;
-                popupTips(error.message, 'error');
-            }
-        });
-
-        this.state.uploadInput.addEventListener('click', async event => {
             this.state.currentSkinImage = await handleUploader(event);
-            this.generateUpload();
+            event.target.value = null;
+            this.renderAvatar();
         });
 
         // 头像类型选择事件（仅Minimal）额外判断
@@ -124,8 +116,7 @@ class AvatarGeneratorApp {
                 this.state.options.generate.type = event.target.id;
                 this.state.options.generate.scale = 100;
                 this.updateDialogs(event.target.parentElement.parentElement.parentElement);
-                if (this.state.fetchSkinMethod === 'upload') this.generateUpload();
-                else this.generate();
+                this.generate();
             })
         );
 
@@ -135,15 +126,13 @@ class AvatarGeneratorApp {
                 this.updateRangeProgress(event.target);
                 const [ type, option ] = event.target.getAttribute('option').split('-');
                 this.state.options[type][option] = parseInt(event.target.value);
-                if (type === 'background' && option === 'angle') 
+                if (type == 'background' && option == 'angle') 
                     this.updateDialogs(event.target.parentElement.parentElement, event.target.value);
-                if (this.state.modelType === 'vintage' && option == 'border') {
-                    this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
-                    this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
-                    this.updateCanvas();
+                if (this.state.modelType == 'vintage' && option == 'border') {
+                    this.renderAvatar();
                     return;
                 }
-                if (type === 'generate')
+                if (type == 'generate')
                     this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
                 else this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
                 this.updateCanvas();
@@ -162,10 +151,8 @@ class AvatarGeneratorApp {
                 const [ type, option ] = event.target.getAttribute('option').split('-');
                 this.state.options.background.image = null;
                 this.state.options[type][option] = colors;
-                if (this.state.modelType === 'vintage' && option == 'color') {
-                    this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
-                    this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
-                    this.updateCanvas();
+                if (this.state.modelType == 'vintage' && option == 'color') {
+                    this.renderAvatar();
                     return;
                 }
                 this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
@@ -185,10 +172,8 @@ class AvatarGeneratorApp {
                 const [ type, option ] = event.target.getAttribute('option').split('-');
                 this.state.options.background.image = null;
                 this.state.options[type][option] = colors;
-                if (this.state.modelType === 'vintage' && option == 'color') {
-                    this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
-                    this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
-                    this.updateCanvas();
+                if (this.state.modelType == 'vintage' && option == 'color') {
+                    this.renderAvatar();
                     return;
                 }
                 this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
@@ -235,17 +220,26 @@ class AvatarGeneratorApp {
         );
 
         document.querySelectorAll('button.generate').forEach(button =>
-            button.addEventListener('click', _ => {
-                if (this.state.fetchSkinMethod == 'upload') this.generateUpload();
-                else this.generate();
-            })
+            button.addEventListener('click', this.generate.bind(this))
         );
 
         // 编辑按钮事件
         document.querySelectorAll('button.edit-generate, button.edit-background').forEach(button =>
             button.addEventListener('click', event => this.showEditDialog(event))
         );
-        // 拖动条进度条效果
+
+        document.querySelectorAll('a.float-tips-link').forEach(link => {
+            const type = link.parentElement.getAttribute('for');
+            const tips = document.querySelector(`div.float-tips[for=${type}]`);
+            link.addEventListener('mouseover', _ => tips.classList.remove('hidden'));
+            link.addEventListener('mouseout', _ => tips.classList.add('hidden'));
+            link.addEventListener('mousemove', event => {
+                tips.style.left = `${event.clientX + 10}px`;
+                tips.style.top = `${event.clientY + 10}px`;
+            });
+        });
+
+        // 初始化对话框
         this.initDialogs();
     }
 
@@ -257,7 +251,7 @@ class AvatarGeneratorApp {
             let flag = false;
             const currentColor = this.state.options.background.colors.join(',');
             for (const item of dialog.querySelectorAll('div.color-item')) {
-                if (item.getAttribute('value') === currentColor) {
+                if (item.getAttribute('value') == currentColor) {
                     item.id = 'selected';
                     flag = true;
                 } else item.id = '';
@@ -266,7 +260,7 @@ class AvatarGeneratorApp {
             }
             if (!this.state.options.background.image && !flag)
                 dialog.querySelectorAll('input.color-picker').forEach(item => item.id = 'selected');
-        } else if (this.state.modelType === 'vintage' && dialog.id.includes('generate')) {
+        } else if (this.state.modelType == 'vintage' && dialog.id.includes('generate')) {
             // 在生成对话框中，如果当前皮肤不为空，则自动计算颜色
             if (this.state.currentSkinImage.src) {
                 const selectedItem = dialog.querySelector('#selected');
@@ -309,7 +303,7 @@ class AvatarGeneratorApp {
             // 读取单选按钮选项（如Minimal的生成模式）
             const radioInputs = generateDialog.querySelectorAll('input[type="radio"]:checked');
             radioInputs.forEach(radio => {
-                if (radio.name === 'minimal-option') {
+                if (radio.name == 'minimal-option') {
                     newOptions.generate.type = radio.id;
                 }
             });
@@ -388,40 +382,16 @@ class AvatarGeneratorApp {
 
     switchModelType(event) {
         const modelType = event.target.id;
-        if (this.state.modelType === modelType) return;
+        if (this.state.modelType == modelType) return;
         
-        // 更新选项，保留一些通用设置
-        this.state.options = this.readOptions(modelType);
-        const avatarTypeName = modelType.charAt(0).toUpperCase() + modelType.slice(1);
+        // 更新选项
         this.state.modelType = modelType;
+        this.state.options = this.readOptions(modelType);
+        this.state.currentSkinImage = this.state.defaultSkin;
+        this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
+        this.renderAvatar();
         
-        // 检查是否有已上传的皮肤
-        if (this.state.currentSkinImage && this.state.currentSkinImage.src) {
-            // 如果有已上传的皮肤，重新渲染头像
-            this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
-            this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
-            this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
-            this.updateCanvas();
-        } else {
-            // 如果没有皮肤，加载默认头像
-            this.state.currentAvatarImage = new Image();
-            this.state.currentAvatarImage.src = `Resources/Avatars/${avatarTypeName}.png`;
-            this.state.currentAvatarImage.onload = () => {
-                this.state.currentAvatarImage.onload = null;
-                this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
-                this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
-                this.updateCanvas();
-            }
-            this.state.currentAvatarImage.onerror = () => {
-                this.state.currentAvatarImage.src = null;
-                this.state.currentAvatarImage.onerror = null;
-                this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
-                this.updateCanvas();
-                popupTips('加载默认头像失败！', 'error');
-            };
-        }
-        
-        popupTips(`已切换到 ${avatarTypeName} 头像类型！`, 'success');
+        popupTips(`已切换到 ${modelType.charAt(0).toUpperCase() + modelType.slice(1)} 头像类型！`, 'success');
     }
 
     /**
@@ -457,8 +427,8 @@ class AvatarGeneratorApp {
      */
     handleDownload(event) {
         const downloadType = event.target.getAttribute('download-type');
-        if (downloadType === 'background') downloadWithBackground(this.state.currentCanvas);
-        else if (downloadType === 'transparent') downloadTransparent(this.state.currentRegulatedAvatarImage);
+        if (downloadType == 'background') downloadWithBackground(this.state.currentCanvas);
+        else if (downloadType == 'transparent') downloadTransparent(this.state.currentRegulatedAvatarImage);
     }
 
     /**
@@ -484,7 +454,7 @@ class AvatarGeneratorApp {
 
         if (dialog) {
             // 显示遮罩层和对话框
-            if (dialogType === 'background' && !dialog.id.includes('vintage'))
+            if (dialogType == 'background' && !dialog.id.includes('vintage'))
                 this.updateDialogs(dialog, this.state.options.background.angle);
             else this.updateDialogs(dialog);
             // 强制重绘，然后添加动画类
@@ -515,84 +485,73 @@ class AvatarGeneratorApp {
         setTimeout(() => this.state.dialogOverlay.classList.add('hidden'), 300);
     }
 
-    /**
-     * 生成头像（Mojang/皮肤站）
-     */
-    async generate() {
+    fetchSkin() {
+        return new Promise(async (resolve, reject) => {
+            if (this.state.fetchSkinMethod == 'upload') resolve(this.state.currentSkinImage);
+            const input = this.state.current.querySelector('input.player-name');
+            if (!input.value) return popupTips('请输入用户名！', 'warning');
+            if (this.state.fetchSkinMethod == 'website' && !this.state.skinWebsiteInput.value)
+                return popupTips('请输入皮肤站地址！', 'warning');
+            // 加载皮肤图像
+            const skinImage = new Image();
+            skinImage.onload = () => {
+                skinImage.onload = null;
+                resolve(skinImage);
+            }
 
-        const input = this.state.current.querySelector('input.player-name');
+            skinImage.onerror = () => {
+                skinImage.src = null;
+                skinImage.onerror = null;
+                reject('加载皮肤图像失败！');
+            };
 
-        if (!input.value) return popupTips('请输入用户名！', 'warning');
-        if (this.state.fetchSkinMethod === 'website' && !this.state.skinWebsiteInput.value)
-            return popupTips('请输入皮肤站地址！', 'warning');
-
-        const mask = this.state.current.querySelector('.loading-overlay');
-        mask.style.opacity = 1;
-
-        try {
-            let skinUrl = null;
-            if (this.state.fetchSkinMethod === 'website') {
+            skinImage.crossOrigin = 'anonymous';
+            if (this.state.fetchSkinMethod == 'website') {
                 // 皮肤站模式
                 const website = 'https://' + this.state.skinWebsiteInput.value;
                 const skinData = await fetchSkinWebsiteProfile(website, input.value);
-                if (!skinData || !skinData.skins) throw new Error('未找到该玩家的皮肤数据！');
+                if (!skinData || !skinData.skins) reject('未找到该玩家的皮肤数据！');
                 const texturePath = Object.values(skinData.skins)[0];
-                skinUrl = `${corsProxy}${website}/textures/${texturePath}`;
+                skinImage.src = `${corsProxy}${website}/textures/${texturePath}`;
             } else {
                 // Mojang模式
                 const profile = await fetchMojangProfile(input.value);
-                if (!profile) throw new Error('未找到该玩家的信息！');
-                skinUrl = `https://crafatar.com/skins/${profile.id}`;
+                if (!profile) reject('未找到该玩家的信息！');
+                skinImage.src = `https://crafatar.com/skins/${profile.id}`;
             }
-
-            // 加载皮肤图像
-            if (!this.state.currentSkinImage) this.state.currentSkinImage = new Image();
-            this.state.currentSkinImage.onload = () => {
-                // 渲染头像
-                this.state.currentSkinImage.onload = null;
-                this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
-                this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
-                this.updateCanvas();
-
-                mask.style.opacity = 0;
-                popupTips('生成头像成功！', 'success');
-            };
-
-            this.state.currentSkinImage.onerror = () => {
-                this.state.currentSkinImage.src = null;
-                this.state.currentSkinImage.onerror = null;
-                mask.style.opacity = 0;
-                popupTips('加载皮肤图像失败！', 'error');
-            };
-
-            this.state.currentSkinImage.crossOrigin = 'anonymous';
-            this.state.currentSkinImage.src = skinUrl;
-
-        } catch (error) {
-            console.error('生成头像失败：', error);
-            mask.style.opacity = 0;
-            popupTips(`生成头像失败，${error.message}`, 'error');
-        }
+        });
     }
 
     /**
-     * 生成头像（文件上传）
+     * 生成头像（Mojang/皮肤站）
      */
-    async generateUpload() {
-        if (!this.state.currentSkinImage) return popupTips('请先上传皮肤！', 'warning');
-        const mask = this.state.current.querySelector('.loading-overlay');
-        mask.style.opacity = 1;
+    renderAvatar() {
         try {
             this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
             this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
             this.updateCanvas();
-            mask.style.opacity = 0;
+        } catch (error) {
+            console.error('生成头像失败：', error);
+            throw error;
+        }
+    }
+
+    async generate() {
+        const mask = this.state.current.querySelector('.loading-overlay');
+        mask.style.opacity = 1;
+        try {
+            const skinImage = await this.fetchSkin();
+            if (!skinImage) {
+                mask.style.opacity = 0;
+                return;
+            }
+            this.state.currentSkinImage = skinImage;
+            this.renderAvatar();
             popupTips('生成头像成功！', 'success');
         } catch (error) {
-            mask.style.opacity = 0;
-            console.error('生成头像失败:', error);
-            popupTips('生成头像失败！', 'error');
+            popupTips(`生成头像失败，${error.message}`, 'error');
         }
+        mask.style.opacity = 0;
     }
 }
 

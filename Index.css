@@ -346,20 +346,32 @@ p {
 }
 
 .model-selector .model-selector-label:nth-of-type(1) {
-  background-image: url('Resources/Avatars/Minimal.png');
+  background-image: url('Resources/Models/Minimal.png');
 }
 
 .model-selector .model-selector-label:nth-of-type(2) {
-  background-image: url('Resources/Avatars/Vintage.png');
+  background-image: url('Resources/Models/Vintage.png');
 }
 
 .model-selector .model-selector-label:nth-of-type(3) {
-  background-image: url('Resources/Avatars/Side.png');
+  background-image: url('Resources/Models/Side.png');
 }
 
 .model-selector-label:hover {
   box-shadow: var(--theme-shadow);
   transform: scale(1.005);
+}
+
+.float-tips {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 6px 15px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--theme-shadow);
+  color: var(--theme-color);
+  z-index: 100;
 }
 
 .model-selector-label a {
