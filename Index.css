@@ -37,7 +37,7 @@
 
 /* 响应式设计 */
 @media (max-height: 810px),
-(max-width: 940px) {
+(max-width: 800px) {
   .main-content {
     padding: 70px;
     gap: 30px !important;

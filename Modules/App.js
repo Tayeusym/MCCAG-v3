@@ -497,22 +497,22 @@ class AvatarGeneratorApp {
 
     fetchSkin() {
         return new Promise(async (resolve, reject) => {
-            if (this.state.fetchSkinMethod == 'upload') resolve(this.state.currentSkinImage);
+            if (this.state.fetchSkinMethod == 'upload') return resolve(this.state.currentSkinImage);
             const input = this.state.current.querySelector('input.player-name');
-            if (!input.value) resolve(popupTips('请输入用户名！', 'warning'));
+            if (!input.value) return resolve(popupTips('请输入用户名！', 'warning'));
             if (this.state.fetchSkinMethod == 'website' && !this.state.skinWebsiteInput.value)
-                resolve(popupTips('请输入皮肤站地址！', 'warning'));
+                return resolve(popupTips('请输入皮肤站地址！', 'warning'));
             // 加载皮肤图像
             const skinImage = new Image();
             skinImage.onload = () => {
                 skinImage.onload = null;
-                resolve(skinImage);
+                return resolve(skinImage);
             }
 
             skinImage.onerror = () => {
                 skinImage.src = null;
                 skinImage.onerror = null;
-                reject('加载皮肤图像失败！');
+                return reject('加载皮肤图像失败！');
             };
 
             skinImage.crossOrigin = 'anonymous';
@@ -520,13 +520,13 @@ class AvatarGeneratorApp {
                 // 皮肤站模式
                 const website = 'https://' + this.state.skinWebsiteInput.value;
                 const skinData = await fetchSkinWebsiteProfile(website, input.value);
-                if (!skinData || !skinData.skins) reject('未找到该玩家的皮肤数据！');
+                if (!skinData || !skinData.skins) return reject('未找到该玩家的皮肤数据！');
                 const texturePath = Object.values(skinData.skins)[0];
                 skinImage.src = `${corsProxy}${website}/textures/${texturePath}`;
             } else {
                 // Mojang模式
                 const profile = await fetchMojangProfile(input.value);
-                if (!profile) reject('未找到该玩家的信息！');
+                if (!profile) return reject('未找到该玩家的信息！');
                 skinImage.src = `https://crafatar.com/skins/${profile.id}`;
             }
         });
