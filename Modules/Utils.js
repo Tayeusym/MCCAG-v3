@@ -18,9 +18,7 @@ export function popupTips(text, type) {
     setTimeout(() => {
         tips.style.transform = `translateX(-${tips.offsetWidth + 40}px)`;
         setTimeout(() => {
-            tips.style.height = '0';
-            tips.style.margin = '0';
-            tips.style.padding = '0';
+            tips.classList.add('disappear');
             setTimeout(() => tipsContainer.removeChild(tips), 1000);
         }, 1000);
     }, 8000);

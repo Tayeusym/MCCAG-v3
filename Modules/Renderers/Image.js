@@ -53,7 +53,7 @@ export function calculateAutoColors(image) {
     const avgG = Math.floor(totalG / pixelCount);
     const avgB = Math.floor(totalB / pixelCount);
     const autoColors = [];
-    for (let index = -4; index < 5; index++) {
+    for (let index = -2; index <= 7; index++) {
         const offset = index * 30;
         autoColors.push(`rgb(${Math.max(0, avgR - offset)}, ${Math.max(0, avgG - offset)}, ${Math.max(0, avgB - offset)})`);
     }

@@ -171,6 +171,37 @@
                 </div>
             </div>
 
+            <!-- Minimal 背景编辑 -->
+            <div id="dialog-minimal-background" class="dialog-content hidden">
+                <div class="dialog-row">
+                    <label>倾斜角度</label>
+                    <input type="range" option="background-angle" min="0" max="180" value="45" class="range-slider">
+                    <p><span class="range-slider-value">45</span>°</p>
+                </div>
+                <div class="dialog-row">
+                    <label>预设颜色</label>
+                    <div class="color-list">
+                        <div class="color-item" option="background-colors" value="#FFCCCB"></div>
+                        <div class="color-item" option="background-colors" value="#ADD8E6"></div>
+                        <div class="color-item" option="background-colors" value="#FFFFFF"></div>
+                        <div class="color-item" option="background-colors" value="#FFCCCB,#FFEB3B"></div>
+                        <div class="color-item" option="background-colors" value="#F1EEF9,#F5CCF6"></div>
+                        <div class="color-item" option="background-colors" value="#41D8DD,#5583EE"></div>
+                        <div class="color-item" option="background-colors" value="#323B42,#121317"></div>
+                    </div>
+                </div>
+                <div class="dialog-row">
+                    <label>选择颜色</label>
+                    <input type="color" option="background-colors" class="color-picker">
+                    <input type="color" option="background-colors" class="color-picker">
+                </div>
+                <div class="dialog-row">
+                    <label>上传背景</label>
+                    <label for="upload-background-2" class="button button-secondary upload-label">点击上传</label>
+                    <input type="file" id="upload-background-2" accept="image/*" class="upload-background hidden">
+                </div>
+            </div>
+
             <!-- Vintage 生成编辑 -->
             <div id="dialog-vintage-generate" class="dialog-content hidden">
                 <div class="dialog-row">
@@ -180,14 +211,14 @@
                 </div>
                 <div class="dialog-row">
                     <label>图片缩放</label>
-                    <input type="range" option="generate-scale" min="10" max="100" value="100" class="range-slider">
+                    <input type="range" option="generate-scale" min="40" max="150" value="100" class="range-slider">
                     <p><span class="range-slider-value">100</span>%</p>
                 </div>
                 <div class="dialog-row">
                     <label>边线颜色</label>
                     <div class="color-list">
                         <div class="color-item" option="generate-color" value="#000000"></div>
-                        <div class="color-item" option="generate-color" value="#000000b"></div>
+                        <div class="color-item" option="generate-color" value="#000000"></div>
                         <div class="color-item" option="generate-color" value="#000000"></div>
                         <div class="color-item" option="generate-color" value="#000000"></div>
                         <div class="color-item" option="generate-color" value="#000000"></div>
@@ -208,8 +239,8 @@
             <div id="dialog-vintage-background" class="dialog-content hidden">
                 <div class="dialog-row">
                     <label>背景条数</label>
-                    <input type="range" option="background-count" min="6" max="20" value="8" step="2" class="range-slider">
-                    <p><span class="range-slider-value">8</span>条</p>
+                    <input type="range" option="background-count" min="6" max="26" value="16" step="2" class="range-slider">
+                    <p><span class="range-slider-value">16</span>条</p>
                 </div>
                 <div class="dialog-row">
                     <label>暗角深浅</label>
@@ -224,16 +255,10 @@
                 <div class="dialog-row">
                     <label>预设颜色</label>
                     <div class="color-list">
-                        <div class="color-item" option="background-colors" value="#F5E6E8,#D5C6E0"></div>
-                        <div class="color-item" option="background-colors" value="#D5C6E0,#AAA1C8"></div>
-                        <div class="color-item" option="background-colors" value="#AAA1C8,#967AA1"></div>
-                        <div class="color-item" option="background-colors" value="#AAA1C8,#967AA1"></div>
-                        <div class="color-item" option="background-colors" value="#AAA1C8,#967AA1"></div>
-                        <div class="color-item" option="background-colors" value="#AAA1C8,#967AA1"></div>
-                        <div class="color-item" option="background-colors" value="#AAA1C8,#967AA1"></div>
-                        <div class="color-item" option="background-colors" value="#AAA1C8,#967AA1"></div>
-                        <div class="color-item" option="background-colors" value="#AAA1C8,#967AA1"></div>
-                        <div class="color-item" option="background-colors" value="#967AA1,#FFD6E0"></div>
+                        <div class="color-item" option="background-colors" value="#FFF5DA,#FD434D"></div>
+                        <div class="color-item" option="background-colors" value="#FD444E,#5DB6FC"></div>
+                        <div class="color-item" option="background-colors" value="#FFFAEC,#5572FB"></div>
+                        <div class="color-item" option="background-colors" value="#604880,#CD485C"></div>
                     </div>
                 </div>
                 <div class="dialog-row">
@@ -262,23 +287,24 @@
                 </div>
             </div>
 
-            <!-- Side / Minimal 背景编辑 -->
-            <div id="dialog-common-background" class="dialog-content hidden">
+            <!-- Side 背景编辑 -->
+            <div id="dialog-side-background" class="dialog-content hidden">
                 <div class="dialog-row">
                     <label>倾斜角度</label>
-                    <input type="range" option="background-angle" min="0" max="180" value="45" class="range-slider">
-                    <p><span class="range-slider-value">0</span>°</p>
+                    <input type="range" option="background-angle" min="0" max="180" value="90" class="range-slider">
+                    <p><span class="range-slider-value">90</span>°</p>
                 </div>
                 <div class="dialog-row">
                     <label>预设颜色</label>
                     <div class="color-list">
-                        <div class="color-item" option="background-colors" value="#F5E6E8"></div>
-                        <div class="color-item" option="background-colors" value="#D5C6E0"></div>
-                        <div class="color-item" option="background-colors" value="#AAA1C8"></div>
-                        <div class="color-item" option="background-colors" value="#967AA1"></div>
-                        <div class="color-item" option="background-colors" value="#FFD6E0"></div>
-                        <div class="color-item" option="background-colors" value="#FFD6E0,#967AA1"></div>
-                        <div class="color-item" option="background-colors" value="#F5E6E8,#AAA1C8"></div>
+                        <div class="color-item" option="background-colors" value="#FBDA61,#FF5ACD"></div>
+                        <div class="color-item" option="background-colors" value="#A9C9FF,#FFBBEC"></div>
+                        <div class="color-item" option="background-colors" value="#F4D03F,#16A085"></div>
+                        <div class="color-item" option="background-colors" value="#7F00FF,#E100FF"></div>
+                        <div class="color-item" option="background-colors" value="#41D8DD,#5583EE"></div>
+                        <div class="color-item" option="background-colors" value="#323B42,#121317"></div>
+                        <div class="color-item" option="background-colors" value="#F25949,#E9304D"></div>
+                        <div class="color-item" option="background-colors" value="#ABC6EF,#0E0B2B"></div>
                     </div>
                 </div>
                 <div class="dialog-row">

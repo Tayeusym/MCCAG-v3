@@ -126,6 +126,8 @@ class AvatarGeneratorApp {
                 this.updateRangeProgress(event.target);
                 const [ type, option ] = event.target.getAttribute('option').split('-');
                 this.state.options[type][option] = parseInt(event.target.value);
+                if (type === 'background' && option === 'angle') 
+                    this.updateDialogs(event.target.parentElement.parentElement, event.target.value);
                 if (this.state.modelType === 'vintage' && option == 'border') {
                     this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
                     this.state.currentRegulatedAvatarImage = regulateAvatar(this.state.currentAvatarImage, this.state.options.generate);
@@ -241,7 +243,7 @@ class AvatarGeneratorApp {
     /**
      * 更新对话框
      */
-    updateDialogs(dialog) {
+    updateDialogs(dialog, angle=null) {
         if (dialog.id.includes('background')) {
             let flag = false;
             const currentColor = this.state.options.background.colors.join(',');
@@ -250,6 +252,8 @@ class AvatarGeneratorApp {
                     item.id = 'selected';
                     flag = true;
                 } else item.id = '';
+                if (angle && !dialog.id.includes('vintage'))
+                    item.style.background = `linear-gradient(${angle - 270}deg, ${item.getAttribute('value')})`;
             }
             if (!this.state.options.background.image && !flag)
                 dialog.querySelectorAll('input.color-picker').forEach(item => item.id = 'selected');
@@ -323,7 +327,7 @@ class AvatarGeneratorApp {
         }
 
         // 读取背景选项
-        const backgroundDialogId = modelType === 'vintage' ? 'dialog-vintage-background' : 'dialog-common-background';
+        const backgroundDialogId = `dialog-${modelType}-background`;
         const backgroundDialog = document.getElementById(backgroundDialogId);
         if (backgroundDialog) {
             const rangeInputs = backgroundDialog.querySelectorAll('input.range-slider');
@@ -400,6 +404,7 @@ class AvatarGeneratorApp {
         this.state.currentAvatarImage.onerror = () => {
             this.state.currentAvatarImage.src = null;
             this.state.currentAvatarImage.onerror = null;
+            this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
             this.updateCanvas();
             popupTips('加载默认头像失败！', 'error');
         };
@@ -432,6 +437,69 @@ class AvatarGeneratorApp {
         context.clearRect(0, 0, 1000, 1000);
         context.drawImage(this.state.currentRegulatedBackgroundImage, 0, 0, 1000, 1000);
         context.drawImage(this.state.currentRegulatedAvatarImage, 0, 0, 1000, 1000);
+    }
+
+    /**
+     * 处理下载
+     */
+    handleDownload(event) {
+        const downloadType = event.target.getAttribute('download-type');
+        if (downloadType === 'background') downloadWithBackground(this.state.currentCanvas);
+        else if (downloadType === 'transparent') downloadTransparent(this.state.currentRegulatedAvatarImage);
+    }
+
+    /**
+     * 更新拖动条进度条
+     */
+    updateRangeProgress(input) {
+        const value = (input.value - input.min) / (input.max - input.min) * 100;
+        const valueElement = input.nextElementSibling.querySelector('span.range-slider-value');
+        const progressColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color');
+        const trackColor = '#e0e4f6';
+        valueElement.textContent = input.value;
+        input.style.background = `linear-gradient(to right, ${progressColor} 0%, ${progressColor} ${value}%, ${trackColor} ${value}%, ${trackColor} 100%)`;
+    }
+
+    /**
+     * 显示编辑对话框
+     */
+    showEditDialog(event) {
+        const button = event.target;
+        const dialogType = button.classList.contains('edit-generate') ? 'generate' : 'background';
+        // 构建对话框ID
+        const dialog = document.getElementById(`dialog-${this.state.modelType}-${dialogType}`);
+
+        if (dialog) {
+            // 显示遮罩层和对话框
+            if (dialogType === 'background' && !dialog.id.includes('vintage'))
+                this.updateDialogs(dialog, this.state.options.background.angle);
+            else this.updateDialogs(dialog);
+            // 强制重绘，然后添加动画类
+            requestAnimationFrame(() => {
+                this.state.dialogOverlay.classList.add('show');
+                this.state.dialog.classList.add('show');
+            });
+            this.state.dialogOverlay.classList.remove('hidden');
+            // 隐藏所有对话框内容
+            this.state.dialogOverlay.querySelectorAll('.dialog-content').forEach(content =>
+                content.classList.add('hidden')
+            );
+            // 显示对应的对话框内容
+            dialog.classList.remove('hidden');
+            event.stopPropagation();
+        }
+    }
+
+    /**
+     * 隐藏编辑对话框
+     */
+    hideEditDialog() {
+        // 移除动画类
+        this.state.dialogOverlay.classList.remove('show');
+        this.state.dialog.classList.remove('show');
+
+        // 等待动画完成后隐藏元素
+        setTimeout(() => this.state.dialogOverlay.classList.add('hidden'), 300);
     }
 
     /**
@@ -484,7 +552,6 @@ class AvatarGeneratorApp {
                 this.state.currentSkinImage.src = null;
                 this.state.currentSkinImage.onerror = null;
                 mask.style.opacity = 0;
-                this.updateCanvas();
                 popupTips('加载皮肤图像失败！', 'error');
             };
 
@@ -515,68 +582,6 @@ class AvatarGeneratorApp {
             console.error('生成头像失败:', error);
             popupTips('生成头像失败！', 'error');
         }
-    }
-
-    /**
-     * 处理下载
-     */
-    handleDownload(event) {
-        const downloadType = event.target.getAttribute('download-type');
-        if (downloadType === 'background') downloadWithBackground(this.state.currentCanvas);
-        else if (downloadType === 'transparent') downloadTransparent(this.state.currentRegulatedAvatarImage);
-    }
-
-    /**
-     * 更新拖动条进度条
-     */
-    updateRangeProgress(input) {
-        const value = (input.value - input.min) / (input.max - input.min) * 100;
-        const valueElement = input.nextElementSibling.querySelector('span.range-slider-value');
-        const progressColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color');
-        const trackColor = '#e0e4f6';
-        valueElement.textContent = input.value;
-        input.style.background = `linear-gradient(to right, ${progressColor} 0%, ${progressColor} ${value}%, ${trackColor} ${value}%, ${trackColor} 100%)`;
-    }
-
-    /**
-     * 显示编辑对话框
-     */
-    showEditDialog(event) {
-        const button = event.target;
-        const dialogType = button.classList.contains('edit-generate') ? 'generate' : 'background';
-        // 构建对话框ID
-        const avatarType = dialogType === 'background' && this.state.modelType != 'vintage' ? 'common' : this.state.modelType;
-        const dialog = document.getElementById(`dialog-${avatarType}-${dialogType}`);
-
-        if (dialog) {
-            // 显示遮罩层和对话框
-            this.updateDialogs(dialog);
-            // 强制重绘，然后添加动画类
-            requestAnimationFrame(() => {
-                this.state.dialogOverlay.classList.add('show');
-                this.state.dialog.classList.add('show');
-            });
-            this.state.dialogOverlay.classList.remove('hidden');
-            // 隐藏所有对话框内容
-            this.state.dialogOverlay.querySelectorAll('.dialog-content').forEach(content =>
-                content.classList.add('hidden')
-            );
-            // 显示对应的对话框内容
-            dialog.classList.remove('hidden');
-            event.stopPropagation();
-        }
-    }
-
-    /**
-     * 隐藏编辑对话框
-     */
-    hideEditDialog() {
-        // 移除动画类
-        this.state.dialogOverlay.classList.remove('show');
-        this.state.dialog.classList.remove('show');
-
-        // 等待动画完成后隐藏元素
-        setTimeout(() => this.state.dialogOverlay.classList.add('hidden'), 300);
     }
 }
 

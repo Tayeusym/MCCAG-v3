@@ -240,9 +240,15 @@ p {
   border-radius: var(--radius-md);
   line-height: 25px;
   margin: 10px;
-  transition: transform 0.8s, height 0.8s;
+  transition: all .7s;
   transform: translateX(-1000px);
   box-shadow: 0 2px 5px var(--theme-color-alpha);
+}
+.notification-list li.disappear {
+  padding: 0;
+  height: 0;
+  margin: 0;
+  opacity: 0;
 }
 
 .notification-list li::before {
@@ -331,10 +337,24 @@ p {
 .model-selector-label {
   border-radius: var(--radius-sm);
   border: 2px solid var(--theme-color-alpha);
-  background: url('Resources/Avatars/Minimal.png') no-repeat center center / cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   background-color: var(--show-background-color);
   transition: all var(--transition-fast);
   position: relative;
+}
+
+.model-selector .model-selector-label:nth-of-type(1) {
+  background-image: url('Resources/Avatars/Minimal.png');
+}
+
+.model-selector .model-selector-label:nth-of-type(2) {
+  background-image: url('Resources/Avatars/Vintage.png');
+}
+
+.model-selector .model-selector-label:nth-of-type(3) {
+  background-image: url('Resources/Avatars/Side.png');
 }
 
 .model-selector-label:hover {
