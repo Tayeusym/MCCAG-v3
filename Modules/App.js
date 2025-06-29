@@ -18,6 +18,8 @@ import { initI18n } from './I18n.js';
 import { calculateAutoColors } from './Renderers/Image.js';
 import { renderBackground, renderAvatar, regulateAvatar } from './Renderers/Index.js';
 
+import { corsProxy } from './Const.js';
+
 
 // 应用状态
 class AppState {
@@ -524,7 +526,7 @@ class AvatarGeneratorApp {
                 const skinData = await fetchSkinWebsiteProfile(website, input.value);
                 if (!skinData || !skinData.skins) throw new Error('未找到该玩家的皮肤数据！');
                 const texturePath = Object.values(skinData.skins)[0];
-                skinUrl = `${website}/textures/${texturePath}`;
+                skinUrl = `${corsProxy}${website}/textures/${texturePath}`;
             } else {
                 // Mojang模式
                 const profile = await fetchMojangProfile(input.value);
@@ -534,10 +536,7 @@ class AvatarGeneratorApp {
             }
 
             // 加载皮肤图像
-            if (!this.state.currentSkinImage) {
-                this.state.currentSkinImage = new Image();
-                this.state.currentSkinImage.crossOrigin = 'anonymous';
-            }
+            if (!this.state.currentSkinImage) this.state.currentSkinImage = new Image();
             this.state.currentSkinImage.onload = () => {
                 // 渲染头像
                 this.state.currentAvatarImage = renderAvatar(this.state.currentSkinImage, this.state.modelType, this.state.options.generate);
@@ -555,6 +554,7 @@ class AvatarGeneratorApp {
                 popupTips('加载皮肤图像失败！', 'error');
             };
 
+            this.state.currentSkinImage.crossOrigin = 'anonymous';
             this.state.currentSkinImage.src = skinUrl;
 
         } catch (error) {
