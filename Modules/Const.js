@@ -34,14 +34,6 @@ export const translations = Object.freeze({
     "fr": "Sélectionner le modèle",
     "de": "Modell auswählen"
   },
-  "model-minimal": {
-    "zh": "Minimal",
-    "en": "Minimal",
-    "ko": "Minimal",
-    "jp": "Minimal",
-    "fr": "Minimal",
-    "de": "Minimal"
-  },
   "model-minimal-inspiration": {
     "zh": "灵感来源：噪音回放",
     "en": "Inspiration: Noise Replay",
@@ -50,37 +42,22 @@ export const translations = Object.freeze({
     "fr": "Inspiration : Noise Replay",
     "de": "Inspiration: Noise Replay"
   },
-  "model-vintage": {
-    "zh": "Vintage",
-    "en": "Vintage",
-    "ko": "Vintage",
-    "jp": "Vintage",
-    "fr": "Vintage",
-    "de": "Vintage"
-  },
   "model-vintage-inspiration": {
-    "zh": "灵感来源：Henry Packs",
-    "en": "Inspiration: Henry Packs",
-    "ko": "영감: Henry Packs",
-    "jp": "インスピレーション: Henry Packs",
-    "fr": "Inspiration : Henry Packs",
-    "de": "Inspiration: Henry Packs"
-  },
-  "model-side": {
-    "zh": "Side",
-    "en": "Side",
-    "ko": "Side",
-    "jp": "Side",
-    "fr": "Side",
-    "de": "Side"
-  },
-  "model-side-inspiration": {
     "zh": "灵感来源：Minecraft Skin Avatar",
     "en": "Inspiration: Minecraft Skin Avatar",
     "ko": "영감: Minecraft Skin Avatar",
     "jp": "インスピレーション: Minecraft Skin Avatar",
     "fr": "Inspiration : Minecraft Skin Avatar",
     "de": "Inspiration: Minecraft Skin Avatar"
+
+  },
+  "model-side-inspiration": {
+    "zh": "灵感来源：Henry Packs",
+    "en": "Inspiration: Henry Packs",
+    "ko": "영감: Henry Packs",
+    "jp": "インスピレーション: Henry Packs",
+    "fr": "Inspiration : Henry Packs",
+    "de": "Inspiration: Henry Packs"
   },
   "qq-group": {
     "zh": "MCCAG 交流群：597688340",
