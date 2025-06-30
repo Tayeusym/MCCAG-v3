@@ -260,20 +260,20 @@ export const translations = Object.freeze({
     "de": "Originales Bilibili-Video ansehen"
   },
   "float-tips-vintage": {
-    "zh": "点击查看 Youtube 原视频",
-    "en": "Click to view original YouTube video",
-    "ko": "YouTube 원본 동영상 보기",
-    "jp": "YouTubeオリジナル動画を見る",
-    "fr": "Cliquer pour voir la vidéo originale sur YouTube",
-    "de": "Originales YouTube-Video ansehen"
-  },
-  "float-tips-side": {
     "zh": "该网站已关闭",
     "en": "This website is closed",
     "ko": "해당 웹사이트는 폐쇄됨",
     "jp": "このウェブサイトは閉鎖されました",
     "fr": "Ce site web est fermé",
     "de": "Diese Website ist geschlossen"
+  },
+  "float-tips-side": {
+    "zh": "点击查看 Youtube 原视频",
+    "en": "Click to view original YouTube video",
+    "ko": "YouTube 원본 동영상 보기",
+    "jp": "YouTubeオリジナル動画を見る",
+    "fr": "Cliquer pour voir la vidéo originale sur YouTube",
+    "de": "Originales YouTube-Video ansehen"
   },
   "dialog-minimal-shadow-depth": {
     "zh": "阴影深浅",
