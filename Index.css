@@ -60,6 +60,7 @@
 
   .advertisement-image {
     height: 90px !important;
+    background-image: url('Resources/Advertisement/Small.png') !important;
   }
 
   .introduction {
@@ -450,7 +451,7 @@ p {
 .advertisement-image {
   width: 100%;
   height: 140px;
-  background-image: url('Resources/Models/Side.png');
+  background-image: url('Resources/Advertisement/Big.png');
   background-size: cover;
   background-position: center;
   transition: transform var(--transition-normal);

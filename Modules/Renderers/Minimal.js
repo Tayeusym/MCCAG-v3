@@ -1,5 +1,5 @@
 // 渲染模块
-import { normalOperationData } from './Data.js';
+import { minimalOperationData } from './Data.js';
 import { preprecessSkinImage, processImage } from './Image.js';
 
 /**
@@ -9,13 +9,13 @@ import { preprecessSkinImage, processImage } from './Image.js';
  * @returns {Array} 操作列表
  */
 function getOperations(avatarType, skinSize) {
-    if (!normalOperationData) return [];
+    if (!minimalOperationData) return [];
 
-    if (avatarType === 'head') return normalOperationData.head;
+    if (avatarType === 'head') return minimalOperationData.head;
     if (avatarType === 'big-head') avatarType = 'full';
 
     const skinVersion = (skinSize[0] === 64 && skinSize[1] === 32) ? 'old' : 'new';
-    return normalOperationData[avatarType][skinVersion];
+    return minimalOperationData[avatarType][skinVersion];
 }
 
 
