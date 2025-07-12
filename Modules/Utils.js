@@ -5,7 +5,7 @@
  * @param {string} text - 提示文本
  * @param {string} type - 提示类型 ('success', 'error', 'warning')
  */
-export function popupTips(text, type) {
+export function popupTips(text, type, showTime=8000) {
     const tipsContainer = document.querySelector('.notification-list');
     const tips = document.createElement('li');
     const tipsText = document.createElement('p');
@@ -21,7 +21,7 @@ export function popupTips(text, type) {
             tips.classList.add('disappear');
             setTimeout(() => tipsContainer.removeChild(tips), 1000);
         }, 1000);
-    }, 8000);
+    }, showTime);
 }
 
 /**

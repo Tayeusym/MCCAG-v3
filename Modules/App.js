@@ -73,6 +73,10 @@ class AvatarGeneratorApp {
                 this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
                 this.renderAvatar();
             };
+
+            // 对于手机用户弹出提示可以选择模型
+            if (/Mobi|Android|iPhone/i.test(navigator.userAgent))
+                popupTips('偷偷告诉你，下滑页面还可以选择其他头像样式的模型，快来试试吧！（该消息15秒后自动消失）', 'success', 15000);
             console.log('初始化应用完成！');
         } catch (error) {
             console.error('应用初始化失败:', error);

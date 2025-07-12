@@ -255,9 +255,7 @@ p {
 }
 
 .notification-list li {
-  height: 45px;
   padding: 4px;
-  width: fit-content;
   border-radius: var(--radius-md);
   line-height: 25px;
   margin: 10px;
@@ -265,7 +263,11 @@ p {
   transform: translateX(-1000px);
   box-shadow: 0 2px 5px var(--theme-color-alpha);
   display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
 }
+
 .notification-list li.disappear {
   padding: 0;
   height: 0;
@@ -283,10 +285,11 @@ p {
 }
 
 .notification-list li p {
-  height: 25px;
   padding: 10px 20px;
   border-radius: 7px;
   background-color: var(--white);
+  max-width: 70vw;
+  text-wrap: warp;
 }
 
 .notification-list li.error {
