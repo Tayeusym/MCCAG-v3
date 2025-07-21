@@ -1,9 +1,6 @@
 import { skinData } from './Data.js';
 import { processImage, preprecessSkinImage } from './Image.js';
 
-const SCALE = 20; // 人像在输出画布上的缩放倍数（影响人像整体大小）
-const ALPHA_THRESHOLD = 128; // 判断像素是否为"非透明"的阈值（0-255），用于主色提取等
-
 // 直接用processImage缩放
 function scaleCanvas(sourceCanvas, targetWidth, targetHeight) {
     return processImage(sourceCanvas, 0, 0, sourceCanvas.width, sourceCanvas.height, targetWidth, targetHeight, false, false);
@@ -37,7 +34,7 @@ function getDominantColor(canvas, x = 0, y = 0, width = null, height = null) {
 
     for (let index = 0; index < data.length; index += 4) {
         const alpha = data[index + 3];
-        if (alpha <= ALPHA_THRESHOLD) continue;
+        if (alpha <= 128) continue;
 
         const r = data[index];
         const g = data[index + 1];
@@ -70,7 +67,7 @@ function fillCanvasRegion(canvas, color, x = 0, y = 0, width = null, height = nu
     const data = imageData.data;
     for (let index = 0; index < data.length; index += 4) {
         const a = data[index + 3];
-        if (a > ALPHA_THRESHOLD) {
+        if (a > 128) {
             data[index] = color.r;
             data[index + 1] = color.g;
             data[index + 2] = color.b;
@@ -278,8 +275,8 @@ export function renderAvatar(skinImage, options) {
     context.imageSmoothingEnabled = false;
     
     // 计算缩放和定位
-    const scaledWidth = totalWidth * SCALE;
-    const scaledHeight = totalHeight * SCALE;
+    const scaledWidth = totalWidth * 20;
+    const scaledHeight = totalHeight * 20;
     const x = (canvas.width - scaledWidth) / 2;
     const y = (canvas.height - scaledHeight) / 2;
     

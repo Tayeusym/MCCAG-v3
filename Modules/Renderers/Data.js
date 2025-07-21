@@ -45,17 +45,15 @@ export const minimalOperationData = Object.freeze({
     ],
     full: {
         old: [
-            [skinData.old.head.cropBox, skinData.old.head.mirror, 26.875, [287, 131]],
-            [skinData.old.headOuter.cropBox, skinData.old.headOuter.mirror, 30.8125, [254, 107]],
             [skinData.old.torso.cropBox, skinData.old.torso.mirror, 8.0625, [437, 561]],
             [skinData.old.rightLeg.cropBox, skinData.old.rightLeg.mirror, 8.375, [434, 751]],
             [skinData.old.leftLeg.cropBox, skinData.old.leftLeg.mirror, 8.375, [505, 751]],
             [skinData.old.rightArm.cropBox, skinData.old.rightArm.mirror, 8.167, [388, 561]],
-            [skinData.old.leftArm.cropBox, skinData.old.leftArm.mirror, 8.167, [566, 561]]
+            [skinData.old.leftArm.cropBox, skinData.old.leftArm.mirror, 8.167, [566, 561]],
+            [skinData.old.head.cropBox, skinData.old.head.mirror, 26.875, [287, 131]],
+            [skinData.old.headOuter.cropBox, skinData.old.headOuter.mirror, 30.8125, [254, 107]]
         ],
         new: [
-            [skinData.new.head.cropBox, skinData.new.head.mirror, 26.875, [287, 131]],
-            [skinData.new.headOuter.cropBox, skinData.new.headOuter.mirror, 30.8125, [254, 107]],
             [skinData.new.torso.cropBox, skinData.new.torso.mirror, 8.0625, [437, 561]],
             [skinData.new.torsoOuter.cropBox, skinData.new.torsoOuter.mirror, 8.6575, [432, 555]],
             [skinData.new.rightLeg.cropBox, skinData.new.rightLeg.mirror, 8.375, [434, 751]],
@@ -65,7 +63,9 @@ export const minimalOperationData = Object.freeze({
             [skinData.new.rightArm.cropBox, skinData.new.rightArm.mirror, 8.167, [388, 561]],
             [skinData.new.rightArmOuter.cropBox, skinData.new.rightArmOuter.mirror, 9.5, [382, 538]],
             [skinData.new.leftArm.cropBox, skinData.new.leftArm.mirror, 8.167, [566, 561]],
-            [skinData.new.leftArmOuter.cropBox, skinData.new.leftArmOuter.mirror, 9.5, [564, 538]]
+            [skinData.new.leftArmOuter.cropBox, skinData.new.leftArmOuter.mirror, 9.5, [564, 538]],
+            [skinData.new.head.cropBox, skinData.new.head.mirror, 26.875, [287, 131]],
+            [skinData.new.headOuter.cropBox, skinData.new.headOuter.mirror, 30.8125, [254, 107]]
         ]
     }
 });

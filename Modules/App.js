@@ -226,7 +226,7 @@ class AvatarGeneratorApp {
                     this.updateCanvas();
                     popupTips('背景图片上传成功！', 'success');
                 } catch (error) {
-                    popupTips(error.message, 'error');
+                    popupTips(error, 'error');
                 }
             })
         );
@@ -563,7 +563,7 @@ class AvatarGeneratorApp {
             this.renderAvatar();
             popupTips('生成头像成功！', 'success');
         } catch (error) {
-            popupTips(`生成头像失败，${error.message}`, 'error');
+            popupTips(`生成头像失败，${error}`, 'error');
         } finally {
             overlay.style.opacity = 0;
         }
