@@ -76,7 +76,7 @@ class AvatarGeneratorApp {
 
             // 对于手机用户弹出提示可以选择模型
             if (/Mobi|Android|iPhone/i.test(navigator.userAgent))
-                popupTips('偷偷告诉你，下滑页面还可以选择其他头像样式的模型，快来试试吧！（该消息15秒后自动消失）', 'success', 15000);
+                popupTips('偷偷告诉你，下滑页面还可以选择其他头像样式的模型，快来试试吧！该消息15秒后自动消失。', 'success', 15000);
             console.log('初始化应用完成！');
         } catch (error) {
             console.error('应用初始化失败:', error);
@@ -551,12 +551,12 @@ class AvatarGeneratorApp {
     }
 
     async generate() {
-        const overlay = this.state.current.querySelector('.loading-overlay');
-        overlay.style.opacity = 1;
+        const container = this.state.current.querySelector('.canvas-container');
+        container.classList.add('loading');
         try {
             const skinImage = await this.fetchSkin();
             if (!skinImage) {
-                overlay.style.opacity = 0;
+                container.classList.remove('loading');
                 return;
             }
             this.state.currentSkinImage = skinImage;
@@ -565,7 +565,7 @@ class AvatarGeneratorApp {
         } catch (error) {
             popupTips(`生成头像失败，${error}`, 'error');
         } finally {
-            overlay.style.opacity = 0;
+            container.classList.remove('loading');
         }
     }
 }

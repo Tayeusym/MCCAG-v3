@@ -622,37 +622,19 @@ p {
   grid-template-columns: repeat(3, 1fr);
 }
 
-/* 预览区域 */
-.avatar-preview-canvas {
-  position: relative;
+/* 遮罩画布容器 */
+.canvas-container {
   width: 330px;
   height: 330px;
-  box-sizing: border-box;
-  border-radius: var(--radius-md);
-  margin: 20px 0;
   border: 2px solid var(--theme-color);
-  box-shadow: var(--theme-shadow);
-}
-
-/* 加载遮罩 */
-.loading-overlay {
-  width: 330px;
-  height: 330px;
   border-radius: var(--radius-md);
-  transform: translateY(-353px) translateX(35px);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
-  box-sizing: border-box;
-  border: 2px solid transparent;
-  position: absolute;
-  opacity: 0;
-  transition: opacity var(--transition-normal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  box-shadow: var(--theme-shadow);
+  overflow: hidden;
+  margin: 20px auto;
+  position: relative;
 }
 
-.loading-overlay::after {
+.canvas-container::after {
   content: '';
   display: block;
   width: 60px;
@@ -661,6 +643,26 @@ p {
   border-bottom: 8px solid rgb(240, 240, 240);
   border-radius: 50%;
   animation: spin 1s ease-in-out infinite;
+  position: absolute;
+  top: 125px;
+  left: 125px;
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.canvas-container.loading::after {
+  opacity: 1;
+}
+
+/* 预览区域 */
+.avatar-preview-canvas {
+  width: 330px;
+  height: 330px;
+  transition: filter .3s;
+}
+
+.canvas-container.loading .avatar-preview-canvas {
+  filter: blur(5px);
 }
 
 /* 网站皮肤标签页 */
@@ -677,9 +679,9 @@ p {
   overflow: visible;
 }
 
-.tab-panel-upload .avatar-preview-canvas {
+/* .tab-panel-upload .avatar-preview-canvas {
   margin-top: 20px;
-}
+} */
 
 /* 页脚 */
 .footer-bar {
