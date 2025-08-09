@@ -60,7 +60,7 @@
 
   .advertisement-image {
     height: 90px !important;
-    background-image: url('Resources/Advertisement/Small.png') !important;
+    background-image: url('Resources/Advertisement/Small.jpg') !important;
   }
 
   .introduction {
@@ -454,14 +454,15 @@ p {
 .advertisement-image {
   width: 100%;
   height: 140px;
-  background-image: url('Resources/Advertisement/Big.png');
+  background-image: url('Resources/Advertisement/Big.jpg');
   background-size: cover;
   background-position: center;
   transition: transform var(--transition-normal);
+  transform-origin: bottom center;
 }
 
 .advertisement-image:hover {
-  transform: scale(1.1) translateY(-5px);
+  transform: scale(1.1);
 }
 
 .donate-us-title {
