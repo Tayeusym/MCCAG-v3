@@ -192,7 +192,7 @@ p {
   height: 30px;
 }
 
-.language-selector-checkbox:checked ~ .language-selector-list {
+.language-selector-checkbox:checked~.language-selector-list {
   opacity: 1;
   max-height: 300px;
 }
@@ -351,7 +351,7 @@ p {
   box-sizing: border-box;
 }
 
-.model-selector-input:checked + .model-selector-label {
+.model-selector-input:checked+.model-selector-label {
   border-color: var(--theme-color);
   box-shadow: var(--theme-shadow);
 }
@@ -529,15 +529,15 @@ p {
 }
 
 /* 标签页滑块位置 */
-.tab-switcher #mojang:checked ~ .tab-switcher-glider {
+.tab-switcher #mojang:checked~.tab-switcher-glider {
   transform: translateX(0);
 }
 
-.tab-switcher #website:checked ~ .tab-switcher-glider {
+.tab-switcher #website:checked~.tab-switcher-glider {
   transform: translateX(132px);
 }
 
-.tab-switcher #upload:checked ~ .tab-switcher-glider {
+.tab-switcher #upload:checked~.tab-switcher-glider {
   transform: translateX(270px);
 }
 
@@ -872,7 +872,7 @@ p {
 }
 
 .options:hover,
-.option-input:checked + .options {
+.option-input:checked+.options {
   border-color: var(--theme-color);
   color: var(--theme-color);
 }
