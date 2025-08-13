@@ -63,8 +63,7 @@ MCCAG/
 │       └── Side.js       # Side 风格渲染器
 └── Resources/            # 静态资源
     ├── Icons/            # 图标文件
-    ├── Models/           # 模型预览图
-    └── Advertisement/    # 广告素材
+    └── Models/           # 模型预览图
 ```
 
 ### 核心功能模块
