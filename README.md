@@ -18,6 +18,9 @@ _轻松生成个性化的 Minecraft 头像_
 
 MCCAG 是一个基于 Web 的 Minecraft 头像生成器，支持多种头像风格和自定义选项。用户可以通过正版 ID、皮肤站或直接上传皮肤文件来生成个性化的头像。
 
+> [!TIP]
+> 若要将你的项目接入头像生成，请移步 [MCCAG-Api](https://github.com/MCCAG/MCCAG-v3-Api) 仓库。
+
 ### ✨ 主要特性
 
 - 🎨 **多种头像风格**：支持 Minimal、Vintage、Side 三种不同的头像渲染风格。
