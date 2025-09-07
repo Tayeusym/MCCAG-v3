@@ -7,11 +7,12 @@ import {
 
 import {
     popupTips,
+    popupDialog,
     checkInputValue,
     closeSelections,
     handleUploader,
     downloadWithBackground,
-    downloadTransparent
+    downloadTransparent,
 } from './Utils.js';
 
 import { initI18n } from './I18n.js';
@@ -41,8 +42,9 @@ class AppState {
         this.uploadInput = document.querySelector('.file-upload-input');
         this.current = this.content.querySelector('#active-content');
         this.currentCanvas = this.current.querySelector('canvas');
-        this.dialog = document.querySelector('#edit-dialog');
-        this.dialogOverlay = document.querySelector('#edit-dialog-overlay');
+        this.alertDialog = document.querySelector('#alert-dialog');
+        this.editDialog = document.querySelector('#edit-dialog');
+        this.dialogOverlay = document.querySelector('#dialog-overlay');
         this.skinWebsiteInput = document.querySelector('.skin-website');
     }
 }
@@ -61,7 +63,7 @@ class AvatarGeneratorApp {
             // 初始化国际化
             initI18n();
             // 初始化对话框
-            this.initDialogs();
+            this.initEditDialogs();
             // 初始化事件监听
             this.initEventListeners();
             // 从弹窗中读取默认选项
@@ -76,7 +78,7 @@ class AvatarGeneratorApp {
 
             // 对于手机用户弹出提示可以选择模型
             if (/Mobi|Android|iPhone/i.test(navigator.userAgent))
-                popupTips('偷偷告诉你，下滑页面还可以选择其他头像样式的模型，快来试试吧！该消息15秒后自动消失。', 'success', 15000);
+                popupDialog('悄悄话', '偷偷告诉你，下滑页面还可以选择其他头像样式的模型，快来试试吧！');
             console.log('初始化应用完成！');
         } catch (error) {
             console.error('应用初始化失败:', error);
@@ -84,8 +86,8 @@ class AvatarGeneratorApp {
         }
     }
 
-    initDialogs() {
-        const colorItems = this.state.dialog.querySelectorAll('div.color-item');
+    initEditDialogs() {
+        const colorItems = this.state.editDialog.querySelectorAll('div.color-item');
         colorItems.forEach(item => {
             const colors = item.getAttribute('value').split(',');
             if (colors.length <= 1) {
@@ -105,7 +107,10 @@ class AvatarGeneratorApp {
         // 全局点击事件
         window.addEventListener('click', closeSelections);
         // 添加关闭对话框的事件
-        this.state.dialogOverlay.addEventListener('click', event => event.target == this.state.dialogOverlay && this.hideEditDialog());
+        this.state.dialogOverlay.addEventListener('click', event => {
+            if (this.state.alertDialog.classList.contains('show')) return;
+            if (event.target == this.state.dialogOverlay) this.hideEditDialog();
+        });
 
         // 文件上传事件
         this.state.uploadInput.addEventListener('change', async event => {
@@ -119,7 +124,7 @@ class AvatarGeneratorApp {
             radio.addEventListener('change', event => {
                 this.state.options.generate.type = event.target.id;
                 this.state.options.generate.scale = 100;
-                this.updateDialogs(event.target.parentElement.parentElement.parentElement);
+                this.updateEditDialogs(event.target.parentElement.parentElement.parentElement);
                 this.generate();
             })
         );
@@ -139,7 +144,7 @@ class AvatarGeneratorApp {
                 const [ type, option ] = event.target.getAttribute('option').split('-');
                 this.state.options[type][option] = parseInt(event.target.value);
                 if (type == 'background' && option == 'angle') 
-                    this.updateDialogs(event.target.parentElement.parentElement, event.target.value);
+                    this.updateEditDialogs(event.target.parentElement.parentElement, event.target.value);
                 if (this.state.modelType == 'vintage' && option == 'border') {
                     this.renderAvatar();
                     return;
@@ -252,13 +257,13 @@ class AvatarGeneratorApp {
         });
 
         // 初始化对话框
-        this.initDialogs();
+        this.initEditDialogs();
     }
 
     /**
      * 更新对话框
      */
-    updateDialogs(dialog, angle=null) {
+    updateEditDialogs(dialog, angle=null) {
         if (dialog.id.includes('background')) {
             let flag = false;
             const currentColor = this.state.options.background.colors.join(',');
@@ -469,14 +474,13 @@ class AvatarGeneratorApp {
         if (dialog) {
             // 显示遮罩层和对话框
             if (dialogType == 'background' && !dialog.id.includes('vintage'))
-                this.updateDialogs(dialog, this.state.options.background.angle);
-            else this.updateDialogs(dialog);
+                this.updateEditDialogs(dialog, this.state.options.background.angle);
+            else this.updateEditDialogs(dialog);
             // 强制重绘，然后添加动画类
             requestAnimationFrame(() => {
                 this.state.dialogOverlay.classList.add('show');
-                this.state.dialog.classList.add('show');
+                this.state.editDialog.classList.add('show');
             });
-            this.state.dialogOverlay.classList.remove('hidden');
             // 隐藏所有对话框内容
             this.state.dialogOverlay.querySelectorAll('.dialog-content').forEach(content =>
                 content.classList.add('hidden')
@@ -493,10 +497,7 @@ class AvatarGeneratorApp {
     hideEditDialog() {
         // 移除动画类
         this.state.dialogOverlay.classList.remove('show');
-        this.state.dialog.classList.remove('show');
-
-        // 等待动画完成后隐藏元素
-        setTimeout(() => this.state.dialogOverlay.classList.add('hidden'), 300);
+        this.state.editDialog.classList.remove('show');
     }
 
     fetchSkin() {

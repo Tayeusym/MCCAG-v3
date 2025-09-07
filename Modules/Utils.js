@@ -1,30 +1,6 @@
 // 工具模块
 
 /**
- * 显示提示信息
- * @param {string} text - 提示文本
- * @param {string} type - 提示类型 ('success', 'error', 'warning')
- */
-export function popupTips(text, type, showTime=8000) {
-    const tipsContainer = document.querySelector('.notification-list');
-    const tips = document.createElement('li');
-    const tipsText = document.createElement('p');
-    tips.className = type;
-    tipsText.textContent = text;
-    tips.appendChild(tipsText);
-    tipsContainer.appendChild(tips);
-    tips.style.transform = `translateX(-${tips.offsetWidth + 40}px)`;
-    setTimeout(() => tips.style.transform = 'translateX(0px)', 100)
-    setTimeout(() => {
-        tips.style.transform = `translateX(-${tips.offsetWidth + 40}px)`;
-        setTimeout(() => {
-            tips.classList.add('disappear');
-            setTimeout(() => tipsContainer.removeChild(tips), 1000);
-        }, 1000);
-    }, showTime);
-}
-
-/**
  * 检查输入值并过滤非法字符
  * @param {RegExp} regex - 过滤正则表达式
  * @returns {Function} 事件处理函数
@@ -107,4 +83,48 @@ export function downloadTransparent(avatarImage) {
     
     // 删除临时画布
     tempCanvas.remove();
-} 
+}
+
+/**
+ * 显示提示信息
+ * @param {string} text - 提示文本
+ * @param {string} type - 提示类型 ('success', 'error', 'warning')
+ */
+export function popupTips(text, type, showTime=8000) {
+    const tipsContainer = document.querySelector('.notification-list');
+    const tips = document.createElement('li');
+    const tipsText = document.createElement('p');
+    tips.className = type;
+    tipsText.textContent = text;
+    tips.appendChild(tipsText);
+    tipsContainer.appendChild(tips);
+    tips.style.transform = `translateX(-${tips.offsetWidth + 40}px)`;
+    setTimeout(() => tips.style.transform = 'translateX(0px)', 100)
+    setTimeout(() => {
+        tips.style.transform = `translateX(-${tips.offsetWidth + 40}px)`;
+        setTimeout(() => {
+            tips.classList.add('disappear');
+            setTimeout(() => tipsContainer.removeChild(tips), 1000);
+        }, 1000);
+    }, showTime);
+}
+
+export async function popupDialog(title, content) {
+    const promise = new Promise((resolve, reject) => {
+        const dialogOverlay = document.querySelector('#dialog-overlay');
+        const dialog = dialogOverlay.querySelector('#alert-dialog')
+        const confirmButton = dialog.querySelector('#alert-confirm');
+        const titleElement = dialog.querySelector('.title');
+        const contentElement = dialog.querySelector('.alert-text');
+        titleElement.textContent = title;
+        contentElement.innerHTML = content;
+        dialogOverlay.classList.add('show');
+        dialog.classList.add('show');
+        confirmButton.addEventListener('click', () => {
+            dialog.classList.remove('show');
+            dialogOverlay.classList.remove('show');
+            resolve()
+        }, { once: true });
+    });
+    return promise;
+}

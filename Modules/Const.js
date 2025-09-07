@@ -506,5 +506,21 @@ export const translations = Object.freeze({
     "jp": "背景アップロード",
     "fr": "Télécharger l'arrière-plan",
     "de": "Hintergrund hochladen"
+  },
+  "dont-show-again": {
+    "zh": "不再显示",
+    "en": "Don't show again",
+    "ko": "다시 표시 안함",
+    "jp": "再表示しない",
+    "fr": "Ne plus afficher",
+    "de": "Nicht mehr anzeigen"
+  },
+  "btn-confirm": {
+    "zh": "知道了",
+    "en": "Got it",
+    "ko": "알겠습니다",
+    "jp": "了解しました",
+    "fr": "Compris",
+    "de": "Verstanden"
   }
 });

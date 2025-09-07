@@ -195,7 +195,30 @@
     <div class="float-tips hidden" for="vintage" i18n="float-tips-vintage">该网站已关闭</div>
     <div class="float-tips hidden" for="side" i18n="float-tips-side">点击查看 Youtube 原视频</div>
 
-    <div id="edit-dialog-overlay" class="hidden edit-dialog-overlay">
+    <div id="dialog-overlay" class="dialog-overlay">
+
+        <!-- 公告弹窗 -->
+        <div id="alert-dialog" class="alert-dialog">
+            <div class="title"></div>
+            <div class="alert-content">
+                <div class="alert-text">
+                    欢迎使用 Minecraft 可爱头像生成器！<br><br>
+                    🎉 新功能上线：<br>
+                    • 支持更多皮肤站<br>
+                    • 优化了头像生成速度<br>
+                    • 新增背景自定义功能<br><br>
+                    如有问题请加入QQ群：597688340
+                </div>
+            </div>
+            <div class="alert-footer">
+                <!-- <label class="alert-checkbox">
+                    <input type="checkbox" id="dont-show-again">
+                    <span i18n="dont-show-again">不再显示</span>
+                </label> -->
+                <button class="button button-primary" id="alert-confirm" i18n="btn-confirm">知道了</button>
+            </div>
+        </div>
+
         <div id="edit-dialog" class="edit-dialog">
 
             <!-- Minimal 生成编辑 -->
