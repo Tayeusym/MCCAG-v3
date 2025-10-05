@@ -1023,6 +1023,7 @@ p {
 }
 
 .alert-content {
+  user-select: text;
   padding: 20px 25px;
 }
 

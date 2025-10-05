@@ -579,6 +579,7 @@ class AvatarGeneratorApp {
         const { title, date, content } = announcement;
         if (title && date && content) {
             if (localStorage.getItem('announcement') == date) return;
+            if (content.includes('<script>')) return popupTips('检测到公告被注入！请检查网络环境！', 'error');
             if (await popupDialog(title, content)) localStorage.setItem('announcement', date);
         }
     }
