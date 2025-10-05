@@ -1,6 +1,7 @@
 // 主应用模块
 
 import {
+    request,
     corsProxy,
     fetchMojangProfile,
     fetchSkinWebsiteProfile,
@@ -76,8 +77,11 @@ class AvatarGeneratorApp {
             };
 
             // 对于手机用户弹出提示可以选择模型
-            if (/Mobi|Android|iPhone/i.test(navigator.userAgent))
-                popupDialog('悄悄话', '偷偷告诉你，下滑页面还可以选择其他头像样式的模型，快来试试吧！');
+            if (/Mobi|Android|iPhone/i.test(navigator.userAgent) && !localStorage.getItem('mobile-tips')) {
+                if (await popupDialog('悄悄话', '偷偷告诉你，下滑页面还可以选择其他头像样式的模型，快来试试吧！'))
+                    localStorage.setItem('mobile-tips', 1);
+            }
+            this.popupAnnouncement();
             console.log('初始化应用完成！');
         } catch (error) {
             console.error('应用初始化失败:', error);
@@ -566,6 +570,16 @@ class AvatarGeneratorApp {
             popupTips(`生成头像失败，${error}`, 'error');
         } finally {
             container.classList.remove('loading');
+        }
+    }
+
+    async popupAnnouncement() {
+        const announcement = await request('/Resources/Data/Announcement.json', false);
+        if (!announcement) return console.warn('加载公告失败！');
+        const { title, date, content } = announcement;
+        if (title && date && content) {
+            if (localStorage.getItem('announcement') == date) return;
+            if (await popupDialog(title, content)) localStorage.setItem('announcement', date);
         }
     }
 }

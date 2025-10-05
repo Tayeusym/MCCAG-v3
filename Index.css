@@ -1035,13 +1035,13 @@ p {
 
 .alert-footer {
   display: flex;
-  justify-content: center;
+  justify-content:space-between;
   align-items: center;
   padding: 15px 25px 20px;
   border-top: 1px solid rgba(83, 146, 239, 0.1);
 }
 
-/* .alert-checkbox {
+.alert-checkbox {
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -1055,7 +1055,7 @@ p {
   width: 16px;
   height: 16px;
   accent-color: var(--theme-color);
-} */
+}
 
 .alert-footer .button {
   width: auto;

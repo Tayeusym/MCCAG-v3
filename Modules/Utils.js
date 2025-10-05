@@ -1,5 +1,6 @@
 // 工具模块
 
+
 /**
  * 检查输入值并过滤非法字符
  * @param {RegExp} regex - 过滤正则表达式
@@ -19,13 +20,11 @@ export function checkInputValue(regex) {
  * 关闭选择菜单
  */
 export function closeSelections() {
-    const selections = document.querySelectorAll('input:checked[type=checkbox]');
-    for (const selection of selections) {
-        if (selection.getAttribute('status') == '1') {
-            selection.checked = false;
-            selection.setAttribute('status', '0');
-        } else selection.setAttribute('status', '1');
-    }
+    const selection = document.querySelector('#language-switch');
+    if (selection.getAttribute('status') == '1') {
+        selection.checked = false;
+        selection.setAttribute('status', '0');
+    } else selection.setAttribute('status', '1');
 }
 
 /**
@@ -116,6 +115,7 @@ export async function popupDialog(title, content) {
         const confirmButton = dialog.querySelector('#alert-confirm');
         const titleElement = dialog.querySelector('.title');
         const contentElement = dialog.querySelector('.alert-text');
+        const dontShowCheckbox = dialog.querySelector('#dont-show-again');
         titleElement.textContent = title;
         contentElement.innerHTML = content;
         dialogOverlay.classList.add('show');
@@ -123,7 +123,9 @@ export async function popupDialog(title, content) {
         confirmButton.addEventListener('click', () => {
             dialog.classList.remove('show');
             dialogOverlay.classList.remove('show');
-            resolve()
+            const dontShow = dontShowCheckbox.checked;
+            dontShowCheckbox.checked = false;
+            resolve(dontShow);
         }, { once: true });
     });
     return promise;
