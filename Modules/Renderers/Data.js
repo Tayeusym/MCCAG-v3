@@ -1,5 +1,5 @@
 function resizeCropBox(box, deltaX, deltaY, deltaWidth, deltaHeight) {
-    return [ box[0] + deltaX, box[1] + deltaY, box[2] + deltaWidth, box[3] + deltaHeight ];
+    return [box[0] + deltaX, box[1] + deltaY, box[2] + deltaWidth, box[3] + deltaHeight];
 }
 
 export const skinData = Object.freeze({

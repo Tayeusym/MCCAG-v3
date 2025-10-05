@@ -1,6 +1,7 @@
 // 主应用模块
 
 import {
+    corsProxy,
     fetchMojangProfile,
     fetchSkinWebsiteProfile,
 } from './Network.js';
@@ -18,8 +19,6 @@ import {
 import { initI18n } from './I18n.js';
 import { calculateAutoColors } from './Renderers/Image.js';
 import { renderBackground, renderAvatar, regulateAvatar } from './Renderers/Index.js';
-
-import { corsProxy } from './Const.js';
 
 
 // 应用状态

@@ -53,7 +53,6 @@ MCCAG/
 ├── Index.js              # 入口文件
 ├── Modules/              # 核心模块
 │   ├── App.js            # 主应用逻辑
-│   ├── Const.js          # 常量定义
 │   ├── I18n.js           # 国际化支持
 │   ├── Network.js        # 网络请求处理
 │   ├── Utils.js          # 工具函数
@@ -65,8 +64,9 @@ MCCAG/
 │       ├── Vintage.js    # Vintage 风格渲染器
 │       └── Side.js       # Side 风格渲染器
 └── Resources/            # 静态资源
-    ├── Icons/            # 图标文件
-    └── Models/           # 模型预览图
+    ├── Data/             # 数据文件夹
+    ├── Icons/            # 图标文件夹
+    └── Models/           # 模型预览图文件夹
 ```
 
 ### 核心功能模块
