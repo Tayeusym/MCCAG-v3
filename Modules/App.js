@@ -80,6 +80,7 @@ class AvatarGeneratorApp {
             // if (/Mobi|Android|iPhone/i.test(navigator.userAgent) && !localStorage.getItem('mobile-tips'))
             //     if (await popupDialog('悄悄话', '偷偷告诉你，下滑页面还可以选择其他头像样式的模型，快来试试吧！'))
             //         localStorage.setItem('mobile-tips', 1);
+            
             this.popupAnnouncement();
             console.log('初始化应用完成！');
         } catch (error) {

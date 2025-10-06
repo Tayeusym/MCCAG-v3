@@ -1051,11 +1051,22 @@ p {
   user-select: none;
 }
 
-.alert-checkbox input[type="checkbox"] {
-  margin-right: 8px;
+.alert-checkbox #dont-show-again {
+  display: none;
+}
+
+.alert-checkbox .checkbox-icon {
   width: 16px;
   height: 16px;
-  accent-color: var(--theme-color);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-right: 10px;
+  transition: background-color .3s;
+}
+
+.alert-checkbox #dont-show-again:checked + .checkbox-icon {
+  border-color: var(--theme-color);
+  background-color: var(--theme-color);
 }
 
 .alert-footer .button {

@@ -10,21 +10,17 @@ export function checkInputValue(regex) {
     return function (event) {
         const value = event.target.value;
         const filtered = value.replace(regex, '');
-        if (filtered !== value) {
-            event.target.value = filtered;
-        }
+        if (filtered !== value) event.target.value = filtered;
     }
 }
 
 /**
  * 关闭选择菜单
  */
-export function closeSelections() {
+export function closeSelections(event) {
     const selection = document.querySelector('#language-switch');
-    if (selection.getAttribute('status') == '1') {
-        selection.checked = false;
-        selection.setAttribute('status', '0');
-    } else selection.setAttribute('status', '1');
+    if (event.target == selection) return;
+    if (selection.checked) selection.checked = false;
 }
 
 /**
