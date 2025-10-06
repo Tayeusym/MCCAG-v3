@@ -259,20 +259,12 @@ p {
   border-radius: var(--radius-md);
   line-height: 25px;
   margin: 10px;
-  transition: all .7s;
-  transform: translateX(-1000px);
   box-shadow: 0 2px 5px var(--theme-color-alpha);
   display: flex;
   width: fit-content;
   align-items: center;
   justify-content: center;
-}
-
-.notification-list li.disappear {
-  padding: 0;
-  height: 0;
-  margin: 0;
-  opacity: 0;
+  overflow: hidden;
 }
 
 .notification-list li::before {

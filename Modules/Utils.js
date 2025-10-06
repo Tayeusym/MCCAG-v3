@@ -85,7 +85,7 @@ export function downloadTransparent(avatarImage) {
  * @param {string} text - 提示文本
  * @param {string} type - 提示类型 ('success', 'error', 'warning')
  */
-export function popupTips(text, type, showTime=8000) {
+export function popupTips(text, type) {
     const tipsContainer = document.querySelector('.notification-list');
     const tips = document.createElement('li');
     const tipsText = document.createElement('p');
@@ -93,15 +93,22 @@ export function popupTips(text, type, showTime=8000) {
     tipsText.textContent = text;
     tips.appendChild(tipsText);
     tipsContainer.appendChild(tips);
-    tips.style.transform = `translateX(-${tips.offsetWidth + 40}px)`;
-    setTimeout(() => tips.style.transform = 'translateX(0px)', 100)
-    setTimeout(() => {
-        tips.style.transform = `translateX(-${tips.offsetWidth + 40}px)`;
-        setTimeout(() => {
-            tips.classList.add('disappear');
-            setTimeout(() => tipsContainer.removeChild(tips), 1000);
-        }, 1000);
-    }, showTime);
+    tips.animate([
+        { transform: `translateX(-${tips.offsetWidth + 40}px)` },
+        { transform: 'translateX(0)' }
+    ], { duration: 700, easing: 'ease-out'});
+    setTimeout(async () => {
+        await tips.animate([
+            { transform: 'translateX(0)' },
+            { transform: `translateX(-${tips.offsetWidth + 40}px)` },
+        ], { duration: 700, easing: 'ease-out' }).finished;
+        tips.style.transform = 'translateX(-200%)';
+        await tips.animate([
+            { maxHeight: `${tips.offsetHeight}px` },
+            { padding: 0, margin: 0, maxHeight: 0 }
+        ], { duration: 700, easing: 'ease-out' }).finished;
+        tips.remove();
+    }, 8000);
 }
 
 export async function popupDialog(title, content) {
