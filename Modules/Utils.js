@@ -60,24 +60,12 @@ export function downloadWithBackground(canvas) {
  * @param {HTMLImageElement} avatarImage - 头像图像
  */
 export function downloadTransparent(avatarImage) {
-    // 创建临时画布
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = 1000;
-    tempCanvas.height = 1000;
-    const tempContext = tempCanvas.getContext('2d');
-    
     // 只绘制头像（不包含背景）
-    tempContext.drawImage(avatarImage, 0, 0, 1000, 1000);
-    
-    // 下载透明背景的图片
     const link = document.createElement('a');
     link.download = 'Avatar_Transparent.png';
-    link.href = tempCanvas.toDataURL('image/png');
+    link.href = avatarImage.toDataURL('image/png');
     link.click();
     link.remove();
-    
-    // 删除临时画布
-    tempCanvas.remove();
 }
 
 /**
@@ -112,7 +100,7 @@ export function popupTips(text, type) {
 }
 
 export async function popupDialog(title, content) {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve) => {
         const dialogOverlay = document.querySelector('#dialog-overlay');
         const dialog = dialogOverlay.querySelector('#alert-dialog')
         const confirmButton = dialog.querySelector('#alert-confirm');

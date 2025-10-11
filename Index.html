@@ -2,8 +2,19 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="Minecraft, 头像, Minecraft 头像生成器, MCCAG, 可爱头像, Minecraft Skin, avatar generator, 皮肤站, MCCAG">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Alternate language versions (update URLs if you publish per-language pages) -->
+    <link rel="alternate" hreflang="zh-CN" href="/?lang=zh">
+    <link rel="alternate" hreflang="en" href="/?lang=en">
+    <link rel="alternate" hreflang="ja" href="/?lang=jp">
+    <link rel="alternate" hreflang="ko" href="/?lang=ko">
+    <link rel="alternate" hreflang="fr" href="/?lang=fr">
+    <link rel="alternate" hreflang="de" href="/?lang=de">
+
     <meta name="description" content="可爱头像生成器 Minecraft Cute Avatar Generator（MCCAG）支持正版ID、皮肤站和自定义上传，轻松生成个性化Minecraft头像，支持多语言切换和多种下载选项。">
     <title i18n="title">可爱头像生成器 | Minecraft Cute Avatar Generator</title>
     <link rel="icon" type="image/png" href="Resources/Logo.png">
@@ -23,6 +34,34 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-W8TBN24W92');
+    </script>
+    
+    <!-- Dynamic JSON-LD structured data (uses runtime URL so you don't need to hardcode domain) -->
+    <script>
+        (function(){
+            try{
+                var url = window && window.location && window.location.href ? window.location.href : '/';
+                var ld = {
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "name": "Minecraft CAG",
+                    "url": url,
+                    "description": "可爱头像生成器 支持正版ID、皮肤站和自定义上传，轻松生成个性化Minecraft头像。",
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "MCCAG",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": (new URL('Resources/Logo.png', url)).href
+                        }
+                    }
+                };
+                var s = document.createElement('script');
+                s.type = 'application/ld+json';
+                s.text = JSON.stringify(ld);
+                document.getElementsByTagName('head')[0].appendChild(s);
+            }catch(e){console && console.warn && console.warn('JSON-LD injection failed', e);} 
+        })();
     </script>
 </head>
 <body>
@@ -74,7 +113,7 @@
         </section>
 
         <section class="donate-section">
-            <a href="https://www.mskfrp.com/" rel="noopener" target="_blank">
+            <a href="https://qm.qq.com/q/8WBY9TT7w" rel="noopener" target="_blank">
                 <div class="container">
                     <div class="advertisement-image"></div>
                     <div class="introduction">

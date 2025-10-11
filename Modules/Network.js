@@ -14,7 +14,7 @@ export async function request(url, cors = true, max = 2, count = 0) {
         console.error(`网络请求失败（第 ${count} 次尝试）：`, error);
     }
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    return request(url, cors, max, count + 1);
+    return await request(url, cors, max, count + 1);
 }
 
 /**
