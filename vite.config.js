@@ -4,7 +4,20 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 
 // 定义复制文件夹的函数
-function copyFolderRecursiveSync(source, target) {}
+function copyFolderRecursiveSync(source, target) {
+	if (!existsSync(target)) mkdirSync(target, { recursive: true });
+
+	if (statSync(source).isDirectory()) {
+		const files = readdirSync(source);
+		files.forEach(function (file) {
+			const sourcePath = join(source, file);
+			const targetPath = join(target, file);
+			if (statSync(sourcePath).isDirectory())
+				copyFolderRecursiveSync(sourcePath, targetPath);
+			else copyFileSync(sourcePath, targetPath);
+		});
+	}
+}
 
 export default defineConfig({
 	build: {
@@ -12,6 +25,7 @@ export default defineConfig({
 		emptyOutDir: true,
 		// 输出目录
 		outDir: '.dist',
+		cssMinify: 'lightningcss',
 		// 不生成源码映射
 		sourcemap: false,
 		rollupOptions: {
@@ -48,21 +62,11 @@ export default defineConfig({
 				// 动态获取输出目录
 				const outDir = this.meta?.rollupOptions?.output?.dir || '.dist';
 				// 在构建完成后复制 Resources 文件夹到输出目录
-				const source = resolve(__dirname, 'Resources');
-				const target = resolve(__dirname, outDir, 'Resources');
+				const sourceDir = resolve(__dirname, 'Resources');
+				const targetDir = resolve(__dirname, outDir, 'Resources');
 
-				if (!existsSync(target)) mkdirSync(target, { recursive: true });
+				copyFolderRecursiveSync(sourceDir, targetDir);
 
-				if (statSync(source).isDirectory()) {
-					const files = readdirSync(source);
-					files.forEach(function (file) {
-						const sourcePath = join(source, file);
-						const targetPath = join(target, file);
-						if (statSync(sourcePath).isDirectory())
-							copyFolderRecursiveSync(sourcePath, targetPath);
-						else copyFileSync(sourcePath, targetPath);
-					});
-				}
 				console.log('✅ Resources 资源文件夹复制完成！');
 			},
 		},
