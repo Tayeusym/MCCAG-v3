@@ -12,7 +12,6 @@ export default defineConfig({
 		emptyOutDir: true,
 		// 输出目录
 		outDir: '.dist',
-		cssMinify: 'lightningcss',
 		// 不生成源码映射
 		sourcemap: false,
 		rollupOptions: {
