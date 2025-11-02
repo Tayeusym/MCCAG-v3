@@ -1,0 +1,22 @@
+{
+  "name": "mccag-website",
+  "version": "1.0.0",
+  "description": "Minecraft Cute Avatar Generator Website.",
+  "main": "Index.js",
+  "scripts": {
+    "build": "vite build",
+    "start": "vite",
+    "dev": "vite"
+  },
+  "keywords": [
+    "minecraft",
+    "avatar",
+    "generator"
+  ],
+  "author": "MCCAG Team",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "vite": "^4.0.0",
+    "serve": "^14.2.0"
+  }
+}

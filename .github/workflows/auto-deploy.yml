@@ -11,8 +11,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
       - name: Create deployment package
         run: |
+          # 运行构建命令
+          npm run build
+          
+          # 创建部署包
           mkdir -p /tmp/deploy-temp
           rsync -rlptgoD \
             --exclude='.git' \
@@ -20,7 +32,10 @@ jobs:
             --exclude='node_modules' \
             --exclude='*.log' \
             --exclude='.DS_Store' \
-            ./ /tmp/deploy-temp/
+            --exclude='build.js' \
+            --exclude='vite.config.js' \
+            --exclude='README.md' \
+            .dist/ /tmp/deploy-temp/
           tar -czf website-deploy.tar.gz -C /tmp/deploy-temp .
           tar -tzf website-deploy.tar.gz | head
           rm -rf /tmp/deploy-temp

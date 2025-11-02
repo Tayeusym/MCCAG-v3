@@ -34,6 +34,31 @@ MCCAG 是一个基于 Web 的 Minecraft 头像生成器，支持多种头像风�
 
 直接访问部署的网站 https://mccag.cn 即可使用，无需安装任何软件。
 
+### 本地开发
+
+```bash
+# 克隆项目
+git clone https://github.com/MCCAG/Website.git
+
+# 进入项目目录
+cd Website
+
+# 安装依赖
+npm install
+
+# 启动本地开发服务器
+npm run dev
+```
+
+### 打包构建
+
+```bash
+# 构建项目
+npm run build
+```
+
+构建后的文件将输出到 `.dist` 目录，其中所有 JavaScript 文件会被打包成一个单独的 `bundle.js` 文件。
+
 
 ## 🛠️ 技术架构
 

@@ -7,14 +7,6 @@
     <meta name="keywords" content="Minecraft, 头像, Minecraft 头像生成器, MCCAG, 可爱头像, Minecraft Skin, avatar generator, 皮肤站, MCCAG">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Alternate language versions (update URLs if you publish per-language pages) -->
-    <link rel="alternate" hreflang="zh-CN" href="/?lang=zh">
-    <link rel="alternate" hreflang="en" href="/?lang=en">
-    <link rel="alternate" hreflang="ja" href="/?lang=jp">
-    <link rel="alternate" hreflang="ko" href="/?lang=ko">
-    <link rel="alternate" hreflang="fr" href="/?lang=fr">
-    <link rel="alternate" hreflang="de" href="/?lang=de">
-
     <meta name="description" content="可爱头像生成器 Minecraft Cute Avatar Generator（MCCAG）支持正版ID、皮肤站和自定义上传，轻松生成个性化Minecraft头像，支持多语言切换和多种下载选项。">
     <title i18n="title">可爱头像生成器 | Minecraft Cute Avatar Generator</title>
     <link rel="icon" type="image/png" href="Resources/Logo.png">
@@ -25,6 +17,11 @@
     <link rel="dns-prefetch" href="//crafatar.com">
     <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
+
+    <!-- 提示浏览器建立连接以提速（可保留） -->
+    <link rel="preconnect" href="https://crafatar.com" crossorigin>
+    <link rel="preconnect" href="https://busuanzi.ibruce.info" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     
     <!-- 统计 -->
     <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -36,33 +33,6 @@
         gtag('config', 'G-W8TBN24W92');
     </script>
     
-    <!-- Dynamic JSON-LD structured data (uses runtime URL so you don't need to hardcode domain) -->
-    <script>
-        (function(){
-            try{
-                var url = window && window.location && window.location.href ? window.location.href : '/';
-                var ld = {
-                    "@context": "https://schema.org",
-                    "@type": "WebSite",
-                    "name": "Minecraft CAG",
-                    "url": url,
-                    "description": "可爱头像生成器 支持正版ID、皮肤站和自定义上传，轻松生成个性化Minecraft头像。",
-                    "publisher": {
-                        "@type": "Organization",
-                        "name": "MCCAG",
-                        "logo": {
-                            "@type": "ImageObject",
-                            "url": (new URL('Resources/Logo.png', url)).href
-                        }
-                    }
-                };
-                var s = document.createElement('script');
-                s.type = 'application/ld+json';
-                s.text = JSON.stringify(ld);
-                document.getElementsByTagName('head')[0].appendChild(s);
-            }catch(e){console && console.warn && console.warn('JSON-LD injection failed', e);} 
-        })();
-    </script>
 </head>
 <body>
     <header class="header-bar">
@@ -235,14 +205,7 @@
         <div id="alert-dialog" class="alert-dialog">
             <div class="title"></div>
             <div class="alert-content">
-                <div class="alert-text">
-                    欢迎使用 Minecraft 可爱头像生成器！<br><br>
-                    🎉 新功能上线：<br>
-                    • 支持更多皮肤站<br>
-                    • 优化了头像生成速度<br>
-                    • 新增背景自定义功能<br><br>
-                    如有问题请加入QQ群：597688340
-                </div>
+                <div class="alert-text"></div>
             </div>
             <div class="alert-footer">
                 <label class="alert-checkbox">
