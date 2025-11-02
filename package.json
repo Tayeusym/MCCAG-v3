@@ -16,7 +16,10 @@
   "author": "MCCAG Team",
   "license": "GPL-3.0",
   "devDependencies": {
-    "vite": "^4.0.0",
-    "serve": "^14.2.0"
+    "serve": "^14.2.0",
+    "vite": "^7.1.12"
+  },
+  "dependencies": {
+    "lightningcss": "^1.30.2"
   }
 }

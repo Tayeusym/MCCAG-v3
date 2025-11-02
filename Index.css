@@ -942,7 +942,7 @@ p {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.range-slider:avtive::-moz-range-thumb,
+.range-slider:active::-moz-range-thumb,
 .range-slider::-moz-range-thumb:hover {
   box-shadow: 0 6px 24px 0 rgba(83, 146, 239, 0.28);
 }

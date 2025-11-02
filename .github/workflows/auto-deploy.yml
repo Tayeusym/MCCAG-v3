@@ -14,15 +14,21 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Create deployment package
         run: |
           # 运行构建命令
-          npm run build
+          pnpm run build
           
           # 创建部署包
           mkdir -p /tmp/deploy-temp
@@ -35,6 +41,8 @@ jobs:
             --exclude='build.js' \
             --exclude='vite.config.js' \
             --exclude='README.md' \
+            --exclude='package.json' \
+            --exclude='pnpm-lock.yaml' \
             .dist/ /tmp/deploy-temp/
           tar -czf website-deploy.tar.gz -C /tmp/deploy-temp .
           tar -tzf website-deploy.tar.gz | head
@@ -49,8 +57,11 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no website-deploy.tar.gz ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            set -e
             cd /www/wwwroot/Website &&
+            rm *.css *.js
             tar -xzf /tmp/website-deploy.tar.gz --strip-components=0 &&
             rm /tmp/website-deploy.tar.gz &&
             echo 'Deploy completed!'
           "
+
