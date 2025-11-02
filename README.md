@@ -57,7 +57,7 @@ npm run dev
 npm run build
 ```
 
-构建后的文件将输出到 `.dist` 目录，其中所有 JavaScript 文件会被打包成一个单独的 `bundle.js` 文件。
+构建后的文件将输出到 `.dist` 目录，其中所有 JavaScript 文件会被打包成一个单独的 `Bundle.js` 文件。
 
 
 ## 🛠️ 技术架构

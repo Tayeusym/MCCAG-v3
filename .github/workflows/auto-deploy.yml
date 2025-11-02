@@ -15,7 +15,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -59,7 +58,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
             set -e
             cd /www/wwwroot/Website &&
-            rm *.css *.js
+            rm *.css *.js &&
             tar -xzf /tmp/website-deploy.tar.gz --strip-components=0 &&
             rm /tmp/website-deploy.tar.gz &&
             echo 'Deploy completed!'
