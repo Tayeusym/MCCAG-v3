@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'fs';
-import { join } from 'path';
 
 // 定义复制文件夹的函数
 function copyFolderRecursiveSync(source, target) {
@@ -25,7 +24,6 @@ export default defineConfig({
 		emptyOutDir: true,
 		// 输出目录
 		outDir: '.dist',
-		cssMinify: 'lightningcss',
 		// 不生成源码映射
 		sourcemap: false,
 		rollupOptions: {

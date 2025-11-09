@@ -35,8 +35,9 @@
   }
 }
 
+
 /* 响应式设计 */
-@media (max-height: 850px),
+@media (max-height: 800px),
 (max-width: 950px) {
   .main-content {
     padding: 70px;
@@ -80,6 +81,29 @@
     transform: translateX(-50%);
     min-width: 120px;
     width: auto;
+  }
+}
+
+/* 响应式适配 */
+@media (max-width: 600px) {
+  .alert-dialog {
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .alert-header,
+  .alert-content,
+  .alert-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .alert-title {
+    font-size: 18px;
+  }
+  
+  .alert-text {
+    font-size: 15px;
   }
 }
 
@@ -314,6 +338,7 @@ p {
 /* 主要内容区块 */
 .model-section,
 .generator-section {
+  z-index: 10;
   height: 630px;
   width: 400px;
   border-radius: var(--radius-lg);
@@ -1065,27 +1090,4 @@ p {
   width: auto;
   min-width: 100px;
   padding: 0 20px;
-}
-
-/* 响应式适配 */
-@media (max-width: 600px) {
-  .alert-dialog {
-    width: 90%;
-    margin: 0 auto;
-  }
-  
-  .alert-header,
-  .alert-content,
-  .alert-footer {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  
-  .alert-title {
-    font-size: 18px;
-  }
-  
-  .alert-text {
-    font-size: 15px;
-  }
 }

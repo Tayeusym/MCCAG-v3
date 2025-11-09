@@ -75,12 +75,8 @@ class AvatarGeneratorApp {
                 this.state.currentRegulatedBackgroundImage = renderBackground(this.state.modelType, this.state.options.background);
                 this.renderAvatar();
             };
-
-            // 对于手机用户弹出提示可以选择模型
-            // if (/Mobi|Android|iPhone/i.test(navigator.userAgent) && !localStorage.getItem('mobile-tips'))
-            //     if (await popupDialog('悄悄话', '偷偷告诉你，下滑页面还可以选择其他头像样式的模型，快来试试吧！'))
-            //         localStorage.setItem('mobile-tips', 1);
-            
+                
+            this.setAdvertisement();            
             this.popupAnnouncement();
             console.log('初始化应用完成！');
         } catch (error) {
@@ -583,6 +579,14 @@ class AvatarGeneratorApp {
             if (content.includes('<script>')) return popupTips('检测到公告被注入！请检查网络环境！', 'error');
             if (await popupDialog(title, content)) localStorage.setItem('announcement', date);
         }
+    }
+
+    async setAdvertisement() {
+        const advertisement = await request('/Resources/Advertisement/Links.json', false);
+        if (!advertisement) return console.warn('加载广告链接失败！');
+        const link = document.querySelector('section.donate-section a');
+        if (advertisement.union) link.herf = advertisement.union;
+        else link.href = (window.innerWidth <= 950) ? advertisement?.small : advertisement?.big;
     }
 }
 
