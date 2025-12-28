@@ -531,7 +531,7 @@ class AvatarGeneratorApp {
                 // Mojang模式
                 const profile = await fetchMojangProfile(input.value);
                 if (!profile) return reject('未找到该玩家的信息！');
-                skinImage.src = `https://crafatar.com/skins/${profile.id}`;
+                skinImage.src = `https://minotar.net/skin/${profile.id}`;
             }
         });
     }
