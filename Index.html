@@ -9,21 +9,21 @@
 
     <meta name="description" content="可爱头像生成器 Minecraft Cute Avatar Generator（MCCAG）支持正版ID、皮肤站和自定义上传，轻松生成个性化Minecraft头像，支持多语言切换和多种下载选项。">
     <title i18n="title">可爱头像生成器 | Minecraft Cute Avatar Generator</title>
-    <link rel="icon" type="image/png" href="Resources/Logo.png">
+    <link rel="icon" type="image/png" href="Resources/Saylor.jpg">
     <link rel="stylesheet" href="Index.css">
     <script type="module" src="Index.js"></script>
     
-    <!-- DNS预解析 -->
+    <!-- DNS预解析
     <link rel="dns-prefetch" href="//crafatar.com">
     <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
-    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">-->
 
     <!-- 提示浏览器建立连接以提速（可保留） -->
-    <link rel="preconnect" href="https://crafatar.com" crossorigin>
+    <!--<link rel="preconnect" href="https://crafatar.com" crossorigin>
     <link rel="preconnect" href="https://busuanzi.ibruce.info" crossorigin>
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>-->
     
-    <!-- 统计 -->
+    <!-- 统计
     <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-W8TBN24W92"></script>
     <script>
@@ -31,16 +31,17 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-W8TBN24W92');
-    </script>
+    </script>-->
     
 </head>
 <body>
     <header class="header-bar">
         <div class="header-logo">
-            <img src="Resources/Logo.png" alt="Logo" class="header-logo-image">
+            <img src="Resources/Avatar.png" alt="Logo" class="header-logo-image">
             <h1 class="header-title" i18n="header-title">Minecraft CAG</h1>
         </div>
-        <div class="language-selector">
+        <!-- 天乐茶会修改版，服主独自运营因此移除语言功能，默认为中文。 -->
+        <!--<div class="language-selector"> 
             <input type="checkbox" id="language-switch" value="0" class="hidden language-selector-checkbox">
             <label for="language-switch" class="language-selector-label">
                 <img src="Resources/Icons/Language.svg" alt="选择语言" i18n-alt="language-alt" class="language-selector-icon">
@@ -53,7 +54,7 @@
                 <li class="language-selector-item" id="french" data-lang="fr">Français</li>
                 <li class="language-selector-item" id="german" data-lang="de">Deutsch</li>
             </ul>
-        </div>
+        </div>-->
     </header>
 
     <main class="main-content">
@@ -77,27 +78,27 @@
                     <span class="model-selector-label-text">Side</span>
                     <a class="float-tips-link" href="https://www.youtube.com/watch?v=2_VWUkZH06g" rel="noopener" target="_blank" i18n="model-side-inspiration">灵感来源：Henry Packs</a>
                 </label>
-                <a href="https://qm.qq.com/q/apvmPE1Wes" rel="noopener" target="_blank" class="button button-secondary qq" i18n="qq-group">MCCAG 交流群：597688340</a>
+                <a href="https://qm.qq.com/q/7fdhEpUGNq" rel="noopener" target="_blank" class="button button-secondary qq" i18n="qq-group">天乐茶会官方群：284082977</a>
 
             </div>
         </section>
 
         <section class="donate-section">
-            <a rel="noopener" target="_blank">
+            <a href="https://qm.qq.com/q/7fdhEpUGNq" rel="noopener" target="_blank">
                 <div class="container">
                     <div class="advertisement-image"></div>
                     <div class="introduction">
-                        <span i18n="click-ad">点击广告</span>
-                        <span i18n="maintain-website">维持网站运营</span>
+                        <span i18n="click-ad">欢迎加入</span>
+                        <span i18n="maintain-website">天乐茶会</span>
                     </div>
                 </div>
             </a>
-            <a href="https://afdian.com/a/Keishi/" rel="noopener" target="_blank">
+            <a href="https://donate.tayemcser.cn" rel="noopener" target="_blank">
                 <div class="container">
-                    <div class="donate-us-title" i18n="donate-us">捐助我们！</div>
+                    <div class="donate-us-title" i18n="donate-us">支持茶会！</div>
                     <div class="introduction">
-                        <span i18n="help-development">助力我们开发</span>
-                        <span i18n="perfect-product">更完美的产品</span>
+                        <span i18n="help-development">帮助服务器</span>
+                        <span i18n="perfect-product">持续运营！</span>
                     </div>
                 </div>
             </a>
@@ -137,7 +138,7 @@
                     <div class="form-section">
                         <div class="form-fields">
                             <input type="text" placeholder="请输入正版 ID" i18n-placeholder="placeholder-id" class="text-input player-name">
-                            <input type="text" value="littleskin.cn" placeholder="请输入皮肤站网址" i18n-placeholder="placeholder-website" class="text-input skin-website">
+                            <input type="text" value="skin.tayemcser.cn" placeholder="请输入皮肤站网址" i18n-placeholder="placeholder-website" class="text-input skin-website">
                         </div>
                         <div class="action-list" columns="3">
                             <button class="button button-primary generate" i18n="btn-generate">生成</button>
@@ -177,22 +178,15 @@
 
     <footer class="footer-bar">
         <p class="footer-text">
-            <span i18n="production">制作：</span>
+            <span i18n="production">原作者：</span>
             <a href="https://github.com/Lonely-Sails/" rel="noopener" target="_blank" class="footer-link">LonelySail</a> 
             <a href="https://space.bilibili.com/23785358/" rel="noopener" target="_blank" class="footer-link">Keishi</a> | 
-            <a href="https://afdian.com/a/Keishi/" rel="noopener" target="_blank" i18n="donate" class="footer-link">打赏给作者一杯咖啡！</a>
+            <a style="color:#f76808" href="https://github.com/MCCAG/" rel="noopener" target="-blank" class="footer-link">Github 上的官方项目</a> | 
+            <span i18n="newtayeinfo">修改和代码编辑：天乐茶会服主光亮 | <a href="" rel="noopener" class="footer-link" style="color:#f76808">以GPL-3.0发布</a></span>
         </p>
         <p class="footer-text">
-            <a href="https://github.com/MCCAG/" rel="noopener" target="-blank" class="footer-link">Github</a> |
-            <span i18n="friendly-links">友链：</span>
-            <a href="https://klpbbs.com/" rel="noopener" target="_blank" class="footer-link" i18n="friendly-link-1">苦力怕论坛</a>
-            <a href="https://www.mcnav.net/" rel="noopener" target="_blank" class="footer-link" i18n="friendly-link-2">MC导航网</a>
-            <a href="https://mcgif.cn/" rel="noopener" target="_blank" class="footer-link" i18n="friendly-link-3">MC动图网</a>  |
-            <span id='busuanzi-container-site-pv'>
-                <span i18n="total-visits">本站总访问量</span> 
-                <span id="busuanzi_value_site_pv" class="footer-count"></span> 
-                <span i18n="times">次</span>
-            </span>
+            <p class="footer-text">Copyright &copy; 2023-2026 <a href="https://tayemcser.cn">Taye Tea Party（天乐茶会）</a>丨&copy; 2020-2026 Saylor Future Studio All. | <a href="https://skin.tayemcser.cn/" rel="noopener" target="_blank" class="footer-link">光亮皮肤站</a></p>
+            <!-- 移除访问量次数 -->
         </p>
     </footer>
 
@@ -204,9 +198,9 @@
 
         <!-- 公告弹窗 -->
         <div id="alert-dialog" class="alert-dialog">
-            <div class="title"></div>
+            <div class="title">1111</div>
             <div class="alert-content">
-                <div class="alert-text"></div>
+                <div class="alert-text">111</div>
             </div>
             <div class="alert-footer">
                 <label class="alert-checkbox">
@@ -255,19 +249,19 @@
                 <div class="dialog-row">
                     <label i18n="dialog-minimal-preset-colors">预设颜色</label>
                     <div class="color-list">
-                        <div class="color-item" option="background-colors" value="#FFCCCB"></div>
-                        <div class="color-item" option="background-colors" value="#ADD8E6"></div>
-                        <div class="color-item" option="background-colors" value="#FFFFFF"></div>
-                        <div class="color-item" option="background-colors" value="#FFCCCB,#FFEB3B"></div>
-                        <div class="color-item" option="background-colors" value="#F1EEF9,#F5CCF6"></div>
-                        <div class="color-item" option="background-colors" value="#41D8DD,#5583EE"></div>
-                        <div class="color-item" option="background-colors" value="#323B42,#121317"></div>
+                        <div class="color-item" option="background-colors" value="#FFCCCB" title="#FFCCCB"></div>
+                        <div class="color-item" option="background-colors" value="#ADD8E6" title="#ADD8E6"></div>
+                        <div class="color-item" option="background-colors" value="#FFFFFF" title="#FFFFFF"></div>
+                        <div class="color-item" option="background-colors" value="#FFCCCB,#FFEB3B" title="左上角：#FFCCCB，右下角：#FFEB3B"></div>
+                        <div class="color-item" option="background-colors" value="#F1EEF9,#F5CCF6" title="左上角：#F1EEF9,右下角：#F5CCF6"></div>
+                        <div class="color-item" option="background-colors" value="#41D8DD,#5583EE" title="左上角：#41D8DD,右下角：#5583EE"></div>
+                        <div class="color-item" option="background-colors" value="#323B42,#121317" title="左上角：#323B42,右下角：#121317"></div>
                     </div>
                 </div>
                 <div class="dialog-row">
                     <label i18n="dialog-minimal-select-color">选择颜色</label>
-                    <input type="color" option="background-colors" class="color-picker">
-                    <input type="color" option="background-colors" class="color-picker">
+                    <input type="color" option="background-colors" class="color-picker" title="选择左上角颜色">
+                    <input type="color" option="background-colors" class="color-picker" title="选择右下角颜色">
                 </div>
                 <div class="dialog-row">
                     <label i18n="dialog-minimal-upload-background">上传背景</label>
