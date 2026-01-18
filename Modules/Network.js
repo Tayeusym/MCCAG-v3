@@ -1,6 +1,6 @@
 // 网络请求模块
 
-export const corsProxy = 'https://proxy.mccag.cn/?url=';
+export const corsProxy = 'https://proxy.tayemcser.cn/proxy.php?url=';
 
 
 export async function request(url, cors = true, max = 2, count = 0) {
