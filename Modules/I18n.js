@@ -13,13 +13,8 @@ let currentLang = localStorage.getItem('language');
  * @param {string} lang - 语言代码
  */
 export async function applyTranslation(lang) {
-    currentLang = lang;
-    document.documentElement.lang = lang === 'jp' ? 'ja' : lang;
-    if (!translations.hasOwnProperty(lang)) {
-        const response = await request(`/Resources/Data/Languages/${lang}.json`, false);
-        if (response) translations[lang] = Object.freeze(response);
-        else return popupTips('加载语言文件失败！', 'warning');
-    }
+    currentLang = 'zh';
+    document.documentElement.lang = 'zh';
     // 更新页面标题
     const titleElement = document.querySelector('title[i18n]');
     if (titleElement) titleElement.textContent = translations[lang][titleElement.getAttribute('i18n')];
