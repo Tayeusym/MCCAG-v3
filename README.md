@@ -14,6 +14,13 @@ _轻松生成个性化的 Minecraft 头像_
 
 </div>
 
+> [!TIP]
+> 本项目基于官方 [MCCAG](https://github.com/MCCAG/MCCAG-v3) 仓库修改。
+
+访问 https://tayecag.tayemcser.cn 体验。
+
+本项目做出大部分改动，为遵循原作者，本项目部署在天乐茶会官方网站后同步发布到这里以GPL3.0开源。
+
 ## 📖 项目简介
 
 MCCAG 是一个基于 Web 的 Minecraft 头像生成器，支持多种头像风格和自定义选项。用户可以通过正版 ID、皮肤站或直接上传皮肤文件来生成个性化的头像。
@@ -30,14 +37,22 @@ MCCAG 是一个基于 Web 的 Minecraft 头像生成器，支持多种头像风�
 - 📱 **响应式设计**：完美适配桌面和移动设备。
 - 💾 **多种下载格式**：支持透明背景和带背景两种下载方式。
 
+## 本版本（仓库）修改的内容
+- index.html 中“皮肤站”获取的来源修改为“skin.tayemcser.cn”（注：默认是给我服务器的玩家使用的，不过如果你想自己使用可以在页面中修改URL地址。）
+- 更换右侧广告位的图片和内容
+- 更换右侧赞助内容
+- 移除了语言（天乐茶会服主喜欢中文，如果需要多语言请前往官方项目。）
+- 修改底部栏内容
+- 反向代理来源设置为天乐茶会自写的PHP反向代理。
+
 ## 🚀 快速开始
 
-直接访问部署的网站 https://mccag.cn 即可使用，无需安装任何软件。
+访问 https://tayecag.tayemcser.cn 以体验天乐茶会修改的项目，访问 https://mccag.cn 以使用官方项目。
 
 ### 本地开发
 
 ```bash
-# 克隆项目
+# 克隆官方项目
 git clone https://github.com/MCCAG/Website.git
 
 # 进入项目目录
@@ -69,7 +84,34 @@ npm run build
 - **JavaScript ES6+**：模块化架构、异步处理、Canvas 绘图。
 - **Canvas API**：头像渲染和图像处理。
 
-### 项目结构
+### 本项目结构
+
+```
+MCCAG/
+├── Index.html            # 主页面
+├── Index.css             # 主样式文件
+├── Index.js              # 入口文件
+├── Modules/              # 核心模块
+│   ├── App.js            # 主应用逻辑
+│   ├── I18n.js           # 国际化支持
+│   ├── Network.js        # 网络请求处理
+│   ├── Utils.js          # 工具函数
+│   └── Renderers/        # 渲染器模块
+│       ├── Index.js      # 渲染器入口
+│       ├── Data.js       # 数据处理
+│       ├── Image.js      # 图像处理
+│       ├── Minimal.js    # Minimal 风格渲染器
+│       ├── Vintage.js    # Vintage 风格渲染器
+│       └── Side.js       # Side 风格渲染器
+└── Resources/            # 静态资源
+    ├── Data/             # 数据文件夹
+    ├── Icons/            # 图标文件夹
+    ├── Models/           # 模型预览图文件夹
+    ├── Saylor.jpg            # 天乐茶会版本的图标
+    └── 2026-01-11_18.01.20.png        # 服务器截图，用在广告位背景上。
+```
+
+### 官方项目结构
 
 ```
 MCCAG/
@@ -125,5 +167,7 @@ MCCAG/
 **如果这个项目对你有帮助，请给它一个 ⭐ Star！**
 
 Made with ❤️ by [LonelySail](https://github.com/Lonely-Sails/) & [Keishi](https://space.bilibili.com/23785358/)
+
+欢迎支持我 [Lift-光亮](https://space.bilibili.com/510576749/) | [爱发电](https://afdian.com/a/tayefuture) [天乐茶会官方群](https://qm.qq.com/q/RsRExu9Tsy)
 
 </div>
